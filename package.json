@@ -5,5 +5,10 @@
     "node": ">=6.0.0",
     "yarn": ">=0.25.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@rails/webpacker": "3.5"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "2.11.2"
+  }
 }
