@@ -25,6 +25,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'webpacker'
 gem 'devise'
+gem 'carrierwave'
 
 group :development, :test do
   gem 'pry-rails'
