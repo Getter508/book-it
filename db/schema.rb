@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_06_035242) do
+ActiveRecord::Schema.define(version: 2018_11_08_031337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,9 +57,9 @@ ActiveRecord::Schema.define(version: 2018_11_06_035242) do
 
   create_table "isbns", force: :cascade do |t|
     t.integer "book_id", null: false
-    t.integer "isbn", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "international_standard_book_number", null: false
     t.index ["book_id"], name: "index_isbns_on_book_id"
   end
 

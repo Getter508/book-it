@@ -17,5 +17,5 @@ class Book < ApplicationRecord
   validates :year, length: { is: 4 }, numericality: { only_integer: true }
   validates_with YearValidator
 
-  mount_uploader :cover, ImageUploader
+  # mount_uploader :cover, ImageUploader
 end
