@@ -1,0 +1,12 @@
+
+<%= image_tag(book.cover) %>
+<%= book.title %>
+<% book.authors.each do |author| %>
+  <%= author.name %>
+<% end %>
+<% book.genres.each do |genre| %>
+  <%= genre.name %>
+<% end %>
+<%= book.year %>
+<%= book.pages %>
+<%= book.description %>
