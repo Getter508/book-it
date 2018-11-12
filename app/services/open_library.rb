@@ -68,11 +68,12 @@ class OpenLibrary
 
   def isbns
     isbns = []
-    orig_isbns = @search_hash["docs"].first["isbn"]
+    orig_isbns = search_info.first["isbn"]
     orig_isbns.each do |isbn|
       without_dashes = isbn.delete('-')
       isbns << without_dashes if Isbn::LENGTHS.include?(without_dashes.length)
     end
+    isbns << @isbn unless isbns.include?(@isbn)
     isbns
   end
 

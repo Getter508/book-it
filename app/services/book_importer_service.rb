@@ -68,7 +68,7 @@ class BookImporterService
   def create_isbn(data, book_id, primary_isbn)
     data[:isbns].each do |international_standard_book_number|
       isbn = Isbn.find_or_create_by(international_standard_book_number: international_standard_book_number, book_id: book_id)
-      if isbn == primary_isbn
+      if isbn.international_standard_book_number == primary_isbn
         isbn.primary_number = true
         isbn.save
       end
