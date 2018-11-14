@@ -1,5 +1,5 @@
 
-<%= image_tag(@book.cover) %>
+<%= image_tag(@book.display_cover) %>
 <%= @book.title %>
 <% @book.authors.each do |author| %>
   <%= author.name %>

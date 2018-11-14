@@ -1,11 +1,12 @@
 
 <%= sortable "title" %>
 <%= sortable "author" %>
+<%= link_to "None", @books_path %>
 
-<ul>
+<ul class="books">
   <% @books.each do |book| %>
     <li>
-      <%= link_to( image_tag(book.cover), book_path(book), class: "book-#{book.id}") %>
+      <%= link_to( image_tag(book.display_cover), book_path(book), class: "book-#{book.id}") %>
       <%= book.title %>
       <% book.authors.each do |author| %>
         <%= author.name %>

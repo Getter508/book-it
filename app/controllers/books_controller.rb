@@ -1,8 +1,10 @@
 class BooksController < ApplicationController
-  helper_method :sort_attribute, :sort_direction
-
   def index
-    @books = Book.order(sort_attribute + " " + sort_direction).limit(10)
+    if sort_params.present?
+      @books = Book.order_by(sort_params).limit(10)
+    else
+      @books = Book.all.limit(10)
+    end
   end
 
   def show
@@ -11,11 +13,9 @@ class BooksController < ApplicationController
 
   private
 
-  def sort_attribute
-    %w[title author].include?(params[:sort]) ? params[:sort] : "title"
-  end
-
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  def sort_params
+    params.permit(:sort, :direction)
   end
 end
+
+# sortable_name = self.params[:sort].sub(/^(the|a|an)\s+/i, '')

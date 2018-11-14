@@ -8,8 +8,5 @@ FactoryBot.define do
   end
 end
 
-# NameofWindCover: "http://covers.openlibrary.org/b/id/8259447-L.jpg"
-# WiseMansFearCover: "http://covers.openlibrary.org/b/id/8155423-L.jpg"
-
 # cover { Rack::Test::UploadedFile.new(Rails.root.join('spec/support/NameofWindCover.jpg'), 'image/jpeg') }
 # cover { Rack::Test::UploadedFile.new(Rails.root.join('spec/support/WiseMansFearCover.jpg'), 'image/jpeg')) }
