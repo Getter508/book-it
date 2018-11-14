@@ -13,3 +13,18 @@
  *= require_tree .
  *= require_self
  */
+
+.current {
+ background-size: 8px;
+ background-position: right;
+ background-repeat: no-repeat;
+ padding-right: 10px;
+}
+
+.asc {
+ background-image: url('up_arrow.png');
+}
+
+.desc {
+ background-image: url('down_arrow.png');
+}
