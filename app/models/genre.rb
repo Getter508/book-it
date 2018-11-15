@@ -32,29 +32,34 @@ class Genre < ApplicationRecord
   GENRES_MAP = {
     "Adventure and adventurers" => "Adventure",
     "Adventure stories" => "Adventure",
-    "American Science fiction" => "Science fiction",
-    "BIOGRAPHY & AUTOBIOGRAPHY" => ["Biography", "Autobiography"],
-    "Biography & Autobiography" => ["Biography", "Autobiography"],
+    "American science fiction" => "Science fiction",
+    "Biography & autobiography" => ["Biography", "Autobiography"],
     "Children's stories" => "Children's books",
     "Comedy" => "Humor",
     "Detective and mystery stories" => "Mystery",
     "Fantasy fiction" => ["Fantasy", "Fiction"],
-    "Fiction in English" => "Fiction",
-    "FICTION / Historical" => "Historical Fiction",
+    "Fiction in english" => "Fiction",
+    "Fiction / historical" => "Historical fiction",
     "Horror stories" => "Horror",
     "Horror tales" => "Horror",
     "Juvenile fiction" => "Young adult fiction",
     "Love stories" => "Romance",
-    "Mystery & Detective" => "Mystery",
+    "Mystery & detective" => "Mystery",
     "Nonfiction" => "Non-fiction",
-    "Science Fiction & Fantasy" => ["Science fiction", "Fantasy"],
+    "Science fiction & fantasy" => ["Science fiction", "Fantasy"],
     "Serial murders" => "Murder",
     "Suspense fiction" => "Suspense"
   }
+
+  PROMPT = "-- Select a Genre --"
 
   has_many :book_genres
   has_many :books, through: :book_genres
 
   validates_presence_of :name
   validates_uniqueness_of :name
+
+  def self.select_options
+    Genre.all.order(:name).map { |genre| [genre.name, genre.id] }
+  end
 end
