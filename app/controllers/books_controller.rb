@@ -6,7 +6,7 @@ class BooksController < ApplicationController
       @books = Book.filter(filter_params)&.page params[:page]
       @selected_genre = filter_params.nil?
     else
-      @books = Book.order('random()').page params[:page]
+      @books = Book.order(Arel.sql('random()')).page params[:page]
     end
   end
 
