@@ -60,6 +60,6 @@ class Genre < ApplicationRecord
   validates_uniqueness_of :name
 
   def self.select_options
-    @select_options ||= Genre.all.order(:name).map { |genre| [genre.name, genre.id] }
+    Genre.all.order(:name).map { |genre| [genre.name, genre.id] }
   end
 end
