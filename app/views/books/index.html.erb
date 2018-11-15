@@ -11,7 +11,7 @@
   <%= form_tag books_path, method: "get" do %>
     <%= label_tag :genre, "Filter" %>
     <%= select(:genre, :id, options_for_select(@genre_select_options, selected: @selected_genre), prompt: Genre::PROMPT) %>
-    <%= submit_tag "Filter", name: nil %>
+    <%= submit_tag "Filter", name: nil, id: "submit_filter" %>
     <% unless @selected_genre.nil? %>
       <%= link_to "Remove filter", @books_path %>
     <% end %>
