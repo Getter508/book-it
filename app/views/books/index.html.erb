@@ -1,7 +1,22 @@
+<div class="sort">
+  Sort by:
+  <%= sortable "title" %>
+  <%= sortable "author" %>
+  <% unless params[:sort].nil? %>
+    <%= link_to "Remove", @books_path %>
+  <% end %>
+</div>
 
-<%= sortable "title" %>
-<%= sortable "author" %>
-<%= link_to "None", @books_path %>
+<div class="filter">
+  <%= form_tag books_path, method: "get" do %>
+    <%= label_tag :genre, "Filter" %>
+    <%= select(:genre, :id, options_for_select(Genre.select_options, selected: @selected_genre), prompt: Genre::PROMPT) %>
+    <%= submit_tag "Filter", name: nil %>
+    <% unless @selected_genre.nil? %>
+      <%= link_to "Remove filter", @books_path %>
+    <% end %>
+  <% end %>
+</div>
 
 <ul class="books">
   <% @books.each do |book| %>
@@ -18,3 +33,5 @@
     </li>
   <% end %>
 </ul>
+
+<%= paginate @books, window: 2 %>

@@ -69,6 +69,21 @@ feature 'user views books' do
     end
   end
 
+  scenario "filter books by genre" do
+    visit books_path
+    select("Fantasy", from: "Genre")
+    click_on "Filter"
+
+    expect(page).to have_content(book1.title)
+    expect(page).not_to have_content(book2.title)
+
+    # select("None", from: "Genre")
+    # click_on("Filter")
+    #
+    # expect(page).to have_content(book1.title)
+    # expect(page).to have_content(book2.title)
+  end
+
   # As a user
   # I can view details of a book
   # So that I know more about it

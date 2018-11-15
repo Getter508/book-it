@@ -25,6 +25,7 @@ gem 'fog-aws'
 gem 'carrierwave'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'mini_magick'
+gem 'kaminari'
 
 group :development, :test do
   gem 'pry-rails'

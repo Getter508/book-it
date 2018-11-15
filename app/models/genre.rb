@@ -52,9 +52,15 @@ class Genre < ApplicationRecord
     "Suspense fiction" => "Suspense"
   }
 
+  PROMPT = "-- Select a Genre --"
+
   has_many :book_genres
   has_many :books, through: :book_genres
 
   validates_presence_of :name
   validates_uniqueness_of :name
+
+  def self.select_options
+    @select_options ||= Genre.all.order(:name).map { |genre| [genre.name, genre.id] }
+  end
 end

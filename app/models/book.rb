@@ -22,8 +22,14 @@ class Book < ApplicationRecord
 
   # mount_uploader :cover, ImageUploader
 
+  paginates_per 30
+
   def display_cover
     cover.nil? ? "generic_book_cover1.png" : cover
+  end
+
+  def self.filter(filter)
+    self.joins(:genres).where(genres: { id: filter }) if filter
   end
 
   SORTING_ATTRIBUTES = ['title', 'author']
@@ -36,7 +42,6 @@ class Book < ApplicationRecord
       self.joins(:authors).order(query)
     else
       self.order(query)
-      # self.order(query).where(self.each { |book| book.title.sub(/^(the|a|an)\s+/i, '')) }
     end
   end
 
