@@ -48,7 +48,7 @@ class Genre < ApplicationRecord
     "Nonfiction" => "Non-fiction",
     "Science fiction & fantasy" => ["Science fiction", "Fantasy"],
     "Serial murders" => "Murder",
-    "Suspense fiction" => "Suspense"
+    "Suspense fiction" => ["Suspense", "Fiction"]
   }
 
   PROMPT = "-- Select a Genre --"

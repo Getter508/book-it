@@ -15,12 +15,11 @@ class Book < ApplicationRecord
   has_many :isbns
   has_many :book_genres
   has_many :genres, through: :book_genres
+  has_many :have_read_books
 
   validates_presence_of :title, :year
   validates :year, length: { is: 4 }, numericality: { only_integer: true }
   validates_with YearValidator
-
-  # mount_uploader :cover, ImageUploader
 
   paginates_per 30
 
@@ -51,8 +50,3 @@ class Book < ApplicationRecord
     sort == 'author' ? "authors.name" : sort
   end
 end
-
-
-# def self.sortable_title
-#   title.sub(/^(the|a|an)\s+/i, '')
-# end
