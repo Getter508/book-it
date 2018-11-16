@@ -16,6 +16,7 @@ class Book < ApplicationRecord
   has_many :book_genres
   has_many :genres, through: :book_genres
   has_many :have_read_books
+  has_many :to_read_books
 
   validates_presence_of :title, :year
   validates :year, length: { is: 4 }, numericality: { only_integer: true }
@@ -25,6 +26,14 @@ class Book < ApplicationRecord
 
   def display_cover
     cover.nil? ? "generic_book_cover1.png" : cover
+  end
+
+  def display_have_read_date(user)
+    have_read_books.where(user: user).first&.display_date
+  end
+
+  def display_to_read_rank
+    to_read_books.first&.rank
   end
 
   def self.filter(filter)
