@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'user views books' do
+feature "user views books" do
   let!(:book2) {
     create(:book,
     title: "The Wise Man's Fear",

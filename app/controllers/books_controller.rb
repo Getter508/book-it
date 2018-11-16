@@ -26,8 +26,5 @@ class BooksController < ApplicationController
   end
 end
 
-# WHY NO AUTOBIOGRAPHIES????
-
-
 
 # sortable_name = self.params[:sort].sub(/^(the|a|an)\s+/i, '')

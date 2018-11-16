@@ -20,8 +20,6 @@ class Book < ApplicationRecord
   validates :year, length: { is: 4 }, numericality: { only_integer: true }
   validates_with YearValidator
 
-  # mount_uploader :cover, ImageUploader
-
   paginates_per 30
 
   def display_cover
