@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   has_many :have_read_books
 
-  validates_presence_of :first_name, :last_name, :admin, :username
+  validates_presence_of :first_name, :last_name, :username
   validates_uniqueness_of :username
 
   mount_uploader :avatar, ImageUploader
