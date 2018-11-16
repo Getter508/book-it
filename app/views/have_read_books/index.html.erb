@@ -13,6 +13,7 @@
       <% book.authors.each do |author| %>
         <%= author.name %>
       <% end %>
+      <%= book.have_read_books.first.display_date unless nil %>
     </li>
   <% end %>
 </ul>

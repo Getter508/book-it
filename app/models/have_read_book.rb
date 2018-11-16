@@ -16,6 +16,10 @@ class HaveReadBook < ApplicationRecord
   validates_presence_of :book_id, :user_id
   validates_with CompletedDateValidator
 
+  def display_date
+    date_completed.strftime("%m/%d/%Y")
+  end
+
   AUTHOR = 'author'
   SORTING_ATTRIBUTES = ['title', AUTHOR]
 

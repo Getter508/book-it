@@ -8,7 +8,11 @@ feature "user views 'have read' books" do
   let!(:book_author1) { create(:book_author) }
   let!(:book1) { book_author1.book }
   let!(:book_genre1) { create(:book_genre, book: book1) }
-  let!(:have_read_book1) { create(:have_read_book, book: book1) }
+  let!(:have_read_book1) {
+    create(:have_read_book,
+      book: book1,
+      date_completed: DateTime.current.prev_day)
+  }
   let!(:user) { have_read_book1.user }
   let!(:book2) {
     create(:book,
@@ -16,12 +20,7 @@ feature "user views 'have read' books" do
     cover: "http://covers.openlibrary.org/b/id/8155423-L.jpg")
   }
   let!(:book_author2) { create(:book_author, book: book2) }
-  let!(:have_read_book2) {
-    create(:have_read_book,
-      book: book2,
-      user: user,
-      date_completed: DateTime.current.prev_day)
-  }
+  let!(:have_read_book2) { create(:have_read_book, book: book2, user: user) }
   let!(:book_author3) { create(:book_author) }
   let!(:book3) { book_author3.book }
 
@@ -36,12 +35,16 @@ feature "user views 'have read' books" do
   scenario "view 'have read' list" do
     visit have_read_books_path
 
-    expect(page).to have_content(book1.title)
-    expect(page).to have_content(book_author1.author.name)
-    expect(page).to have_xpath("//img[contains(@src,'8259447-L.jpg')]")
-    expect(page).to have_content(book2.title)
-    expect(page).to have_content(book_author2.author.name)
-    expect(page).to have_xpath("//img[contains(@src,'8155423-L.jpg')]")
+    within "ul.have_read_books" do
+      expect(first('li')).to have_content(book2.title)
+      expect(first('li')).to have_content(book_author2.author.name)
+      expect(first('li')).to have_content(have_read_book2.display_date)
+      expect(first('li')).to have_xpath("//img[contains(@src,'8155423-L.jpg')]")
+      expect(all('li')[1]).to have_content(book1.title)
+      expect(all('li')[1]).to have_content(book_author1.author.name)
+      expect(all('li')[1]).to have_content(have_read_book1.display_date)
+      expect(all('li')[1]).to have_xpath("//img[contains(@src,'8259447-L.jpg')]")
+    end
     expect(page).not_to have_content(book3.title)
     expect(page).not_to have_content(book_author3.author.name)
   end
@@ -85,8 +88,8 @@ feature "user views 'have read' books" do
     click_on("Date Completed")
 
     within "ul.have_read_books" do
-      expect(first('li')).to have_content(book_author1.author.name)
-      expect(all('li')[1]).to have_content(book_author2.author.name)
+      expect(first('li')).to have_content(book2.title)
+      expect(all('li')[1]).to have_content(book1.title)
     end
   end
 
