@@ -1,6 +1,6 @@
 class CompletedDateValidator < ActiveModel::Validator
   def validate(record)
-    if record.date_completed > Time.zone.now 
+    if record.date_completed > Time.zone.now
       record.errors[:base] << "Completed date cannot be in the future"
     end
   end
@@ -16,13 +16,14 @@ class HaveReadBook < ApplicationRecord
   validates_presence_of :book_id, :user_id
   validates_with CompletedDateValidator
 
-  SORTING_ATTRIBUTES = ['title', 'author']
+  AUTHOR = 'author'
+  SORTING_ATTRIBUTES = ['title', AUTHOR]
 
   def self.order_by(params)
     raise InvalidSortParamError unless SORTING_ATTRIBUTES.include?(params[:sort])
     raise InvalidDirectionParamError unless ['asc', 'desc'].include?(params[:direction])
     query = "#{query_for(params[:sort])} #{params[:direction]}"
-    if params[:sort] == 'author'
+    if params[:sort] == AUTHOR
       self.joins(:authors).order(query)
     else
       self.order(query)
@@ -32,6 +33,6 @@ class HaveReadBook < ApplicationRecord
   private
 
   def self.query_for(sort)
-    sort == 'author' ? "authors.name" : sort
+    sort == AUTHOR ? "authors.name" : sort
   end
 end

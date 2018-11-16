@@ -1,9 +1,7 @@
 class BooksController < ApplicationController
-  # before_action :authenticate_user!, except: [:index]
-
   def index
     @genre_select_options = Genre.select_options
-    
+
     if sort_params.present?
       @books = Book.order_by(sort_params)&.page params[:page]
     elsif filter_params.present?
@@ -28,6 +26,3 @@ class BooksController < ApplicationController
     params.dig(:genre, :id)
   end
 end
-
-
-# sortable_name = self.params[:sort].sub(/^(the|a|an)\s+/i, '')

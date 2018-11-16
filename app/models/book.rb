@@ -50,8 +50,3 @@ class Book < ApplicationRecord
     sort == 'author' ? "authors.name" : sort
   end
 end
-
-
-# def self.sortable_title
-#   title.sub(/^(the|a|an)\s+/i, '')
-# end
