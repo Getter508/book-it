@@ -2,10 +2,15 @@ class ToReadBooksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    # binding.pry
     user_book_ids = current_user.to_read_books.order(rank: :asc).pluck(:book_id)
-    @to_read_books = Book.where(id: user_book_ids).includes(:authors)
-    @to_read_books = @to_read_books.order_by(sort_params) if sort_params.present?
+
+    @to_read_books = user_book_ids.map do |id|
+      Book.where(id: id).includes(:authors)
+    end.flatten
+
+    if sort_params.present?
+      @to_read_books = Book.where(id: user_book_ids).order_by(sort_params)
+    end
   end
 
   private

@@ -31,13 +31,16 @@ feature "user views 'to read' books" do
   scenario "view 'to read' list" do
     visit to_read_books_path
 
-    expect(page).to have_content(book1.title)
-    expect(page).to have_content(to_read_book1.rank)
-    expect(page).to have_content(book_author1.author.name)
-    expect(page).to have_xpath("//img[contains(@src,'8259447-L.jpg')]")
-    expect(page).to have_content(book2.title)
-    expect(page).to have_content(book_author2.author.name)
-    expect(page).to have_xpath("//img[contains(@src,'8155423-L.jpg')]")
+    within "ul.to_read_books" do
+      expect(first('li')).to have_content(book2.title)
+      expect(first('li')).to have_content(to_read_book2.rank)
+      expect(first('li')).to have_content(book_author2.author.name)
+      expect(first('li')).to have_xpath("//img[contains(@src,'8155423-L.jpg')]")
+      expect(all('li')[1]).to have_content(book1.title)
+      expect(all('li')[1]).to have_content(to_read_book1.rank)
+      expect(all('li')[1]).to have_content(book_author1.author.name)
+      expect(all('li')[1]).to have_xpath("//img[contains(@src,'8259447-L.jpg')]")
+    end
     expect(page).not_to have_content(book3.title)
     expect(page).not_to have_content(book_author3.author.name)
   end
@@ -76,14 +79,13 @@ feature "user views 'to read' books" do
     end
   end
 
-  xscenario "sort books by rank" do
+  scenario "sort books by rank" do
     visit to_read_books_path
-    save_and_open_page
     click_on("My Ranking")
 
     within "ul.to_read_books" do
-      expect(first('li')).to have_content(to_read_book2.rank)
-      expect(all('li')[1]).to have_content(to_read_book1.rank)
+      expect(first('li')).to have_content(book2.title)
+      expect(all('li')[1]).to have_content(book1.title)
     end
   end
 
