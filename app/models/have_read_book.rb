@@ -19,24 +19,4 @@ class HaveReadBook < ApplicationRecord
   def display_date
     date_completed.strftime("%m/%d/%Y")
   end
-
-  AUTHOR = 'author'
-  SORTING_ATTRIBUTES = ['title', AUTHOR]
-
-  def self.order_by(params)
-    raise InvalidSortParamError unless SORTING_ATTRIBUTES.include?(params[:sort])
-    raise InvalidDirectionParamError unless ['asc', 'desc'].include?(params[:direction])
-    query = "#{query_for(params[:sort])} #{params[:direction]}"
-    if params[:sort] == AUTHOR
-      self.joins(:authors).order(query)
-    else
-      self.order(query)
-    end
-  end
-
-  private
-
-  def self.query_for(sort)
-    sort == AUTHOR ? "authors.name" : sort
-  end
 end

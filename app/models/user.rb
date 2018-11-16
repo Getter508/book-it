@@ -5,7 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :have_read_books
+  has_many :completed_books, through: :have_read_books, source: :book
   has_many :to_read_books
+  has_many :to_complete_books, through: :to_read_books, source: :book
 
   validates_presence_of :first_name, :last_name, :username
   validates_uniqueness_of :username

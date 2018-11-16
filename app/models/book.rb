@@ -28,6 +28,14 @@ class Book < ApplicationRecord
     cover.nil? ? "generic_book_cover1.png" : cover
   end
 
+  def display_have_read_date(user)
+    have_read_books.where(user: user).first&.display_date
+  end
+
+  def display_to_read_rank
+    to_read_books.first&.rank
+  end
+
   def self.filter(filter)
     self.joins(:genres).where(genres: { id: filter }) if filter
   end

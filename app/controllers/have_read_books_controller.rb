@@ -2,14 +2,10 @@ class HaveReadBooksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    user_book_ids = current_user.have_read_books.order(date_completed: :desc).pluck(:book_id)
-
-    @have_read_books = user_book_ids.map do |id|
-      Book.where(id: id).includes(:authors)
-    end.flatten
-
     if sort_params.present?
-      @have_read_books = Book.where(id: user_book_ids).order_by(sort_params).includes(:authors)
+      @have_read_books = current_user.completed_books.order_by(sort_params).includes(:authors)
+    else
+      @have_read_books = current_user.completed_books.order("have_read_books.date_completed desc").includes(:authors)
     end
   end
 
