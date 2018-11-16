@@ -1,19 +1,21 @@
 require 'rails_helper'
 
 feature "user views 'have read' books" do
+  before(:each) do
+    sign_in user
+  end
+
   let!(:book_author1) { create(:book_author) }
   let!(:book1) { book_author1.book }
   let!(:book_genre1) { create(:book_genre, book: book1) }
   let!(:have_read_book1) { create(:have_read_book, book: book1) }
-  let!(:user) { :have_read_book1.user }
+  let!(:user) { have_read_book1.user }
   let!(:book2) {
     create(:book,
     title: "The Wise Man's Fear",
     cover: "http://covers.openlibrary.org/b/id/8155423-L.jpg")
   }
   let!(:book_author2) { create(:book_author, book: book2) }
-  # let!(:genre2) { create(:genre, name: "Adventure") }
-  # let!(:book_genre2) { create(:book_genre, book: book2, genre: genre2) }
   let!(:have_read_book2) {
     create(:have_read_book,
       book: book2,
@@ -44,60 +46,53 @@ feature "user views 'have read' books" do
     expect(page).not_to have_content(book_author3.author.name)
   end
 
-  xscenario "sort books by title" do
-    # visit have_read_books_path
-    # click_on("Title")
-    #
-    # within "ul.books" do
-    #   expect(first('li')).to have_content(book1.title)
-    #   expect(all('li')[1]).to have_content(book2.title)
-    # end
-    #
-    # click_on("Title")
-    #
-    # within "ul.books" do
-    #   expect(first('li')).to have_content(book2.title)
-    #   expect(all('li')[1]).to have_content(book1.title)
-    # end
-  end
-
-  xscenario "sort books by author" do
-    # visit have_read_books_path
-    # click_on("Author")
-    #
-    # within "ul.books" do
-    #   expect(first('li')).to have_content(book_author1.author.name)
-    #   expect(all('li')[1]).to have_content(book_author2.author.name)
-    # end
-    #
-    # click_on("Author")
-    #
-    # within "ul.books" do
-    #   expect(first('li')).to have_content(book_author2.author.name)
-    #   expect(all('li')[1]).to have_content(book_author1.author.name)
-    # end
-  end
-
-  xscenario "sort books by date read" do
-    # visit have_read_books_path
-    # click_on("Author")
-    #
-    # within "ul.books" do
-    #   expect(first('li')).to have_content(book_author1.author.name)
-    #   expect(all('li')[1]).to have_content(book_author2.author.name)
-    # end
-    #
-    # click_on("Author")
-    #
-    # within "ul.books" do
-    #   expect(first('li')).to have_content(book_author2.author.name)
-    #   expect(all('li')[1]).to have_content(book_author1.author.name)
-    # end
-  end
-
-  xscenario "view book details" do
+  scenario "sort books by title" do
     visit have_read_books_path
-    # find(".book-#{book1.id}").click
+    click_on("Title")
+
+    within "ul.have_read_books" do
+      expect(first('li')).to have_content(book1.title)
+      expect(all('li')[1]).to have_content(book2.title)
+    end
+
+    click_on("Title")
+
+    within "ul.have_read_books" do
+      expect(first('li')).to have_content(book2.title)
+      expect(all('li')[1]).to have_content(book1.title)
+    end
+  end
+
+  scenario "sort books by author" do
+    visit have_read_books_path
+    click_on("Author")
+
+    within "ul.have_read_books" do
+      expect(first('li')).to have_content(book_author1.author.name)
+      expect(all('li')[1]).to have_content(book_author2.author.name)
+    end
+
+    click_on("Author")
+
+    within "ul.have_read_books" do
+      expect(first('li')).to have_content(book_author2.author.name)
+      expect(all('li')[1]).to have_content(book_author1.author.name)
+    end
+  end
+
+  scenario "sort books by date read" do
+    visit have_read_books_path
+    click_on("Date Completed")
+
+    within "ul.have_read_books" do
+      expect(first('li')).to have_content(book_author1.author.name)
+      expect(all('li')[1]).to have_content(book_author2.author.name)
+    end
+  end
+
+  scenario "view book details" do
+    visit have_read_books_path
+    find(".book-#{book1.id}").click
 
     expect(page).to have_content(book1.year)
     expect(page).to have_content(book1.pages)

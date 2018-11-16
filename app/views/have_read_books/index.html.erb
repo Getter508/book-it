@@ -1,0 +1,18 @@
+<div class="sort">
+  Sort by:
+  <%= sortable "title" %>
+  <%= sortable "author" %>
+  <%= link_to "Date Completed", @have_read_books_path %>
+</div>
+
+<ul class="have_read_books">
+  <% @have_read_books.each do |book| %>
+    <li>
+      <%= link_to( image_tag(book.display_cover), book_path(book), class: "book-#{book.id}") %>
+      <%= book.title %>
+      <% book.authors.each do |author| %>
+        <%= author.name %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
