@@ -9,7 +9,7 @@ class HaveReadBooksController < ApplicationController
     end.flatten
 
     if sort_params.present?
-      @have_read_books = Book.where(id: user_book_ids).order_by(sort_params)
+      @have_read_books = Book.where(id: user_book_ids).order_by(sort_params).includes(:authors)
     end
   end
 
