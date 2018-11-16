@@ -16,6 +16,7 @@ class Book < ApplicationRecord
   has_many :book_genres
   has_many :genres, through: :book_genres
   has_many :have_read_books
+  has_many :to_read_books
 
   validates_presence_of :title, :year
   validates :year, length: { is: 4 }, numericality: { only_integer: true }
