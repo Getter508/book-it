@@ -1,27 +1,37 @@
-<div class="sort">
-  Sort by:
-  <%= sortable "title" %>
-  <%= sortable "author" %>
-  <% unless params[:sort].nil? %>
-    <%= link_to "Remove", @books_path %>
-  <% end %>
+<div class="sort grid-x grid-padding-x grid-padding-y">
+  <div class="small-1 cell align-self-middle">
+    <div class="text-right">Sort by</div>
+  </div>
+  <div class="small-11 cell">
+    <%= sortable "title" %>
+    <%= sortable "author" %>
+    <% unless params[:sort].nil? %>
+      <%= link_to "Remove", @books_path, class: "button" %>
+    <% end %>
+  </div>
 </div>
 
-<div class="filter">
-  <%= form_tag books_path, method: "get" do %>
-    <%= label_tag :genre, "Filter" %>
-    <%= select(:genre, :id, options_for_select(@genre_select_options, selected: @selected_genre), prompt: Genre::PROMPT) %>
-    <%= submit_tag "Filter", name: nil, id: "submit_filter" %>
-    <% unless @selected_genre.nil? %>
-      <%= link_to "Remove filter", @books_path %>
-    <% end %>
-  <% end %>
-</div>
+<%= form_tag books_path, method: "get" do %>
+  <div class="grid-x grid-padding-x align-middle">
+    <div class="small-1 cell">
+      <%= label_tag :genre, "Filter", class: "text-right middle" %>
+    </div>
+    <div class="small-6 cell">
+      <%= select(:genre, :id, options_for_select(@genre_select_options, selected: @selected_genre), prompt: Genre::PROMPT) %>
+    </div>
+    <div class="small-5 cell">
+      <%= submit_tag "Filter", name: nil, id: "submit_filter", class: "middle" %>
+      <% unless @selected_genre.nil? %>
+        <%= link_to "Remove Filter", @books_path, class: "button" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
 
 <ul class="books">
   <% @books.each do |book| %>
     <li>
-      <%= link_to( image_tag(book.display_cover), book_path(book), class: "book-#{book.id}") %>
+      <%= link_to( image_tag(book.display_cover), book_path(book), class: "book-cover book-#{book.id}") %>
       <%= book.title %>
       <% book.authors.each do |author| %>
         <%= author.name %>

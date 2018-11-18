@@ -11,8 +11,32 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <section class="top-bar">
+      <div class="flash">
+        <%- if notice -%>
+          <p class="notice callout small success"><%= notice %></p>
+        <%- end -%>
+        <%- if alert -%>
+          <p class="alert callout small alert"><%= alert %></p>
+        <%- end -%>
+      </div>
+
+      <div class="top-bar-right">
+        <ul class="menu">
+          <li><%= link_to 'Browse Books', books_path %></li>
+          <%- if current_user -%>
+            <li><%= link_to 'Edit Account', edit_user_registration_path %></li>
+            <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
+          <%- else -%>
+            <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+            <li><%= link_to 'Sign In', new_user_session_path %></li>
+          <%- end -%>
+        </ul>
+      </div>
+    </section>
+
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>

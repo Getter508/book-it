@@ -3,9 +3,9 @@ class ToReadBooksController < ApplicationController
 
   def index
     if sort_params.present?
-      @to_read_books = current_user.to_complete_books.order_by(sort_params).includes(:authors)
+      @to_read_books = current_user.to_complete_books.order_by(sort_params).includes(:authors, :genres)
     else
-      @to_read_books = current_user.to_complete_books.order("to_read_books.rank asc").includes(:authors)
+      @to_read_books = current_user.to_complete_books.order("to_read_books.rank asc").includes(:authors, :genres)
     end
   end
 

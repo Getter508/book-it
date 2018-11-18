@@ -16,17 +16,62 @@
 
  */
 
+.container {
+  background-color: #FFFFFF;
+  padding: 0px 15px;
+  margin: 0px 67.5px;
+  min-height: 650px;
+}
+
 .current {
- background-size: 8px;
- background-position: right;
- background-repeat: no-repeat;
- padding-right: 10px;
+  background-size: 8px;
+  background-position: right;
+  background-repeat: no-repeat;
 }
 
 .asc {
- background-image: url('up_arrow.png');
+  background-image: url('up_arrow.png');
 }
 
 .desc {
- background-image: url('down_arrow.png');
+  background-image: url('down_arrow.png');
+}
+
+.book-cover img {
+  max-height: 500px;
+  max-width: 300px;
+}
+
+/* .book-cover img {
+  width: 100%;
+  height: auto;
+} */
+
+.sort .small-11 > :nth-child(2) {
+  padding: 0px 10px;
+}
+
+.sort .small-11 > :first-child {
+  padding: 0px 10px 0px 0px;
+}
+
+.sort .button {
+  margin-bottom: 0;
+  margin-left: 20px;
+}
+
+form .small-5 {
+  margin-bottom: 16px;
+}
+
+form .small-5 > :first-child {
+  margin-right: 20px;
+}
+
+form .grid-x {
+  padding-bottom: 15px;
+}
+
+form .button {
+  margin-bottom: 0;
 }
