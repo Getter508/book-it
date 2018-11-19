@@ -37,15 +37,11 @@
           <dt>Title</dt>
           <dd><%= book.title %></dd>
           <dt>Author(s)</dt>
-            <% book.authors.each do |author| %>
-              <dd><%= author.name %></dd>
-            <% end %>
+            <dd><%= book.display_authors %></dd>
           <dt>Genre(s)</dt>
-            <% book.genres.each do |genre| %>
-              <dd><%= genre.name %></dd>
-            <% end %>
+            <dd><%= book.display_genres %></dd>
           <dt>Brief Description</dt>
-          <dd><%= book.description %></dd>
+          <dd><%= book.brief_description %></dd>
         </dl>
       </li>
     <% end %>
