@@ -1,19 +1,33 @@
-<div class="sort">
-  Sort by:
-  <%= sortable "title" %>
-  <%= sortable "author" %>
-  <%= link_to "Date Completed", @have_read_books_path %>
+<div class="sort grid-x grid-padding-x grid-padding-y">
+  <div class="cell small-2 medium-2 large-1 align-self-middle">
+    <div class="text-right">Sort by</div>
+  </div>
+  <div class="links cell auto">
+    <%= sortable "title" %>
+    <%= sortable "author" %>
+    <%= link_to "Date Completed", @have_read_books_path, class: "default" %>
+  </div>
 </div>
 
-<ul class="have_read_books">
+<ul class="books-list have-read-list">
   <% @have_read_books.each do |book| %>
-    <li>
-      <%= link_to( image_tag(book.display_cover), book_path(book), class: "book-#{book.id}") %>
-      <%= book.title %>
-      <% book.authors.each do |author| %>
-        <%= author.name %>
-      <% end %>
-      <%= book.display_have_read_date(current_user) %>
+    <li class="callout secondary grid-x align-middle">
+      <div class="cover cell small-2 medium-2 large-1">
+        <%= link_to( image_tag(book.display_cover), book_path(book), class: "thumbnail-cover book-#{book.id}") %>
+      </div>
+      <div class="cell medium-10 large-5 have-read-info">
+        <%= book.title %> by <%= book.display_authors %>
+      </div>
+      <div class="cell medium-6 large-4 have-read-rec">
+        Not Recommended
+      </div>
+      <div class="cell medium-6 large-2 have-read-date">
+        <% if book.display_have_read_date(current_user).nil? %>
+          Add Date Completed
+        <% else %>
+          <%= book.display_have_read_date(current_user) %>
+        <% end %>
+      </div>
     </li>
   <% end %>
 </ul>

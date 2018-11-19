@@ -49,7 +49,11 @@ class Book < ApplicationRecord
   end
 
   def display_authors
-    authors.pluck(:name).join(", ")
+    if authors.count == 2
+      authors.pluck(:name).join(" & ")
+    else
+      authors.pluck(:name).join(", ")
+    end
   end
 
   def self.filter(filter)

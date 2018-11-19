@@ -1,7 +1,9 @@
 class CompletedDateValidator < ActiveModel::Validator
   def validate(record)
-    if record.date_completed > Time.zone.now
-      record.errors[:base] << "Completed date cannot be in the future"
+    unless record.date_completed.nil?
+      if record.date_completed > Time.zone.now
+        record.errors[:base] << "Completed date cannot be in the future"
+      end
     end
   end
 end
@@ -17,6 +19,6 @@ class HaveReadBook < ApplicationRecord
   validates_with CompletedDateValidator
 
   def display_date
-    date_completed.strftime("%m/%d/%Y")
+    date_completed&.strftime("%m/%d/%Y")
   end
 end
