@@ -4,6 +4,7 @@
     <title>BookIt</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width">
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
@@ -34,6 +35,13 @@
         </ul>
       </div>
     </section>
+
+
+      <ul class="tabs" data-tabs id="example-tabs">
+        <li class="tabs-title"><%= link_to "Have Read", have_read_books_path %></li>
+        <li class="tabs-title"><%= link_to "To Read", to_read_books_path %></li>
+      </ul>
+
 
     <div class="container">
       <%= yield %>

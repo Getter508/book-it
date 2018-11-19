@@ -23,6 +23,20 @@
   min-height: 650px;
 }
 
+.tabs {
+  margin: 0px 67.5px;
+}
+
+.tabs li.is-active {
+  font-weight: bold;
+  border-bottom: #FFFFFF;
+}
+
+.tabs li a:hover {
+  font-weight: bold;
+  color: #1779ba;
+}
+
 .current {
   background-size: 8px;
   background-position: right;
@@ -40,12 +54,8 @@
 .book-cover img {
   max-height: 475px;
   max-width: 300px;
+  border: 1px solid #333333;
 }
-
-/* .book-cover img {
-  width: 100%;
-  height: auto;
-} */
 
 .sort .auto > :nth-child(2) {
   padding: 0px 10px;
@@ -84,15 +94,29 @@ dt {
   margin-top: 12px;
 }
 
-
+nav.pagination {
+  margin-bottom: 0;
+}
 
 @media screen and (max-width: 39.9375em) {
   .container {
     margin: 0;
   }
 
+  .tabs {
+    margin: 0;
+  }
+
   .book-index {
     margin-left: 0;
     margin-right: 0;
+  }
+
+  .books {
+    margin-left: 0;
+  }
+
+  .book-cover {
+    padding-left: 15px;
   }
 }
