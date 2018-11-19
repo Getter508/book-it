@@ -98,6 +98,10 @@ nav.pagination {
   margin-bottom: 0;
 }
 
+.devise.links {
+  padding-bottom: 25px;
+}
+
 @media screen and (max-width: 39.9375em) {
   .container {
     margin: 0;
