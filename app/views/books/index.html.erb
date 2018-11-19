@@ -31,9 +31,11 @@
 
   <ul class="books grid-x grid-padding-x medium-up-1 large-up-2">
     <% @books.each do |book| %>
-      <li class="cell">
-        <%= link_to( image_tag(book.display_cover), book_path(book), class: "book-cover book-#{book.id}") %>
-        <dl>
+      <li class="cell grid-x grid-padding-y">
+        <div class="medium-6 cell">
+          <%= link_to( image_tag(book.display_cover), book_path(book), class: "book-cover book-#{book.id}") %>
+        </div>
+        <dl class="cell auto">
           <dt>Title</dt>
           <dd><%= book.title %></dd>
           <dt>Author(s)</dt>

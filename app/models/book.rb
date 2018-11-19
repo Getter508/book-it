@@ -37,7 +37,11 @@ class Book < ApplicationRecord
   end
 
   def brief_description
-    description&.length > 220 ? description.slice(0..220) + "..." : description
+    if description&.length.nil? || description.length <= 220
+      description
+    else
+      description.slice(0..220) + "..."
+    end
   end
 
   def display_genres

@@ -38,7 +38,7 @@
 }
 
 .book-cover img {
-  max-height: 500px;
+  max-height: 475px;
   max-width: 300px;
 }
 
@@ -74,6 +74,14 @@ form .grid-x {
 
 form .button {
   margin-bottom: 0;
+}
+
+li dl {
+  padding-left: 15px;
+}
+
+dt {
+  margin-top: 12px;
 }
 
 
