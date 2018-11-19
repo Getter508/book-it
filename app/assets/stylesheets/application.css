@@ -47,11 +47,11 @@
   height: auto;
 } */
 
-.sort .small-11 > :nth-child(2) {
+.sort .auto > :nth-child(2) {
   padding: 0px 10px;
 }
 
-.sort .small-11 > :first-child {
+.sort .auto > :first-child {
   padding: 0px 10px 0px 0px;
 }
 
@@ -60,11 +60,11 @@
   margin-left: 20px;
 }
 
-form .small-5 {
+form .auto {
   margin-bottom: 16px;
 }
 
-form .small-5 > :first-child {
+form .auto > :first-child {
   margin-right: 20px;
 }
 
@@ -74,4 +74,17 @@ form .grid-x {
 
 form .button {
   margin-bottom: 0;
+}
+
+
+
+@media screen and (max-width: 39.9375em) {
+  .container {
+    margin: 0;
+  }
+
+  .book-index {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }

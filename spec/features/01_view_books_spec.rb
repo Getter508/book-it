@@ -77,7 +77,7 @@ feature "user views books" do
     expect(page).to have_content(book1.title)
     expect(page).not_to have_content(book2.title)
 
-    click_on("Remove Filter")
+    click_on("Remove")
 
     expect(page).to have_content(book1.title)
     expect(page).to have_content(book2.title)

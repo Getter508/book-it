@@ -1,47 +1,55 @@
-<div class="sort grid-x grid-padding-x grid-padding-y">
-  <div class="small-1 cell align-self-middle">
-    <div class="text-right">Sort by</div>
+<div class="book-index">
+  <div class="sort grid-x grid-padding-x grid-padding-y">
+    <div class="small-2 medium-1 cell align-self-middle">
+      <div class="text-right">Sort by</div>
+    </div>
+    <div class="cell auto">
+      <%= sortable "title" %>
+      <%= sortable "author" %>
+      <% unless params[:sort].nil? %>
+        <%= link_to "Remove", @books_path, class: "button" %>
+      <% end %>
+    </div>
   </div>
-  <div class="small-11 cell">
-    <%= sortable "title" %>
-    <%= sortable "author" %>
-    <% unless params[:sort].nil? %>
-      <%= link_to "Remove", @books_path, class: "button" %>
-    <% end %>
-  </div>
-</div>
 
-<%= form_tag books_path, method: "get" do %>
-  <div class="grid-x grid-padding-x align-middle">
-    <div class="small-1 cell">
-      <%= label_tag :genre, "Filter", class: "text-right middle" %>
+  <%= form_tag books_path, method: "get" do %>
+    <div class="grid-x grid-padding-x align-middle">
+      <div class="small-2 large-1 cell">
+        <%= label_tag :genre, "Filter", class: "text-right middle" %>
+      </div>
+      <div class="small-6 large-2 cell">
+        <%= select(:genre, :id, options_for_select(@genre_select_options, selected: @selected_genre), prompt: Genre::PROMPT) %>
+      </div>
+      <div class="cell auto">
+        <%= submit_tag "Filter", name: nil, id: "submit_filter", class: "middle" %>
+        <% unless @selected_genre.nil? %>
+          <%= link_to "Remove", @books_path, class: "button" %>
+        <% end %>
+      </div>
     </div>
-    <div class="small-6 cell">
-      <%= select(:genre, :id, options_for_select(@genre_select_options, selected: @selected_genre), prompt: Genre::PROMPT) %>
-    </div>
-    <div class="small-5 cell">
-      <%= submit_tag "Filter", name: nil, id: "submit_filter", class: "middle" %>
-      <% unless @selected_genre.nil? %>
-        <%= link_to "Remove Filter", @books_path, class: "button" %>
-      <% end %>
-    </div>
-  </div>
-<% end %>
-
-<ul class="books">
-  <% @books.each do |book| %>
-    <li>
-      <%= link_to( image_tag(book.display_cover), book_path(book), class: "book-cover book-#{book.id}") %>
-      <%= book.title %>
-      <% book.authors.each do |author| %>
-        <%= author.name %>
-      <% end %>
-      <% book.genres.each do |genre| %>
-        <%= genre.name %>
-      <% end %>
-      <%= book.description %>
-    </li>
   <% end %>
-</ul>
 
-<%= paginate @books, window: 2 %>
+  <ul class="books grid-x grid-padding-x medium-up-1 large-up-2">
+    <% @books.each do |book| %>
+      <li class="cell">
+        <%= link_to( image_tag(book.display_cover), book_path(book), class: "book-cover book-#{book.id}") %>
+        <dl>
+          <dt>Title</dt>
+          <dd><%= book.title %></dd>
+          <dt>Author(s)</dt>
+            <% book.authors.each do |author| %>
+              <dd><%= author.name %></dd>
+            <% end %>
+          <dt>Genre(s)</dt>
+            <% book.genres.each do |genre| %>
+              <dd><%= genre.name %></dd>
+            <% end %>
+          <dt>Brief Description</dt>
+          <dd><%= book.description %></dd>
+        </dl>
+      </li>
+    <% end %>
+  </ul>
+
+  <%= paginate @books, window: 2 %>
+</div>
