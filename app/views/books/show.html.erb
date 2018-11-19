@@ -1,12 +1,21 @@
+<div class="grid-container">
+  <h1 class="h2"><%= @book.title %></h1>
 
-<%= image_tag(@book.display_cover) %>
-<%= @book.title %>
-<% @book.authors.each do |author| %>
-  <%= author.name %>
-<% end %>
-<% @book.genres.each do |genre| %>
-  <%= genre.name %>
-<% end %>
-<%= @book.year %>
-<%= @book.pages %>
-<%= @book.description %>
+  <%= image_tag(@book.display_cover) %>
+  <dl>
+    <dt>Author(s)</dt>
+    <dd><% @book.display_authors %></dd>
+    <dt>Genre(s)</dt>
+    <dd><% @book.display_genres %></dd>
+    <dt>Publication Year</dt>
+    <dd><%= @book.year %></dd>
+    <dt>Number of Pages</dt>
+    <dd><%= @book.pages %></dd>
+    <dt>Description</dt>
+    <dd><%= @book.description %></dd>
+  </dl>
+</div>
+
+<div class="view_reviews grid-container">
+  <h1 class="h2">Reviews</h1>
+</div>
