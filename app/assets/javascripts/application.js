@@ -11,5 +11,8 @@
 // about supported directives.
 //
 //= require rails-ujs
+//= require foundation
 //= require activestorage
 //= require_tree .
+
+$(function(){ $(document).foundation(); });

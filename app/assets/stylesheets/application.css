@@ -12,19 +12,111 @@
  *
  *= require_tree .
  *= require_self
+ *= require foundation_and_overrides
+
  */
 
+.container {
+  background-color: #FFFFFF;
+  padding: 0px 15px;
+  margin: 0px 67.5px;
+  min-height: 650px;
+}
+
+.tabs {
+  margin: 0px 67.5px;
+}
+
+.tabs li.is-active {
+  font-weight: bold;
+  border-bottom: #FFFFFF;
+}
+
+.tabs li a:hover {
+  font-weight: bold;
+  color: #1779ba;
+}
+
 .current {
- background-size: 8px;
- background-position: right;
- background-repeat: no-repeat;
- padding-right: 10px;
+  background-size: 8px;
+  background-position: right;
+  background-repeat: no-repeat;
 }
 
 .asc {
- background-image: url('up_arrow.png');
+  background-image: url('up_arrow.png');
 }
 
 .desc {
- background-image: url('down_arrow.png');
+  background-image: url('down_arrow.png');
+}
+
+.book-cover img {
+  max-height: 475px;
+  max-width: 300px;
+  border: 1px solid #333333;
+}
+
+.sort .auto > :nth-child(2) {
+  padding: 0px 10px;
+}
+
+.sort .auto > :first-child {
+  padding: 0px 10px 0px 0px;
+}
+
+.sort .button {
+  margin-bottom: 0;
+  margin-left: 20px;
+}
+
+form .auto {
+  margin-bottom: 16px;
+}
+
+form .auto > :first-child {
+  margin-right: 20px;
+}
+
+form .grid-x {
+  padding-bottom: 15px;
+}
+
+form .button {
+  margin-bottom: 0;
+}
+
+li dl {
+  padding-left: 15px;
+}
+
+dt {
+  margin-top: 12px;
+}
+
+nav.pagination {
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 39.9375em) {
+  .container {
+    margin: 0;
+  }
+
+  .tabs {
+    margin: 0;
+  }
+
+  .book-index {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .books {
+    margin-left: 0;
+  }
+
+  .book-cover {
+    padding-left: 15px;
+  }
 }

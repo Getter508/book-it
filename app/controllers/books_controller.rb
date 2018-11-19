@@ -3,12 +3,12 @@ class BooksController < ApplicationController
     @genre_select_options = Genre.select_options
 
     if sort_params.present?
-      @books = Book.order_by(sort_params)&.page params[:page]
+      @books = Book.order_by(sort_params).includes(:authors, :genres)&.page params[:page]
     elsif filter_params.present?
-      @books = Book.filter(filter_params)&.page params[:page]
-      @selected_genre = filter_params.nil?
+      @books = Book.filter(filter_params).includes(:authors, :genres)&.page params[:page]
+      @selected_genre = filter_params
     else
-      @books = Book.order(Arel.sql('random()')).page params[:page]
+      @books = Book.order(Arel.sql('random()')).includes(:authors, :genres).page params[:page]
     end
   end
 

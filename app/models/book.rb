@@ -36,6 +36,22 @@ class Book < ApplicationRecord
     to_read_books.first&.rank
   end
 
+  def brief_description
+    if description&.length.nil? || description.length <= 220
+      description
+    else
+      description.slice(0..220) + "..."
+    end
+  end
+
+  def display_genres
+    genres.pluck(:name).join(", ")
+  end
+
+  def display_authors
+    authors.pluck(:name).join(", ")
+  end
+
   def self.filter(filter)
     self.joins(:genres).where(genres: { id: filter }) if filter
   end

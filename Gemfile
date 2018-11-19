@@ -27,6 +27,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'mini_magick'
 gem 'kaminari'
 gem 'rack', '>=2.0.6'
+gem 'foundation-rails'
+gem 'autoprefixer-rails'
 
 group :development, :test do
   gem 'pry-rails'
