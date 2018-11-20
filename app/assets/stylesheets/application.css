@@ -107,6 +107,10 @@ dt {
   padding-right: 18px;
 }
 
+.have-read-info p {
+  margin-bottom: 0;
+}
+
 nav.pagination {
   margin-bottom: 0;
 }

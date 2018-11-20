@@ -7,9 +7,9 @@ class HaveReadBooksController < ApplicationController
     @current_year = Time.zone.now.year
 
     if sort_params.present?
-      @have_read_books = current_user.completed_books.order_by(sort_params).includes(:authors, :genres)
+      @have_read_books = current_user.completed_books.order_by(sort_params).includes(:authors, :genres)&.page params[:page]
     else
-      @have_read_books = current_user.completed_books.order("have_read_books.date_completed desc").includes(:authors, :genres)
+      @have_read_books = current_user.completed_books.order("have_read_books.date_completed desc").includes(:authors, :genres)&.page params[:page]
     end
   end
 
