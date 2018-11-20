@@ -22,10 +22,28 @@
         Not Recommended
       </div>
       <div class="cell medium-6 large-2 have-read-date">
-        <% if book.display_have_read_date(current_user).nil? %>
+        <% if book.display_have_read_date(current_user).nil? || params[:condition].present? %>
           Add Date Completed
+
+          <%= form_tag(have_read_book_path(book), method: :put) do %>
+            <div>
+              <%= select_tag(:month, options_for_select(HaveReadBook::MONTHS, selected: @current_month)) %>
+            </div>
+            <div>
+              <%= select_tag(:day, options_for_select(HaveReadBook::DAYS, selected: @current_day)) %>
+            </div>
+            <div>
+              <%= select_tag(:year, options_for_select(HaveReadBook::YEARS, selected: @current_year)) %>
+            </div>
+            <div class="actions">
+              <%= submit_tag "Submit", name: nil %>
+            </div>
+          <% end %>
+
         <% else %>
+          Date Completed
           <%= book.display_have_read_date(current_user) %>
+          <%= link_to "Edit", have_read_books_path(condition: "edit") %>
         <% end %>
       </div>
     </li>

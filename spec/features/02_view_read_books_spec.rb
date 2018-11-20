@@ -35,7 +35,7 @@ feature "user views 'have read' books" do
   scenario "view 'have read' list" do
     visit have_read_books_path
 
-    within "ul.have_read_books" do
+    within "ul.have-read-list" do
       expect(first('li')).to have_content(book2.title)
       expect(first('li')).to have_content(book_author2.author.name)
       expect(first('li')).to have_content(have_read_book2.display_date)
@@ -53,14 +53,14 @@ feature "user views 'have read' books" do
     visit have_read_books_path
     click_on("Title")
 
-    within "ul.have_read_books" do
+    within "ul.have-read-list" do
       expect(first('li')).to have_content(book1.title)
       expect(all('li')[1]).to have_content(book2.title)
     end
 
     click_on("Title")
 
-    within "ul.have_read_books" do
+    within "ul.have-read-list" do
       expect(first('li')).to have_content(book2.title)
       expect(all('li')[1]).to have_content(book1.title)
     end
@@ -70,14 +70,14 @@ feature "user views 'have read' books" do
     visit have_read_books_path
     click_on("Author")
 
-    within "ul.have_read_books" do
+    within "ul.have-read-list" do
       expect(first('li')).to have_content(book_author1.author.name)
       expect(all('li')[1]).to have_content(book_author2.author.name)
     end
 
     click_on("Author")
 
-    within "ul.have_read_books" do
+    within "ul.have-read-list" do
       expect(first('li')).to have_content(book_author2.author.name)
       expect(all('li')[1]).to have_content(book_author1.author.name)
     end
@@ -87,7 +87,7 @@ feature "user views 'have read' books" do
     visit have_read_books_path
     click_on("Date Completed")
 
-    within "ul.have_read_books" do
+    within "ul.have-read-list" do
       expect(first('li')).to have_content(book2.title)
       expect(all('li')[1]).to have_content(book1.title)
     end

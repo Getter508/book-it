@@ -39,14 +39,14 @@ feature "user views books" do
     visit books_path
     click_on("Title")
 
-    within "ul.books" do
+    within "ul.books-list" do
       expect(first('li')).to have_content(book1.title)
       expect(all('li')[1]).to have_content(book2.title)
     end
 
     click_on("Title")
 
-    within "ul.books" do
+    within "ul.books-list" do
       expect(first('li')).to have_content(book2.title)
       expect(all('li')[1]).to have_content(book1.title)
     end
@@ -56,14 +56,14 @@ feature "user views books" do
     visit books_path
     click_on("Author")
 
-    within "ul.books" do
+    within "ul.books-list" do
       expect(first('li')).to have_content(book_author1.author.name)
       expect(all('li')[1]).to have_content(book_author2.author.name)
     end
 
     click_on("Author")
 
-    within "ul.books" do
+    within "ul.books-list" do
       expect(first('li')).to have_content(book_author2.author.name)
       expect(all('li')[1]).to have_content(book_author1.author.name)
     end

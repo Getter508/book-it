@@ -21,4 +21,26 @@ class HaveReadBook < ApplicationRecord
   def display_date
     date_completed&.strftime("%m/%d/%Y")
   end
+
+  MONTHS = (1..12).map { |m| I18n.l(DateTime.parse(Date::MONTHNAMES[m]), format: "%b") }
+  DAYS = (1..31).to_a
+  YEARS = ((Time.zone.now.year - 9)..Time.zone.now.year).to_a
+
+  def self.month_options
+    MONTHS
+  end
+
+  def self.day_options
+    DAYS
+  end
+
+  def self.year_options
+    YEARS
+  end
+
+  def build_date(params)
+    self.date_completed = DateTime.parse("#{params.first} #{params[1]}, #{params.last}")
+  rescue ArgumentError => e
+    return e.message
+  end
 end
