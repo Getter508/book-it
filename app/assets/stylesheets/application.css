@@ -57,11 +57,18 @@
   border: 1px solid #333333;
 }
 
-.sort .auto > :nth-child(2) {
+.thumbnail-cover img {
+  max-height: 80px;
+  max-width: 50px;
+  border: 1px solid #333333;
+  margin-right: 20px;
+}
+
+.sort .links > :nth-child(2), .default {
   padding: 0px 10px;
 }
 
-.sort .auto > :first-child {
+.sort .links > :first-child {
   padding: 0px 10px 0px 0px;
 }
 
@@ -70,11 +77,11 @@
   margin-left: 20px;
 }
 
-form .auto {
+form .filter {
   margin-bottom: 16px;
 }
 
-form .auto > :first-child {
+form .filter > :first-child {
   margin-right: 20px;
 }
 
@@ -92,6 +99,16 @@ li dl {
 
 dt {
   margin-top: 12px;
+}
+
+.have-read-list {
+  margin-right: 20px;
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+.have-read-info p {
+  margin-bottom: 0;
 }
 
 nav.pagination {
@@ -116,8 +133,11 @@ nav.pagination {
     margin-right: 0;
   }
 
-  .books {
+  .books-list {
     margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .book-cover {

@@ -3,7 +3,7 @@
     <div class="cell small-2 medium-2 large-1 align-self-middle">
       <div class="text-right">Sort by</div>
     </div>
-    <div class="cell auto">
+    <div class="links cell auto">
       <%= sortable "title" %>
       <%= sortable "author" %>
       <% unless params[:sort].nil? %>
@@ -20,7 +20,7 @@
       <div class="cell small-6 large-3">
         <%= select(:genre, :id, options_for_select(@genre_select_options, selected: @selected_genre), prompt: Genre::PROMPT) %>
       </div>
-      <div class="cell auto">
+      <div class="filter cell auto">
         <%= submit_tag "Filter", name: nil, id: "submit_filter", class: "middle" %>
         <% unless @selected_genre.nil? %>
           <%= link_to "Remove", @books_path, class: "button" %>
@@ -29,7 +29,7 @@
     </div>
   <% end %>
 
-  <ul class="books grid-x grid-padding-x medium-up-1 large-up-2">
+  <ul class="books-list grid-x grid-padding-x medium-up-1 large-up-2">
     <% @books.each do |book| %>
       <li class="cell grid-x grid-padding-y">
         <div class="cell medium-6">
