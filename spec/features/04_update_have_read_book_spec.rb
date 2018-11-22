@@ -28,7 +28,20 @@ feature "user updates 'have read' book" do
     expect(page).not_to have_content("Add Date Completed")
   end
 
-  scenario "unsuccessfully adds date completed" do
+  scenario "fails to save date completed" do
+    allow_any_instance_of(HaveReadBook).to receive(:save).and_return(false)
+    visit have_read_books_path
+    find("#month").select("Nov")
+    find("#day").select("8")
+    find("#year").select("2018")
+    click_on("Submit")
+
+    expect(page).to have_content("11/08/2018")
+    expect(page).not_to have_button("Edit")
+    expect(page).not_to have_content("Add Date Completed")
+  end
+
+  scenario "tries to add invalid date completed" do
     visit have_read_books_path
     find("#month").select("Feb")
     find("#day").select("31")

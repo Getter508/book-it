@@ -9,4 +9,8 @@ class ToReadBook < ApplicationRecord
   validates :book_id, numericality: { only_integer: true }
   validates :user_id, numericality: { only_integer: true }
   validates :rank, numericality: { only_integer: true }, allow_nil: true
+
+  def self.default_sort
+    "#{table_name}.rank asc"
+  end
 end

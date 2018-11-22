@@ -25,6 +25,7 @@
       </div>
       <div class="cell medium-6 large-4 have-read-rec">Not Recommended</div>
       <div class="cell medium-6 large-3 have-read-date">
+        <% binding.pry %>
         <% if book.display_have_read_date(current_user).nil? || params[:condition].present? %>
           <h6>Add Date Completed</h6>
           <%= form_tag(have_read_book_path(book), method: :put, class: "date-form grid-x") do %>

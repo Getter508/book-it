@@ -33,4 +33,8 @@ class HaveReadBook < ApplicationRecord
   rescue ArgumentError => e
     return e.message
   end
+
+  def self.default_sort
+    "#{table_name}.date_completed desc"
+  end
 end

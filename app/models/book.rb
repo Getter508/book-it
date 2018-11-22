@@ -49,7 +49,7 @@ class Book < ApplicationRecord
   end
 
   def display_authors
-    if authors.count == 2
+    if authors.size == 2
       authors.pluck(:name).join(" & ")
     else
       authors.pluck(:name).join(", ")
@@ -60,17 +60,23 @@ class Book < ApplicationRecord
     self.joins(:genres).where(genres: { id: filter }) if filter
   end
 
-  SORTING_ATTRIBUTES = ['title', 'author']
+  SORTING_ATTRIBUTES = ['title', 'author', nil]
 
-  def self.order_by(params)
+  def self.order_by(params, model)
     raise InvalidSortParamError unless SORTING_ATTRIBUTES.include?(params[:sort])
-    raise InvalidDirectionParamError unless ['asc', 'desc'].include?(params[:direction])
+    raise InvalidDirectionParamError unless ['asc', 'desc', nil].include?(params[:direction])
     query = "#{query_for(params[:sort])} #{params[:direction]}"
-    if params[:sort] == 'author'
+    if params[:sort].nil?
+      self.order(model.default_sort)
+    elsif params[:sort] == 'author'
       self.joins(:authors).order(query)
     else
       self.order(query)
     end
+  end
+
+  def self.default_sort
+    Arel.sql('random()')
   end
 
   private
