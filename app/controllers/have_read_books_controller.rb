@@ -17,7 +17,7 @@ class HaveReadBooksController < ApplicationController
     elsif @have_read_book.save
       redirect_to have_read_books_path, notice: "Date completed successfully updated"
     else
-      redirect_to have_read_books_path, alert: "Date failed to update"
+      redirect_to have_read_books_path, alert: "Date completed failed to update"
     end
   end
 

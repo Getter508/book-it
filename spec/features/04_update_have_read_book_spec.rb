@@ -23,9 +23,11 @@ feature "user updates 'have read' book" do
     find("#year").select("2018")
     click_on("Submit")
 
-    expect(page).to have_content("11/08/2018")
-    expect(page).not_to have_button("Edit")
-    expect(page).not_to have_content("Add Date Completed")
+    within "ul.have-read-list" do
+      expect(page).to have_content("11/08/2018")
+      expect(page).to have_link("Edit")
+      expect(page).not_to have_content("Add Date Completed")
+    end
   end
 
   scenario "fails to save date completed" do
@@ -35,10 +37,14 @@ feature "user updates 'have read' book" do
     find("#day").select("8")
     find("#year").select("2018")
     click_on("Submit")
+    save_and_open_page
 
-    expect(page).to have_content("11/08/2018")
-    expect(page).not_to have_button("Edit")
-    expect(page).not_to have_content("Add Date Completed")
+    expect(page).to have_content("Date completed failed to update")
+    within "ul.have-read-list" do
+      expect(page).to have_content("Add Date Completed")
+      expect(page).not_to have_content("11/08/2018")
+      expect(page).not_to have_link("Edit")
+    end
   end
 
   scenario "tries to add invalid date completed" do
@@ -49,8 +55,10 @@ feature "user updates 'have read' book" do
     click_on("Submit")
 
     expect(page).to have_content("Invalid date")
-    expect(page).to have_content("Add Date Completed")
-    expect(page).not_to have_content("02/31/2018")
+    within "ul.have-read-list" do
+      expect(page).to have_content("Add Date Completed")
+      expect(page).not_to have_content("02/31/2018")
+    end
   end
 
   scenario "updates date completed" do
@@ -67,8 +75,10 @@ feature "user updates 'have read' book" do
     click_on("Submit")
 
     expect(page).to have_content("Date completed successfully updated")
-    expect(page).to have_content("10/07/2017")
-    expect(page).not_to have_content("Add Date Completed")
-    expect(page).not_to have_content("11/08/2018")
+    within "ul.have-read-list" do
+      expect(page).to have_content("10/07/2017")
+      expect(page).not_to have_content("Add Date Completed")
+      expect(page).not_to have_content("11/08/2018")
+    end
   end
 end

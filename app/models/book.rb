@@ -29,7 +29,7 @@ class Book < ApplicationRecord
   end
 
   def display_have_read_date(user)
-    have_read_books.where(user: user).first&.display_date
+    have_read_books.detect { |hrb| hrb.user_id == user.id }&.display_date
   end
 
   def display_to_read_rank
