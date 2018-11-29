@@ -31,7 +31,7 @@ feature "user views 'to read' books" do
   scenario "view 'to read' list" do
     visit to_read_books_path
 
-    within "ul.to_read_books" do
+    within "ul.to-read-list" do
       expect(first('li')).to have_content(book2.title)
       expect(first('li')).to have_content(to_read_book2.rank)
       expect(first('li')).to have_content(book_author2.author.name)
@@ -49,14 +49,14 @@ feature "user views 'to read' books" do
     visit to_read_books_path
     click_on("Title")
 
-    within "ul.to_read_books" do
+    within "ul.to-read-list" do
       expect(first('li')).to have_content(book1.title)
       expect(all('li')[1]).to have_content(book2.title)
     end
 
     click_on("Title")
 
-    within "ul.to_read_books" do
+    within "ul.to-read-list" do
       expect(first('li')).to have_content(book2.title)
       expect(all('li')[1]).to have_content(book1.title)
     end
@@ -66,14 +66,14 @@ feature "user views 'to read' books" do
     visit to_read_books_path
     click_on("Author")
 
-    within "ul.to_read_books" do
+    within "ul.to-read-list" do
       expect(first('li')).to have_content(book_author1.author.name)
       expect(all('li')[1]).to have_content(book_author2.author.name)
     end
 
     click_on("Author")
 
-    within "ul.to_read_books" do
+    within "ul.to-read-list" do
       expect(first('li')).to have_content(book_author2.author.name)
       expect(all('li')[1]).to have_content(book_author1.author.name)
     end
@@ -83,7 +83,7 @@ feature "user views 'to read' books" do
     visit to_read_books_path
     click_on("My Ranking")
 
-    within "ul.to_read_books" do
+    within "ul.to-read-list" do
       expect(first('li')).to have_content(book2.title)
       expect(all('li')[1]).to have_content(book1.title)
     end

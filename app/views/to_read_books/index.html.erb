@@ -12,8 +12,15 @@
 <ul class="books-list to-read-list">
   <% @to_read_books.each do |book| %>
     <li class="callout secondary grid-x align-middle">
-      <div class="book-rank cell small-1"><%= book.display_to_read_rank %></div>
-      <div class="to-read-info cell small-11 medium-10 large-5">
+      <div class="book-rank cell small-3 large-1">
+        <%= form_tag(to_read_book_path(book), method: :put, class: "rank-form grid-x") do %>
+          <div class="cell">
+            <%= select_tag(:rank, options_for_select(ToReadBook::RANKS, selected: book.display_to_read_rank), include_blank: true) %>
+          </div>
+          <div class="actions cell"><%= submit_tag "Submit", name: nil %></div>
+        <% end %>
+      </div>
+      <div class="to-read-info cell small-9 large-5">
         <div class="grid-x align-middle">
           <div class="cell small-3">
             <%= link_to( image_tag(book.display_cover), book_path(book), class: "thumbnail-cover book-#{book.id}") %>

@@ -8,7 +8,10 @@ class ToReadBook < ApplicationRecord
   validates_presence_of :book_id, :user_id
   validates :book_id, numericality: { only_integer: true }
   validates :user_id, numericality: { only_integer: true }
-  validates :rank, numericality: { only_integer: true }, allow_nil: true
+  validates :rank, numericality: { only_integer: true, greater_than: 0,
+    less_than_or_equal_to: 10 }, allow_nil: true
+
+  RANKS = (1..10).to_a
 
   def self.default_sort
     "#{table_name}.rank asc"
