@@ -14,7 +14,7 @@
     <li class="callout secondary grid-x align-middle">
       <div class="book-rank cell small-3 large-1">
         <%= form_tag(to_read_book_path(book), method: :put, class: "rank-form grid-x") do %>
-          <div class="cell">
+          <div class="dropdown cell">
             <%= select_tag(:rank, options_for_select(ToReadBook::RANKS, selected: book.display_to_read_rank), include_blank: true) %>
           </div>
           <div class="actions cell"><%= submit_tag "Submit", name: nil %></div>
