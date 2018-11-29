@@ -15,14 +15,11 @@ class User < ApplicationRecord
   mount_uploader :avatar, ImageUploader
 
   def update_ranks(book_id, rank)
-    result = []
-    self.to_read_books.each do |to_read_book|
+    self.to_read_books.all? do |to_read_book|
       to_read_book.rank += 1 if to_read_book.rank.to_i >= rank.to_i
       to_read_book.rank = nil if to_read_book.rank.to_i > 10
       to_read_book.rank = rank if to_read_book.book_id == book_id.to_i
       to_read_book.save
-      result << to_read_book.save
     end
-    result.all?(true)
   end
 end
