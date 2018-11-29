@@ -101,13 +101,13 @@ dt {
   margin-top: 12px;
 }
 
-.have-read-list {
+.have-read-list, .to-read-list {
   margin-right: 20px;
   padding-left: 18px;
   padding-right: 18px;
 }
 
-.have-read-info p {
+.book-info p {
   margin-bottom: 0;
 }
 
