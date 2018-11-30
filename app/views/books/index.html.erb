@@ -35,16 +35,19 @@
         <div class="cell medium-6">
           <%= link_to( image_tag(book.display_cover), book_path(book), class: "book-cover book-#{book.id}") %>
         </div>
-        <dl class="cell auto">
-          <dt>Title</dt>
-          <dd><%= book.title %></dd>
-          <dt>Author(s)</dt>
-            <dd><%= book.display_authors %></dd>
-          <dt>Genre(s)</dt>
-            <dd><%= book.display_genres %></dd>
-          <dt>Brief Description</dt>
-          <dd><%= book.brief_description %></dd>
-        </dl>
+        <div class="cell auto">
+          <%= button_to "Add To Read", {controller: 'to_read_books', method: "post", book_id: book.id}, {class: "add-from-index button", id: "add-to-read-#{book.id}"} %>
+          <dl>
+            <dt>Title</dt>
+            <dd><%= book.title %></dd>
+            <dt>Author(s)</dt>
+              <dd><%= book.display_authors %></dd>
+            <dt>Genre(s)</dt>
+              <dd><%= book.display_genres %></dd>
+            <dt>Brief Description</dt>
+            <dd><%= book.brief_description %></dd>
+          </dl>
+        </div>
       </li>
     <% end %>
   </ul>

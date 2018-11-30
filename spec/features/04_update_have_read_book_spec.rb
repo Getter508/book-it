@@ -37,7 +37,6 @@ feature "user updates 'have read' book" do
     find("#day").select("8")
     find("#year").select("2018")
     click_on("Submit")
-    save_and_open_page
 
     expect(page).to have_content("Date completed failed to update")
     within "ul.have-read-list" do
