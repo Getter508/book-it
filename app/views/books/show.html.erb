@@ -2,6 +2,7 @@
   <h1 class="h2"><%= @book.title %></h1>
 
   <%= image_tag(@book.display_cover) %>
+  <%= button_to "Add To Read", {controller: 'to_read_books', method: "post", book_id: @book.id}, {class: "add-from-details button"} %>
   <dl>
     <dt>Author(s)</dt>
     <dd><%= @book.display_authors %></dd>

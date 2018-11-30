@@ -57,6 +57,14 @@
   border: 1px solid #333333;
 }
 
+.add-from-details {
+  margin-top: 12px;
+}
+
+.add-from-index {
+  margin-left: 15px;
+}
+
 .thumbnail-cover img {
   max-height: 80px;
   max-width: 50px;
