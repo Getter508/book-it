@@ -8,9 +8,14 @@ class HaveReadBooksController < ApplicationController
     @have_read_books = current_user.completed_books.order_by(sort_params, HaveReadBook).includes(:authors, :genres, :have_read_books)&.page params[:page]
   end
 
+  def create_or_update
+    have_read_book = HaveReadBook.find_by(user: current_user, book_id: have_read_params[:book_id])
+    have_read_book.nil? ? create : update
+  end
+
   def create
-    book = Book.find(create_params)
-    have_read_book = HaveReadBook.new(user: current_user, book_id: create_params)
+    book = Book.find(have_read_params[:book_id])
+    have_read_book = HaveReadBook.new(user: current_user, book_id: have_read_params[:book_id])
 
     if have_read_book.save
       redirect_to book_path(book), notice: "Book successfully added to Have Read"
@@ -20,8 +25,8 @@ class HaveReadBooksController < ApplicationController
   end
 
   def update
-    @have_read_book = HaveReadBook.find_by(user: current_user, book_id: params[:id])
-    @have_read_book.build_date(have_read_params)
+    @have_read_book = HaveReadBook.find(have_read_params[:id])
+    @have_read_book.build_date(date_params)
 
     if @have_read_book.date_completed.nil?
       redirect_to have_read_books_path, alert: "Invalid date"
@@ -34,7 +39,7 @@ class HaveReadBooksController < ApplicationController
 
   private
 
-  def have_read_params
+  def date_params
     [params.require(:month), params.require(:day), params.require(:year)]
   end
 
@@ -42,7 +47,7 @@ class HaveReadBooksController < ApplicationController
     params.permit(:sort, :direction)
   end
 
-  def create_params
-    params.require(:book_id)
+  def have_read_params
+    params.permit(:id, :book_id, :rating, :note)
   end
 end

@@ -15,7 +15,7 @@
       <div class="have-read-info cell small-12 medium-10 large-5">
         <div class="grid-x align-middle">
           <div class="cell small-3">
-            <%= link_to( image_tag(book.display_cover), book_path(book), class: "thumbnail-cover book-#{book.id}") %>
+            <%= link_to(image_tag(book.display_cover), book_path(book), class: "thumbnail-cover book-#{book.id}") %>
           </div>
           <div class="book-info cell small-9 align-text-middle">
             <p><%= book.title %></p>
@@ -27,7 +27,7 @@
       <div class="have-read-date cell medium-6 large-3">
         <% if book.display_have_read_date(current_user).nil? || params[:condition].present? %>
           <h6>Add Date Completed</h6>
-          <%= form_tag(have_read_book_path(book), method: :put, class: "date-form grid-x") do %>
+          <%= form_tag(have_read_book_path(book.have_read_books.where(user: current_user).pluck(:id).first), method: :put, class: "date-form grid-x") do %>
             <div><%= select_tag(:month, options_for_select(HaveReadBook::MONTHS, selected: @current_month)) %></div>
             <div><%= select_tag(:day, options_for_select(HaveReadBook::DAYS, selected: @current_day)) %></div>
             <div><%= select_tag(:year, options_for_select(HaveReadBook::YEARS, selected: @current_year)) %></div>
@@ -36,8 +36,8 @@
         <% else %>
           <h6>Date Completed</h6>
           <div class="grid-x">
-            <div class="cell large-5"><%= book.display_have_read_date(current_user) %></div>
-            <div class="cell large-7"><%= link_to "Edit", have_read_books_path(condition: "edit") %></div>
+            <div class="cell small-4 medium-6"><%= book.display_have_read_date(current_user) %></div>
+            <div class="cell small-6 medium-6"><%= link_to "Edit", have_read_books_path(condition: "edit") %></div>
           </div>
         <% end %>
       </div>

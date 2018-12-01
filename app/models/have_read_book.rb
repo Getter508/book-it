@@ -16,6 +16,9 @@ class HaveReadBook < ApplicationRecord
   belongs_to :user
 
   validates_presence_of :book_id, :user_id
+  validates :rating, numericality: { only_integer: true, greater_than: 0,
+    less_than_or_equal_to: 10 }, allow_nil: true
+  validates :note, length: { maximum: 1000 }
   validates_with CompletedDateValidator
 
   paginates_per 30

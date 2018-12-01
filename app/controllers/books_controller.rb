@@ -11,8 +11,11 @@ class BooksController < ApplicationController
   end
 
   def show
-    @have_read_book = HaveReadBook.find_or_initialize_by(user: current_user, book_id: params[:id])
     @book = Book.find(params[:id])
+    @current_month = Time.zone.now.strftime("%b")
+    @current_day = Time.zone.now.day
+    @current_year = Time.zone.now.year
+    @have_read_book = HaveReadBook.find_or_initialize_by(user: current_user, book_id: params[:id])
   end
 
   private

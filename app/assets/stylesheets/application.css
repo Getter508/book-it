@@ -65,6 +65,14 @@
   margin-right: 25px;
 }
 
+.select-spacing * {
+  margin-right: 4px;
+}
+
+.date-label {
+  margin-bottom: 4px;
+}
+
 .add-from-index {
   margin-left: 15px;
 }
@@ -95,10 +103,6 @@ form .filter {
 
 form .filter > :first-child {
   margin-right: 20px;
-}
-
-form .grid-x {
-  padding-bottom: 15px;
 }
 
 form .button {
@@ -158,5 +162,9 @@ nav.pagination {
 
   .book-cover {
     padding-left: 15px;
+  }
+
+  .sticky {
+    margin-left: 0;
   }
 }
