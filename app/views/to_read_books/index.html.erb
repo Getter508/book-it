@@ -23,7 +23,7 @@
       <div class="to-read-info cell small-9 large-5">
         <div class="grid-x align-middle">
           <div class="cell small-3">
-            <%= link_to( image_tag(book.display_cover), book_path(book), class: "thumbnail-cover book-#{book.id}") %>
+            <%= link_to(image_tag(book.display_cover), book_path(book), class: "thumbnail-cover book-#{book.id}") %>
           </div>
           <div class="book-info cell small-9 align-text-middle">
             <p><%= book.title %></p>

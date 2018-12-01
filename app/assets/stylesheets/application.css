@@ -57,8 +57,12 @@
   border: 1px solid #333333;
 }
 
-.add-from-details {
+.detail-buttons {
   margin-top: 12px;
+}
+
+.detail-buttons > :first-child {
+  margin-right: 25px;
 }
 
 .add-from-index {

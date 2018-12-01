@@ -23,6 +23,7 @@ class HaveReadBook < ApplicationRecord
   MONTHS = (1..12).map { |m| I18n.l(DateTime.parse(Date::MONTHNAMES[m]), format: "%b") }
   DAYS = (1..31).to_a
   YEARS = ((Time.zone.now.year - 9)..Time.zone.now.year).to_a
+  RATINGS = (1..10).to_a
 
   def display_date
     date_completed&.strftime("%m/%d/%Y")

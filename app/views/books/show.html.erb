@@ -1,20 +1,51 @@
 <div class="grid-container">
-  <h1 class="h2"><%= @book.title %></h1>
-
-  <%= image_tag(@book.display_cover) %>
-  <%= button_to "Add To Read", {controller: 'to_read_books', method: "post", book_id: @book.id}, {class: "add-from-details button"} %>
-  <dl>
-    <dt>Author(s)</dt>
-    <dd><%= @book.display_authors %></dd>
-    <dt>Genre(s)</dt>
-    <dd><%= @book.display_genres %></dd>
-    <dt>Publication Year</dt>
-    <dd><%= @book.year %></dd>
-    <dt>Number of Pages</dt>
-    <dd><%= @book.pages %></dd>
-    <dt>Description</dt>
-    <dd><%= @book.description %></dd>
-  </dl>
+  <div class="grid-x">
+    <div class="cell medium-6" id="form-anchor" data-something>
+      <h1 class="h2"><%= @book.title %></h1>
+      <%= image_tag(@book.display_cover) %>
+      <div class="detail-buttons button-group">
+        <%= button_to "Add To Read", {controller: 'to_read_books', method: "post", book_id: @book.id}, {class: "button"} %>
+        <%= button_to "Already Read", {controller: 'have_read_books', method: "post", book_id: @book.id}, {class: "button"} %>
+      </div>
+      <dl>
+        <dt>Author(s)</dt>
+        <dd><%= @book.display_authors %></dd>
+        <dt>Genre(s)</dt>
+        <dd><%= @book.display_genres %></dd>
+        <dt>Publication Year</dt>
+        <dd><%= @book.year %></dd>
+        <dt>Number of Pages</dt>
+        <dd><%= @book.pages %></dd>
+        <dt>Description</dt>
+        <dd><%= @book.description %></dd>
+      </dl>
+    </div>
+    <div class="cell medium-6 right" data-sticky-container>
+      <div class="sticky" data-sticky data-margin-top="8" data-anchor="form-anchor">
+        <%= form_for(@have_read_book, method: :put) do |f| %>
+          <div class="field">
+            <h6>Date Completed</h6>
+            <div class="grid-x">
+              <div><%= f.select(:month, options_for_select(HaveReadBook::MONTHS, selected: @current_month)) %></div>
+              <div><%= f.select(:day, options_for_select(HaveReadBook::DAYS, selected: @current_day)) %></div>
+              <div><%= f.select(:year, options_for_select(HaveReadBook::YEARS, selected: @current_year)) %></div>
+            </div>
+          </div>
+          <div class="field">
+            <%= f.label :rating %>
+            <%= f.select(:rating, options_for_select(HaveReadBook::RATINGS)) %>
+          </div>
+          <div class="field">
+            <%= f.label :note, "Review" %>
+            <%= f.text_area :note, value: @have_read_book.note, size: "24x6" %>
+          </div>
+          <div class="actions">
+            <%= f.submit "Submit", name: nil %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="view_reviews grid-container">
