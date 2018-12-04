@@ -8,11 +8,6 @@ class HaveReadBooksController < ApplicationController
     @have_read_books = current_user.completed_books.order_by(sort_params, HaveReadBook).includes(:authors, :genres, :have_read_books)&.page params[:page]
   end
 
-  def create_or_update
-    have_read_book = HaveReadBook.find_by(user: current_user, book_id: have_read_params[:book_id])
-    have_read_book.nil? ? create : update
-  end
-
   def create
     book = Book.find(have_read_params[:book_id])
     have_read_book = HaveReadBook.new(user: current_user, book_id: have_read_params[:book_id])
@@ -25,6 +20,27 @@ class HaveReadBooksController < ApplicationController
   end
 
   def update
+    @book = Book.find(have_read_params[:book_id])
+    @have_read_book = HaveReadBook.find_by(user: current_user, book_id: have_read_params[:book_id])
+    @have_read_book.build_date(date_params)
+    @have_read_book.assign_attributes(have_read_params)
+
+    if have_read_book.save
+      redirect_to book_path(@book), notice: "Have Read book successfully updated"
+    else
+      @current_month = Time.zone.now.strftime("%b")
+      @current_day = Time.zone.now.day
+      @current_year = Time.zone.now.year
+      redirect_to book_path(@book), alert: "Have Read book failed to update"
+    end
+  end
+
+  def create_or_update
+    have_read_book = HaveReadBook.find_by(user: current_user, book_id: have_read_params[:book_id])
+    have_read_book.nil? ? create : update
+  end
+
+  def update_date
     @have_read_book = HaveReadBook.find(have_read_params[:id])
     @have_read_book.build_date(date_params)
 
