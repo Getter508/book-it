@@ -4,8 +4,14 @@
       <h1 class="h2"><%= @book.title %></h1>
       <%= image_tag(@book.display_cover) %>
       <div class="detail-buttons button-group">
-        <%= button_to "Add To Read", {controller: 'to_read_books', method: "post", book_id: @book.id}, {class: "button"} %>
-        <%= button_to "Already Read", {controller: 'have_read_books', method: "post", book_id: @book.id}, {class: "button"} %>
+        <% if !@have_read_book.id.nil? %>
+          <p class="read-sign">Already Read</p>
+        <% elsif !@to_read_book.id.nil? %>
+          <p class="read-sign">Added To Read</p>
+        <% else %>
+          <%= button_to "Add To Read", {controller: 'to_read_books', method: "post", book_id: @book.id}, {class: "button"} %>
+          <%= button_to "Already Read", {controller: 'have_read_books', method: "post", book_id: @book.id}, {class: "button"} %>
+        <% end %>
       </div>
       <dl>
         <dt>Author(s)</dt>
@@ -31,9 +37,9 @@
             <h6 class="date-label">Date Completed</h6>
             <% if @have_read_book.date_completed.nil? || params[:condition].present? %>
               <div class="grid-x select-spacing">
-                <div><%= select_tag(:month, options_for_select(HaveReadBook::MONTHS, selected: @current_month)) %></div>
-                <div><%= select_tag(:day, options_for_select(HaveReadBook::DAYS, selected: @current_day)) %></div>
-                <div><%= select_tag(:year, options_for_select(HaveReadBook::YEARS, selected: @current_year)) %></div>
+                <div><%= select_tag(:month, options_for_select(HaveReadBook::MONTHS, selected: selected_month(@have_read_book))) %></div>
+                <div><%= select_tag(:day, options_for_select(HaveReadBook::DAYS, selected: selected_day(@have_read_book))) %></div>
+                <div><%= select_tag(:year, options_for_select(HaveReadBook::YEARS, selected: selected_year(@have_read_book))) %></div>
               </div>
             <% else %>
               <p><%= @have_read_book.display_date %></p>
@@ -45,7 +51,7 @@
             <% if @have_read_book.rating.nil? || params[:condition].present? %>
               <div class="grid-x" id="no-bottom-padding">
                 <div class="cell small-2">
-                  <%= select_tag(:rating, options_for_select(HaveReadBook::RATINGS)) %>
+                  <%= select_tag(:rating, options_for_select(HaveReadBook::RATINGS, selected: @have_read_book.rating)) %>
                 </div>
               </div>
             <% else %>
@@ -56,7 +62,7 @@
           <div class="field">
             <%= label_tag :note, "Review" %>
             <% if @have_read_book.note.nil? || params[:condition].present? %>
-              <%= text_area_tag(:note, nil, value: @have_read_book.note, size: "24x8") %>
+              <%= text_area_tag(:note, @have_read_book.note, size: "24x8") %>
             <% else %>
               <p><%= @have_read_book.note %></p>
             <% end %>
@@ -64,6 +70,7 @@
 
           <div class="actions grid-x align-right" id="remove-padding">
             <% if @have_read_book.date_completed.nil? || @have_read_book.rating.nil? || @have_read_book.note.nil? || params[:condition].present? %>
+              <%= link_to "Cancel", book_path(@book), class: "cancel" %>
               <%= submit_tag "Submit", name: nil %>
             <% else %>
               <%= link_to "Edit", book_path(@book, condition: "edit") %>

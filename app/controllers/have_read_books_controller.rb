@@ -25,7 +25,7 @@ class HaveReadBooksController < ApplicationController
     @have_read_book.build_date(date_params)
     @have_read_book.assign_attributes(have_read_params)
 
-    if have_read_book.save
+    if @have_read_book.save
       redirect_to book_path(@book), notice: "Have Read book successfully updated"
     else
       @current_month = Time.zone.now.strftime("%b")

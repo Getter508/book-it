@@ -57,11 +57,25 @@
   border: 1px solid #333333;
 }
 
+.cancel {
+  margin-right: 16px;
+}
+
+.read-sign {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  color: #1779ba;
+}
+
 .detail-buttons {
   margin-top: 12px;
 }
 
-.detail-buttons > :first-child {
+.index-buttons {
+  margin-left: 15px;
+}
+
+.detail-buttons, .index-buttons > :first-child {
   margin-right: 25px;
 }
 

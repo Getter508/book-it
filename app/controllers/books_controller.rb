@@ -12,9 +12,7 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
-    @current_month = Time.zone.now.strftime("%b")
-    @current_day = Time.zone.now.day
-    @current_year = Time.zone.now.year
+    @to_read_book = ToReadBook.find_or_initialize_by(user: current_user, book_id: params[:id])
     @have_read_book = HaveReadBook.find_or_initialize_by(user: current_user, book_id: params[:id])
   end
 
