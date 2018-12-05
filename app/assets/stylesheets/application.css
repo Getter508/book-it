@@ -181,4 +181,8 @@ nav.pagination {
   .sticky {
     margin-left: 0;
   }
+
+  .have-read-rating, .have-read-rec {
+    text-align: left;
+  }
 }
