@@ -10,6 +10,19 @@
 console.log('Hello World from Webpacker');
 import $ from "jquery";
 import "foundation-sites";
+
 $(document).ready(() => {
   $(document).foundation();
+  $(".modal-form").on("submit", function(event) {
+    event.preventDefault();
+    let data = $(this).serializeArray();
+
+    let request = $.ajax({
+      method: "POST",
+      data: data,
+      url: '/api/v1/have_read_books.json'
+    });
+
+
+  });
 });

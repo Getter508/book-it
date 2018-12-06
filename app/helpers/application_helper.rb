@@ -7,7 +7,7 @@ module ApplicationHelper
   end
 
   def selected_month(have_read_book)
-    if have_read_book.date_completed.nil?
+    if have_read_book&.date_completed.nil?
       Time.zone.now.strftime("%b")
     else
       have_read_book.date_completed.strftime("%b")
@@ -15,7 +15,7 @@ module ApplicationHelper
   end
 
   def selected_day(have_read_book)
-    if have_read_book.date_completed.nil?
+    if have_read_book&.date_completed.nil?
       Time.zone.now.day
     else
       have_read_book.date_completed.day
@@ -23,10 +23,18 @@ module ApplicationHelper
   end
 
   def selected_year(have_read_book)
-    if have_read_book.date_completed.nil?
+    if have_read_book&.date_completed.nil?
       Time.zone.now.year
     else
       have_read_book.date_completed.year
     end
+  end
+
+  def have_read(book)
+    book.have_read_books.detect { |b| b.user_id == current_user.id }
+  end
+
+  def to_read(book)
+    book.to_read_books.detect { |b| b.user_id == current_user.id }
   end
 end

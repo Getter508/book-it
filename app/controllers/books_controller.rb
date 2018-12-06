@@ -3,10 +3,10 @@ class BooksController < ApplicationController
     @genre_select_options = Genre.select_options
 
     if filter_params.present?
-      @books = Book.filter(filter_params).includes(:authors, :genres)&.page params[:page]
+      @books = Book.filter(filter_params).includes(:authors, :genres, :have_read_books, :to_read_books)&.page params[:page]
       @selected_genre = filter_params
     else
-      @books = Book.order_by(sort_params, Book).includes(:authors, :genres)&.page params[:page]
+      @books = Book.order_by(sort_params, Book).includes(:authors, :genres, :have_read_books, :to_read_books)&.page params[:page]
     end
   end
 
