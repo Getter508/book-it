@@ -19,10 +19,17 @@ $(document).ready(() => {
 
     let request = $.ajax({
       method: "POST",
+      async: true,
       data: data,
       url: '/api/v1/have_read_books.json'
     });
 
-
+    request.done(function(response) {
+      let button_div = $(`#buttons-${response.book_id}`);
+      $(button_div).html("<p class='read-sign'>Already Read</p>");
+      return response;
+    }).then(function(response){
+      $(`#modal-${response.book_id}`).foundation("close");
+    });
   });
 });

@@ -36,7 +36,7 @@
           <%= link_to(image_tag(book.display_cover), book_path(book), class: "book-cover book-#{book.id}") %>
         </div>
         <div class="cell auto">
-          <div class="index-buttons button-group">
+          <div class="index-buttons button-group" id="buttons-<%= book.id %>">
             <% if !have_read(book)&.id.nil? %>
               <p class="read-sign">Already Read</p>
             <% elsif !to_read(book)&.id.nil? %>
