@@ -19,14 +19,22 @@ $(document).ready(() => {
 
     let request = $.ajax({
       method: "POST",
-      async: true,
       data: data,
       url: '/api/v1/have_read_books.json'
     });
 
     request.done(function(response) {
+      debugger;
       let button_div = $(`#buttons-${response.book_id}`);
-      $(button_div).html("<p class='read-sign'>Already Read</p>");
+      if ($(button_div).length) {
+        $(button_div).html("<p class='read-sign'>Already Read</p>");
+      }
+
+      let to_read_li = $(`.to-read-${response.book_id}`);
+      if ($(to_read_li).length) {
+        $(`.to-read-${response.book_id}`).remove();
+      }
+
       return response;
     }).then(function(response){
       $(`#modal-${response.book_id}`).foundation("close");

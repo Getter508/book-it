@@ -145,6 +145,10 @@ dt {
   margin-right: 20px;
 }
 
+.finished {
+  margin-bottom: 0;
+}
+
 nav.pagination {
   margin-bottom: 0;
 }
