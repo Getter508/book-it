@@ -39,6 +39,6 @@ class HaveReadBook < ApplicationRecord
   end
 
   def self.default_sort
-    "#{table_name}.date_completed desc"
+    "#{table_name}.rating desc, date_completed desc"
   end
 end

@@ -11,7 +11,8 @@ feature "user views 'have read' books" do
   let!(:have_read_book1) {
     create(:have_read_book,
       book: book1,
-      date_completed: DateTime.current.prev_day)
+      date_completed: DateTime.current.prev_day,
+      rating: 9)
   }
   let!(:user) { have_read_book1.user }
   let!(:book2) {
@@ -85,11 +86,13 @@ feature "user views 'have read' books" do
 
   scenario "sort books by date read" do
     visit have_read_books_path
-    click_on("Date Completed")
+    click_on("My Ratings")
 
     within "ul.have-read-list" do
       expect(first('li')).to have_content(book2.title)
+      expect(first('li')).to have_content("No rating")
       expect(all('li')[1]).to have_content(book1.title)
+      expect(all('li')[1]).to have_content("9 out of 10")
     end
   end
 
