@@ -24,7 +24,6 @@ $(document).ready(() => {
     });
 
     request.done(function(response) {
-      debugger;
       let button_div = $(`#buttons-${response.book_id}`);
       if ($(button_div).length) {
         $(button_div).html("<p class='read-sign'>Already Read</p>");
@@ -38,6 +37,10 @@ $(document).ready(() => {
       return response;
     }).then(function(response){
       $(`#modal-${response.book_id}`).foundation("close");
+
+      for (let to_read_book of response.trb_books) {
+        $(`#rank-${to_read_book.trb_book_id}`).val(`${to_read_book.rank}`);
+      }
     });
   });
 });
