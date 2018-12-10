@@ -149,6 +149,11 @@ dt {
   margin-bottom: 0;
 }
 
+.clear.button {
+  font-size: 16px;
+  margin: 0;
+}
+
 nav.pagination {
   margin-bottom: 0;
 }

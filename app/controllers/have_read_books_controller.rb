@@ -2,9 +2,6 @@ class HaveReadBooksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    # @current_month = Time.zone.now.strftime("%b")
-    # @current_day = Time.zone.now.day
-    # @current_year = Time.zone.now.year
     @have_read_books = current_user.completed_books.order_by(sort_params, HaveReadBook).includes(:authors, :genres, :have_read_books)&.page params[:page]
   end
 
@@ -28,9 +25,6 @@ class HaveReadBooksController < ApplicationController
     if @have_read_book.save
       redirect_to book_path(@book), notice: "Have Read book successfully updated"
     else
-      # @current_month = Time.zone.now.strftime("%b")
-      # @current_day = Time.zone.now.day
-      # @current_year = Time.zone.now.year
       redirect_to book_path(@book), alert: "Have Read book failed to update"
     end
   end

@@ -43,4 +43,31 @@ $(document).ready(() => {
       }
     });
   });
+
+  $(".modal-update-form").on("submit", function(event) {
+    event.preventDefault();
+    let data = $(this).serializeArray();
+
+    let request = $.ajax({
+      method: "PUT",
+      data: data,
+      url: `/api/v1/have_read_books/${data[2].value}.json`
+    });
+
+    request.done(function(response) {
+      let rating_div = $(`#have-read-rating-${response.book_id}`);
+      if (`${response.rating}` === "") {
+        $(rating_div).html("<div>No rating</div>");
+      } else {
+        $(rating_div).html(`<div>My rating</div><div>${response.rating} out of 10</div>`);
+      }
+
+      let date_div = $(`#have-read-date-${response.book_id}`);
+      $(date_div).html(`<h6>Date Completed</h6><div>${response.date}</div>`);
+
+      return response;
+    }).then(function(response){
+      $(`#modal-${response.book_id}`).foundation("close");
+    });
+  });
 });

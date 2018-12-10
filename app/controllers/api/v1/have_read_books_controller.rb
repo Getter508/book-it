@@ -20,6 +20,24 @@ class Api::V1::HaveReadBooksController < ApplicationController
     end
   end
 
+  def update
+    have_read_book = HaveReadBook.find(params[:id])
+    have_read_book.build_date(date_params)
+    have_read_book.rating = ajax_params[:rating]
+    have_read_book.note = ajax_params[:note]
+
+    if have_read_book.save
+      render json: {
+        book_id: "#{ajax_params[:book_id]}",
+        rating: "#{ajax_params[:rating]}",
+        date: "#{have_read_book.display_date}",
+        status: :created
+      }
+    else
+      render json: :nothing, status: :not_found
+    end
+  end
+
   private
 
   def ajax_params
