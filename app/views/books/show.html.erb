@@ -4,9 +4,9 @@
       <h1 class="h2"><%= @book.title %></h1>
       <%= image_tag(@book.display_cover) %>
       <div class="detail-buttons button-group">
-        <% if !@have_read_book.id.nil? %>
+        <% if @have_read_book.id.present? %>
           <p class="read-sign">Already Read</p>
-        <% elsif !@to_read_book.id.nil? %>
+        <% elsif @to_read_book.id.present? %>
           <p class="read-sign">Added To Read</p>
         <% else %>
           <%= button_to "Add To Read", {controller: 'to_read_books', method: "post", book_id: @book.id}, {class: "button"} %>
@@ -30,8 +30,8 @@
       <div class="sticky secondary callout" data-sticky data-options="stickyOn:large" data-margin-top="8" data-anchor="form-anchor">
 
         <%= form_tag(have_read_books_create_or_update_path) do |f| %>
-          <%= hidden_field_tag(:id, @have_read_book[:id]) %>
-          <%= hidden_field_tag(:book_id, @book[:id]) %>
+          <%= hidden_field_tag(:id, @have_read_book.id) %>
+          <%= hidden_field_tag(:book_id, @book.id) %>
 
           <div class="field">
             <h6 class="date-label">Date Completed</h6>
@@ -69,7 +69,7 @@
           </div>
 
           <div class="actions grid-x align-right" id="remove-padding">
-            <% if @have_read_book.date_completed.nil? || @have_read_book.rating.nil? || @have_read_book.note.nil? || params[:condition].present? %>
+            <% if @have_read_book.has_empty_field? || params[:condition].present? %>
               <%= link_to "Cancel", book_path(@book), class: "cancel" %>
               <%= submit_tag "Submit", name: nil %>
             <% else %>

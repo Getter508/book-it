@@ -51,7 +51,7 @@
             <%= label_tag :rating %>
             <div class="grid-x" id="no-bottom-padding">
               <div class="cell small-2">
-                <%= select_tag(:rating, options_for_select(HaveReadBook::RATINGS, selected: have_read(book)&.rating)) %>
+                <%= select_tag(:rating, options_for_select(HaveReadBook::RATINGS, selected: have_read(book)&.rating), include_blank: true) %>
               </div>
             </div>
           </div>

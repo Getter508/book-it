@@ -7,9 +7,12 @@ class HaveReadBooksController < ApplicationController
 
   def create
     book = Book.find(have_read_params[:book_id])
-    have_read_book = HaveReadBook.new(user: current_user, book_id: have_read_params[:book_id])
+    have_read_book = HaveReadBook.new(have_read_params)
+    have_read_book.user = current_user
+    have_read_book.build_date(date_params)
 
     if have_read_book.save
+      to_read_book = ToReadBook.find_and_destroy(user: current_user, book_id: have_read_params[:book_id])
       redirect_to book_path(book), notice: "Book successfully added to Have Read"
     else
       redirect_to book_path(book), alert: "Book failed to save to Have Read"
@@ -30,8 +33,8 @@ class HaveReadBooksController < ApplicationController
   end
 
   def create_or_update
-    have_read_book = HaveReadBook.find_by(user: current_user, book_id: have_read_params[:book_id])
-    have_read_book.nil? ? create : update
+    have_read_book = HaveReadBook.exists?(user: current_user, book_id: have_read_params[:book_id])
+    have_read_book.present? ? update : create
   end
 
   def update_date

@@ -37,9 +37,9 @@
         </div>
         <div class="cell auto">
           <div class="index-buttons button-group" id="buttons-<%= book.id %>">
-            <% if !have_read(book)&.id.nil? %>
+            <% if have_read(book)&.id.present? %>
               <p class="read-sign">Already Read</p>
-            <% elsif !to_read(book)&.id.nil? %>
+            <% elsif to_read(book)&.id.present? %>
               <p class="read-sign">Added To Read</p>
             <% else %>
               <%= button_to "Add To Read", {controller: 'to_read_books', method: "post", book_id: book.id}, {class: "add-from-index button", id: "add-to-read-#{book.id}"} %>

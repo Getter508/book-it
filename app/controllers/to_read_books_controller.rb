@@ -16,7 +16,7 @@ class ToReadBooksController < ApplicationController
 
   def update
     to_read_book = ToReadBook.find_by(user: current_user, book_id: params[:id])
-    if current_user.update_ranks(params[:id], to_read_book.rank, to_read_params[:rank])
+    if current_user.update_ranks(book_id: params[:id], old_rank: to_read_book.rank, new_rank: to_read_params[:rank])
       redirect_to to_read_books_path, notice: "Rank successfully saved"
     else
       redirect_to to_read_books_path, alert: "Rank failed to update"

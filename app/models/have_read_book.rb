@@ -38,6 +38,10 @@ class HaveReadBook < ApplicationRecord
     return e.message
   end
 
+  def has_empty_field?
+    date_completed.nil? || rating.nil? || note.nil?
+  end
+
   def self.default_sort
     "#{table_name}.rating desc, date_completed desc"
   end

@@ -5,14 +5,15 @@ class Api::V1::HaveReadBooksController < ApplicationController
     have_read_book.build_date(date_params)
 
     if have_read_book.save
-      to_read_book = ToReadBook.find_by(user: current_user, book_id: ajax_params[:book_id])
-      current_user.update_ranks(ajax_params[:book_id], to_read_book.rank, nil)
-      to_read_book&.destroy
-      trb_books = current_user.to_read_books.where.not(rank: nil).map { |trb| {trb_book_id: trb.book_id, rank: trb.rank} }
+      to_read_book = ToReadBook.find_and_destroy(user: current_user, book_id: ajax_params[:book_id])
+
+      to_read_books = current_user.to_read_books.where.not(rank: nil).map do |trb|
+        {trb_id: trb.book_id, trb_rank: trb.rank}
+      end
 
       render json: {
         book_id: "#{ajax_params[:book_id]}",
-        trb_books: trb_books,
+        to_read_books: to_read_books,
         status: :created
       }
     else
@@ -28,9 +29,9 @@ class Api::V1::HaveReadBooksController < ApplicationController
 
     if have_read_book.save
       render json: {
-        book_id: "#{ajax_params[:book_id]}",
-        rating: "#{ajax_params[:rating]}",
-        date: "#{have_read_book.display_date}",
+        book_id: ajax_params[:book_id],
+        rating: ajax_params[:rating],
+        date: have_read_book.display_date,
         status: :created
       }
     else

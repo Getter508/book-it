@@ -38,8 +38,8 @@ $(document).ready(() => {
     }).then(function(response){
       $(`#modal-${response.book_id}`).foundation("close");
 
-      for (let to_read_book of response.trb_books) {
-        $(`#rank-${to_read_book.trb_book_id}`).val(`${to_read_book.rank}`);
+      for (let to_read_book of response.to_read_books) {
+        $(`#rank-${to_read_book.trb_id}`).val(`${to_read_book.trb_rank}`);
       }
     });
   });
