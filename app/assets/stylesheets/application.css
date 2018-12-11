@@ -90,7 +90,7 @@
   margin-left: 15px;
 }
 
-.detail-buttons, .index-buttons > :first-child {
+.detail-buttons > :first-child, .index-buttons > :first-child {
   margin-right: 25px;
 }
 
@@ -152,6 +152,10 @@ dt {
   padding-right: 18px;
 }
 
+.buffer {
+  padding-right: 10px;
+}
+
 .book-info p {
   margin-bottom: 0;
 }
@@ -164,9 +168,11 @@ dt {
   margin-bottom: 0;
 }
 
-.clear.button {
+.clear.button, .shrink .clear.button {
   font-size: 16px;
   margin: 0;
+  padding-bottom: 0;
+  padding-top: 0;
 }
 
 nav.pagination {
@@ -204,5 +210,13 @@ nav.pagination {
 
   .sticky {
     margin-left: 0;
+  }
+
+  .clear.button {
+    padding-top: 10px;
+  }
+
+  .shrink .clear.button {
+    padding-top: 0;
   }
 }

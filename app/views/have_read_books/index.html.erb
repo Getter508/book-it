@@ -11,22 +11,22 @@
 
 <ul class="books-list have-read-list">
   <% @have_read_books.each do |book| %>
-    <li class="callout secondary grid-x align-middle">
-      <div class="cell large-11 grid-x align-middle">
+    <li class="callout secondary">
+      <div class="grid-x align-middle">
 
-        <div class="have-read-info cell small-12 medium-9 large-4">
+        <div class="have-read-info buffer cell small-12 medium-9 large-4">
           <div class="grid-x align-middle">
-            <div class="cell small-3">
+            <div class="cell shrink">
               <%= link_to(image_tag(book.display_cover), book_path(book), class: "thumbnail-cover book-#{book.id}") %>
             </div>
-            <div class="book-info cell small-9 align-text-middle">
+            <div class="book-info cell small-8">
               <p><%= book.title %></p>
               <p>by <%= book.display_authors %></p>
             </div>
           </div>
         </div>
 
-        <div class="cell small-6 medium-3 large-2" id="have-read-rating-<%= book.id %>">
+        <div class="buffer cell small-6 medium-3 large-2" id="have-read-rating-<%= book.id %>">
           <% if have_read(book)&.rating.nil? %>
             <div>No rating</div>
           <% else %>
@@ -35,7 +35,7 @@
           <% end %>
         </div>
 
-        <div class="have-read-rec cell small-6 medium-5 large-3">Not Recommended</div>
+        <div class="have-read-rec buffer cell small-6 medium-5 large-3">Not Recommended</div>
 
         <div class="cell medium-7 large-3" id="have-read-date-<%= book.id %>">
           <% if book.display_have_read_date(current_user).nil? %>
@@ -54,8 +54,13 @@
         </div>
       </div>
 
-      <div class="cell large-1 text-right">
-        <button class="edit-from-have-read clear button" data-open="modal-<%= book.id %>">Edit</button>
+      <div class="grid-x align-right">
+        <div class="cell shrink">
+          <button class="clear button" data-open="modal-<%= book.id %>">Edit</button>
+        </div>
+        <div class="cell shrink">
+          <%= button_to "Delete", {action: :destroy, id: have_read(book).id}, method: :delete, class: "clear button", id: "delete-have-read-#{book.id}" %>
+        </div>
       </div>
 
       <div class="reveal" id="modal-<%= book.id %>" data-reveal>
