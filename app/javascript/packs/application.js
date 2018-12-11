@@ -66,7 +66,7 @@ $(document).ready(() => {
       $(date_div).html(`<h6>Date Completed</h6><div>${response.date}</div>`);
 
       return response;
-    }).then(function(response){
+    }).then(function(response) {
       $(`#modal-${response.book_id}`).foundation("close");
     });
   });

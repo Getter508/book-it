@@ -37,4 +37,8 @@ module ApplicationHelper
   def to_read(book)
     book.to_read_books.detect { |b| b.user_id == current_user.id }
   end
+
+  def is_active?(book_list)
+    "is-active" if book_list.present?
+  end
 end
