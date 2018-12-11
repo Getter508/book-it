@@ -9,7 +9,7 @@ class HaveReadBooksController < ApplicationController
     book = Book.find(have_read_params[:book_id])
     have_read_book = HaveReadBook.new(have_read_params)
     have_read_book.user = current_user
-    have_read_book.build_date(date_params)
+    have_read_book.build_date(date_params) unless params[:month].nil?
 
     if have_read_book.save
       to_read_book = ToReadBook.find_and_destroy(user: current_user, book_id: have_read_params[:book_id])
@@ -48,6 +48,12 @@ class HaveReadBooksController < ApplicationController
     else
       redirect_to have_read_books_path, alert: "Date completed failed to update"
     end
+  end
+
+  def destroy
+    have_read_book = HaveReadBook.find(params[:id])
+    have_read_book.destroy
+    redirect_to have_read_books_path, notice: "Book removed from your Have Read list"
   end
 
   private

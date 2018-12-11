@@ -23,6 +23,12 @@ class ToReadBooksController < ApplicationController
     end
   end
 
+  def destroy
+    to_read_book = ToReadBook.find(params[:id])
+    to_read_book.destroy
+    redirect_to to_read_books_path, notice: "Book removed from your To Read list"
+  end
+
   private
 
   def sort_params
