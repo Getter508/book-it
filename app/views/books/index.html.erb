@@ -33,20 +33,64 @@
     <% @books.each do |book| %>
       <li class="cell grid-x grid-padding-y">
         <div class="cell medium-6">
-          <%= link_to( image_tag(book.display_cover), book_path(book), class: "book-cover book-#{book.id}") %>
+          <%= link_to(image_tag(book.display_cover), book_path(book), class: "book-cover book-#{book.id}") %>
         </div>
         <div class="cell auto">
-          <%= button_to "Add To Read", {controller: 'to_read_books', method: "post", book_id: book.id}, {class: "add-from-index button", id: "add-to-read-#{book.id}"} %>
-          <dl>
-            <dt>Title</dt>
-            <dd><%= book.title %></dd>
-            <dt>Author(s)</dt>
+          <div class="index-buttons button-group" id="buttons-<%= book.id %>">
+            <% if have_read(book)&.id.present? %>
+              <p class="read-sign">Already Read</p>
+            <% elsif to_read(book)&.id.present? %>
+              <p class="read-sign">Added To Read</p>
+            <% else %>
+              <%= button_to "Add To Read", {controller: 'to_read_books', method: "post", book_id: book.id}, {class: "add-from-index button", id: "add-to-read-#{book.id}"} %>
+              <button class="already-from-index button" data-open="modal-<%= book.id %>">Already Read</button>
+            <% end %>
+          </div>
+
+          <div class="reveal" id="modal-<%= book.id %>" data-reveal>
+            <%= form_tag(have_read_books_create_or_update_path, class: "modal-form", id: "modal-form-#{book.id}") do |f| %>
+              <%= hidden_field_tag(:book_id, book[:id]) %>
+              <div class="field">
+                <h6 class="date-label">Date Completed</h6>
+                <div class="grid-x select-spacing">
+                  <div><%= select_tag(:month, options_for_select(HaveReadBook::MONTHS, selected: selected_month(have_read(book)))) %></div>
+                  <div><%= select_tag(:day, options_for_select(HaveReadBook::DAYS, selected: selected_day(have_read(book)))) %></div>
+                  <div><%= select_tag(:year, options_for_select(HaveReadBook::YEARS, selected: selected_year(have_read(book)))) %></div>
+                </div>
+              </div>
+              <div class="field">
+                <%= label_tag :rating %>
+                <div class="grid-x" id="no-bottom-padding">
+                  <div class="cell small-2">
+                    <%= select_tag(:rating, options_for_select(HaveReadBook::RATINGS, selected: have_read(book)&.rating), include_blank: true) %>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <%= label_tag :note, "Review" %>
+                <%= text_area_tag(:note, have_read(book)&.note, size: "24x8") %>
+              </div>
+              <div class="actions grid-x align-right" id="remove-padding">
+                <%= submit_tag "Submit", class: "submit-modal", id: "#{book.id}" %>
+              </div>
+            <% end %>
+            <button class="close-button" data-close aria-label="Close modal" type="button">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div>
+            <dl>
+              <dt>Title</dt>
+              <dd><%= book.title %></dd>
+              <dt>Author(s)</dt>
               <dd><%= book.display_authors %></dd>
-            <dt>Genre(s)</dt>
+              <dt>Genre(s)</dt>
               <dd><%= book.display_genres %></dd>
-            <dt>Brief Description</dt>
-            <dd><%= book.brief_description %></dd>
-          </dl>
+              <dt>Brief Description</dt>
+              <dd><%= book.brief_description %></dd>
+            </dl>
+          </div>
         </div>
       </li>
     <% end %>

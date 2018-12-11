@@ -14,12 +14,52 @@ class User < ApplicationRecord
 
   mount_uploader :avatar, ImageUploader
 
-  def update_ranks(book_id, rank)
-    self.to_read_books.all? do |to_read_book|
-      to_read_book.rank += 1 if to_read_book.rank.to_i >= rank.to_i
-      to_read_book.rank = nil if to_read_book.rank.to_i > 10
-      to_read_book.rank = rank if to_read_book.book_id == book_id.to_i
-      to_read_book.save
+  def update_ranks(book_id:, old_rank:, new_rank:)
+    new_rank = new_rank&.to_i
+    new_rank = nil if new_rank == 0
+    
+    return true if old_rank.nil? && new_rank.nil?
+
+    if old_rank.nil? && new_rank.present?
+      add_one_to_ranked_books(new_rank)
+    elsif old_rank.present? && new_rank.nil?
+      minus_one_from_ranked_books(old_rank)
+    elsif old_rank < new_rank
+      demote_rank(old_rank, new_rank)
+    else
+      promote_rank(old_rank, new_rank)
+    end
+
+    to_read_books.find_by(book_id: book_id).update(rank: new_rank)
+  end
+
+  def add_one_to_ranked_books(new_rank)
+    to_read_books.where("rank >= ?", new_rank).order(rank: :asc).each do |to_read_book|
+      if to_read_book.rank == new_rank
+        to_read_book.increment_rank!
+      end
+      new_rank = to_read_book.rank
+    end
+  end
+
+  def minus_one_from_ranked_books(old_rank)
+    to_read_books.where("rank > ?", old_rank).each do |to_read_book|
+      to_read_book.decrement_rank!
+    end
+  end
+
+  def demote_rank(old_rank, new_rank)
+    to_read_books.where("rank > ?", old_rank).where("rank <= ?", new_rank).each do |to_read_book|
+      to_read_book.decrement_rank!
+    end
+  end
+
+  def promote_rank(old_rank, new_rank)
+    to_read_books.where("rank >= ?", new_rank).where("rank < ?", old_rank).order(rank: :asc).each do |to_read_book|
+      if to_read_book.rank == new_rank
+        to_read_book.increment_rank!
+      end
+      new_rank = to_read_book.rank
     end
   end
 end

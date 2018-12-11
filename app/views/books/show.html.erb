@@ -1,20 +1,86 @@
 <div class="grid-container">
-  <h1 class="h2"><%= @book.title %></h1>
+  <div class="grid-x align-justify">
+    <div class="cell large-6" id="form-anchor" data-something>
+      <h1 class="h2"><%= @book.title %></h1>
+      <%= image_tag(@book.display_cover) %>
+      <div class="detail-buttons button-group">
+        <% if @have_read_book.id.present? %>
+          <p class="read-sign">Already Read</p>
+        <% elsif @to_read_book.id.present? %>
+          <p class="read-sign">Added To Read</p>
+        <% else %>
+          <%= button_to "Add To Read", {controller: 'to_read_books', method: "post", book_id: @book.id}, {class: "button"} %>
+          <%= button_to "Already Read", {controller: 'have_read_books', method: "post", book_id: @book.id}, {class: "button"} %>
+        <% end %>
+      </div>
+      <dl>
+        <dt>Author(s)</dt>
+        <dd><%= @book.display_authors %></dd>
+        <dt>Genre(s)</dt>
+        <dd><%= @book.display_genres %></dd>
+        <dt>Publication Year</dt>
+        <dd><%= @book.year %></dd>
+        <dt>Number of Pages</dt>
+        <dd><%= @book.pages %></dd>
+        <dt>Description</dt>
+        <dd><%= @book.description %></dd>
+      </dl>
+    </div>
+    <div class="cell large-5" data-sticky-container>
+      <div class="sticky secondary callout" data-sticky data-options="stickyOn:large" data-margin-top="8" data-anchor="form-anchor">
 
-  <%= image_tag(@book.display_cover) %>
-  <%= button_to "Add To Read", {controller: 'to_read_books', method: "post", book_id: @book.id}, {class: "add-from-details button"} %>
-  <dl>
-    <dt>Author(s)</dt>
-    <dd><%= @book.display_authors %></dd>
-    <dt>Genre(s)</dt>
-    <dd><%= @book.display_genres %></dd>
-    <dt>Publication Year</dt>
-    <dd><%= @book.year %></dd>
-    <dt>Number of Pages</dt>
-    <dd><%= @book.pages %></dd>
-    <dt>Description</dt>
-    <dd><%= @book.description %></dd>
-  </dl>
+        <%= form_tag(have_read_books_create_or_update_path) do |f| %>
+          <%= hidden_field_tag(:id, @have_read_book.id) %>
+          <%= hidden_field_tag(:book_id, @book.id) %>
+
+          <div class="field">
+            <h6 class="date-label">Date Completed</h6>
+            <% if @have_read_book.date_completed.nil? || params[:condition].present? %>
+              <div class="grid-x select-spacing">
+                <div><%= select_tag(:month, options_for_select(HaveReadBook::MONTHS, selected: selected_month(@have_read_book))) %></div>
+                <div><%= select_tag(:day, options_for_select(HaveReadBook::DAYS, selected: selected_day(@have_read_book))) %></div>
+                <div><%= select_tag(:year, options_for_select(HaveReadBook::YEARS, selected: selected_year(@have_read_book))) %></div>
+              </div>
+            <% else %>
+              <p><%= @have_read_book.display_date %></p>
+            <% end %>
+          </div>
+
+          <div class="field">
+            <%= label_tag :rating %>
+            <% if @have_read_book.rating.nil? || params[:condition].present? %>
+              <div class="grid-x" id="no-bottom-padding">
+                <div class="cell small-2">
+                  <%= select_tag(:rating, options_for_select(HaveReadBook::RATINGS, selected: @have_read_book.rating), include_blank: true) %>
+                </div>
+              </div>
+            <% else %>
+              <p><%= @have_read_book.rating %> out of 10</p>
+            <% end %>
+          </div>
+
+          <div class="field">
+            <%= label_tag :note, "Review" %>
+            <% if @have_read_book.note.nil? || params[:condition].present? %>
+              <%= text_area_tag(:note, @have_read_book.note, size: "24x8") %>
+            <% else %>
+              <p><%= @have_read_book.note %></p>
+            <% end %>
+          </div>
+
+          <div class="actions grid-x align-right" id="remove-padding">
+            <% if @have_read_book.has_empty_field? || params[:condition].present? %>
+              <%= link_to "Cancel", book_path(@book), class: "cancel" %>
+              <%= submit_tag "Submit", name: nil %>
+            <% else %>
+              <%= link_to "Edit", book_path(@book, condition: "edit") %>
+            <% end %>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="view_reviews grid-container">

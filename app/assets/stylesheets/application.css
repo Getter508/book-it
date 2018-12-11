@@ -23,18 +23,33 @@
   min-height: 650px;
 }
 
-.tabs {
+.list-tabs {
   margin: 0px 67.5px;
+  background-color: #86122c;
 }
 
-.tabs li.is-active {
+.list-tabs li {
+  margin-bottom: 0px;
+  padding: 16px 0px;
+  background-color: #86122c;
+}
+
+.list-tabs li a {
+  padding: 19px 22px 20px 22px;
+  color: #FFFFFF;
+}
+
+.list-tabs li a:hover {
+  color: #1779ba;
+  font-weight: bold;
+  background-color: #FFFFFF;
+}
+
+.list-tabs li a.is-active {
+  color: #1779ba;
   font-weight: bold;
   border-bottom: #FFFFFF;
-}
-
-.tabs li a:hover {
-  font-weight: bold;
-  color: #1779ba;
+  background-color: #FFFFFF;
 }
 
 .current {
@@ -57,8 +72,34 @@
   border: 1px solid #333333;
 }
 
-.add-from-details {
+.cancel {
+  margin-right: 16px;
+}
+
+.read-sign {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  color: #1779ba;
+}
+
+.detail-buttons {
   margin-top: 12px;
+}
+
+.index-buttons {
+  margin-left: 15px;
+}
+
+.detail-buttons, .index-buttons > :first-child {
+  margin-right: 25px;
+}
+
+.select-spacing * {
+  margin-right: 4px;
+}
+
+.date-label {
+  margin-bottom: 4px;
 }
 
 .add-from-index {
@@ -93,10 +134,6 @@ form .filter > :first-child {
   margin-right: 20px;
 }
 
-form .grid-x {
-  padding-bottom: 15px;
-}
-
 form .button {
   margin-bottom: 0;
 }
@@ -123,6 +160,15 @@ dt {
   margin-right: 20px;
 }
 
+.finished {
+  margin-bottom: 0;
+}
+
+.clear.button {
+  font-size: 16px;
+  margin: 0;
+}
+
 nav.pagination {
   margin-bottom: 0;
 }
@@ -136,7 +182,7 @@ nav.pagination {
     margin: 0;
   }
 
-  .tabs {
+  .list-tabs {
     margin: 0;
   }
 
@@ -154,5 +200,9 @@ nav.pagination {
 
   .book-cover {
     padding-left: 15px;
+  }
+
+  .sticky {
+    margin-left: 0;
   }
 }

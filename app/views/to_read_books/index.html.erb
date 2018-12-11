@@ -11,11 +11,11 @@
 
 <ul class="books-list to-read-list">
   <% @to_read_books.each do |book| %>
-    <li class="callout secondary grid-x align-middle">
+    <li class="to-read-<%= book.id %> callout secondary grid-x align-middle">
       <div class="book-rank cell small-3 large-1">
         <%= form_tag(to_read_book_path(book), method: :put, class: "rank-form grid-x") do %>
           <div class="dropdown cell">
-            <%= select_tag(:rank, options_for_select(ToReadBook::RANKS, selected: book.display_to_read_rank), include_blank: true) %>
+            <%= select_tag(:rank, options_for_select(ToReadBook::RANKS, selected: book.display_to_read_rank), include_blank: true, id: "rank-#{book.id}") %>
           </div>
           <div class="actions cell"><%= submit_tag "Submit", name: nil %></div>
         <% end %>
@@ -23,7 +23,7 @@
       <div class="to-read-info cell small-9 large-5">
         <div class="grid-x align-middle">
           <div class="cell small-3">
-            <%= link_to( image_tag(book.display_cover), book_path(book), class: "thumbnail-cover book-#{book.id}") %>
+            <%= link_to(image_tag(book.display_cover), book_path(book), class: "thumbnail-cover book-#{book.id}") %>
           </div>
           <div class="book-info cell small-9 align-text-middle">
             <p><%= book.title %></p>
@@ -32,9 +32,42 @@
         </div>
       </div>
       <div class="to-read-rec cell small-6 medium-6 large-4">Not Recommended</div>
-      <div class="finished cell small-6 medium-6 large-2">
-        Finished Reading
+      <div class="cell small-6 medium-6 large-2">
+        <button class="finished button" data-open="modal-<%= book.id %>">Finished Reading</button>
       </div>
+
+      <div class="reveal" id="modal-<%= book.id %>" data-reveal>
+        <%= form_tag(have_read_books_create_or_update_path, class: "modal-form", id: "modal-form-#{book.id}") do |f| %>
+          <%= hidden_field_tag(:book_id, book[:id]) %>
+          <div class="field">
+            <h6 class="date-label">Date Completed</h6>
+            <div class="grid-x select-spacing">
+              <div><%= select_tag(:month, options_for_select(HaveReadBook::MONTHS, selected: selected_month(have_read(book)))) %></div>
+              <div><%= select_tag(:day, options_for_select(HaveReadBook::DAYS, selected: selected_day(have_read(book)))) %></div>
+              <div><%= select_tag(:year, options_for_select(HaveReadBook::YEARS, selected: selected_year(have_read(book)))) %></div>
+            </div>
+          </div>
+          <div class="field">
+            <%= label_tag :rating %>
+            <div class="grid-x" id="no-bottom-padding">
+              <div class="cell small-2">
+                <%= select_tag(:rating, options_for_select(HaveReadBook::RATINGS, selected: have_read(book)&.rating), include_blank: true) %>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <%= label_tag :note, "Review" %>
+            <%= text_area_tag(:note, have_read(book)&.note, size: "24x8") %>
+          </div>
+          <div class="actions grid-x align-right" id="remove-padding">
+            <%= submit_tag "Submit", class: "submit-modal", id: "#{book.id}" %>
+          </div>
+        <% end %>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
     </li>
   <% end %>
 </ul>

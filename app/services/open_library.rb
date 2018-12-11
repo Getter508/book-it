@@ -58,7 +58,7 @@ class OpenLibrary
 
   def cover
     id = search_info.find do |book|
-      !book["cover_i"].nil? && book["cover_i"] != -1
+      book["cover_i"].present? && book["cover_i"] != -1
     end&.dig("cover_i")
 
     if id.present?

@@ -22,64 +22,62 @@ feature "user updates 'to read' book" do
   scenario "successfully adds a rank" do
     visit to_read_books_path
     within(first('.dropdown')) do
-      find("#rank").select(1)
+      find("#rank-#{book1.id}").select(1)
     end
     within(first('.actions')) do
       click_on("Submit")
     end
 
     expect(page).to have_content("Rank successfully saved")
-    within 'ul.to-read-list' do
-      expect(first('li')).to have_content(book1.title)
-      expect(first('select').value).to eq("1")
-      expect(all('li')[1]).to have_content(book2.title)
-      expect(all('select')[1].value).to eq("")
-    end
+    expect(find(:css, "li.to-read-#{book1.id}")).to have_content(book1.title)
+    expect(find(:css, "select#rank-#{book1.id}").value).to eq("1")
+    expect(find(:css, "li.to-read-#{book2.id}")).to have_content(book2.title)
+    expect(find(:css, "select#rank-#{book2.id}").value).to eq("")
   end
 
   scenario "fails to add a rank" do
     allow_any_instance_of(ToReadBook).to receive(:save).and_return(false)
     visit to_read_books_path
     within(first('.dropdown')) do
-      find("#rank").select(1)
+      find("#rank-#{book1.id}").select(1)
     end
     within(first('.actions')) do
       click_on("Submit")
     end
 
     expect(page).to have_content("Rank failed to update")
-    within 'ul.to-read-list' do
-      expect(first('select').value).to eq("")
-      expect(all('select')[1].value).to eq("")
-    end
+    expect(find(:css, "select#rank-#{book1.id}").value).to eq("")
+    expect(find(:css, "select#rank-#{book2.id}").value).to eq("")
   end
 
   scenario "overwrites rank order" do
     visit to_read_books_path
     within(first('.dropdown')) do
-      find("#rank").select(1)
+      find("#rank-#{book1.id}").select(1)
     end
     within(first('.actions')) do
       click_on("Submit")
     end
+
     within(all('.dropdown')[1]) do
-      find("#rank").select(2)
+      find("#rank-#{book2.id}").select(2)
     end
-    within(all('.actions')[1]) do
+    within(all('.actions')[2]) do
       click_on("Submit")
     end
+
     within(all('.dropdown')[1]) do
-      find("#rank").select(1)
+      find("#rank-#{book2.id}").select(1)
     end
-    within(all('.actions')[1]) do
+    within(all('.actions')[2]) do
       click_on("Submit")
     end
 
     expect(page).to have_content("Rank successfully saved")
+    expect(find(:css, "select#rank-#{book2.id}").value).to eq("1")
+    expect(find(:css, "select#rank-#{book1.id}").value).to eq("2")
     within 'ul.to-read-list' do
-      expect(first('select').value).to eq("1")
       expect(first('li')).to have_content(book2.title)
-      expect(all('select')[1].value).to eq("2")
       expect(all('li')[1]).to have_content(book1.title)
     end
   end

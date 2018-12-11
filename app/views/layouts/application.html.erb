@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width">
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
-    <%= javascript_pack_tag   'application' %>
   </head>
 
   <body>
@@ -36,13 +34,14 @@
       </div>
     </section>
 
-    <ul class="tabs" data-tabs id="example-tabs">
-      <li class="tabs-title"><%= link_to "Have Read", have_read_books_path %></li>
-      <li class="tabs-title"><%= link_to "To Read", to_read_books_path %></li>
+    <ul class="list-tabs grid-x">
+      <li class="cell shrink"><%= link_to "Have Read", have_read_books_path, class: "tab #{is_active?(@have_read_books)}" %></li>
+      <li class="cell shrink"><%= link_to "To Read", to_read_books_path, class: "tab #{is_active?(@to_read_books)}" %></li>
     </ul>
 
     <div class="container">
       <%= yield %>
     </div>
+    <%= javascript_pack_tag   'application' %>
   </body>
 </html>
