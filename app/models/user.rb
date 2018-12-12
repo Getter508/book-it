@@ -17,7 +17,7 @@ class User < ApplicationRecord
   def update_ranks(book_id:, old_rank:, new_rank:)
     new_rank = new_rank&.to_i
     new_rank = nil if new_rank == 0
-    
+
     return true if old_rank.nil? && new_rank.nil?
 
     if old_rank.nil? && new_rank.present?
