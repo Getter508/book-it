@@ -5,7 +5,9 @@ class Api::V1::HaveReadBooksController < ApplicationController
     have_read_book.build_date(date_params)
 
     if have_read_book.save
-      to_read_book = ToReadBook.find_and_destroy(user: current_user, book_id: ajax_params[:book_id])
+      to_read_book = ToReadBook.find_by(user: current_user, book_id: ajax_params[:book_id])
+      current_user.update_ranks(book_id: ajax_params[:book_id], old_rank: to_read_book&.rank, new_rank: nil)
+      to_read_book&.destroy
 
       to_read_books = current_user.to_read_books.where.not(rank: nil).map do |trb|
         { trb_id: trb.book_id, trb_rank: trb.rank }

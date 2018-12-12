@@ -12,7 +12,10 @@ class HaveReadBooksController < ApplicationController
     have_read_book.build_date(date_params) unless params[:month].nil?
 
     if have_read_book.save
-      to_read_book = ToReadBook.find_and_destroy(user: current_user, book_id: have_read_params[:book_id])
+      to_read_book = ToReadBook.find_by(user: current_user, book_id: have_read_params[:book_id])
+      current_user.update_ranks(book_id: have_read_params[:book_id], old_rank: to_read_book&.rank, new_rank: nil)
+      to_read_book&.destroy
+
       redirect_to book_path(book), notice: "Book successfully added to Have Read"
     else
       redirect_to book_path(book), alert: "Book failed to save to Have Read"
