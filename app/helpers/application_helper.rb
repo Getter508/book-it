@@ -1,16 +1,16 @@
 module ApplicationHelper
   def sortable(attribute, display = nil)
     display ||= attribute.titleize
+    direction = params[:direction] == 'asc' ? 'desc' : 'asc'
     css_class = attribute == params[:sort] ? "current #{params[:direction]}" : nil
-    direction = attribute == params[:sort] && params[:direction] == "asc" ? "desc" : "asc"
-    link_to display, {sort: attribute, direction: direction}, {class: css_class}
+    link_to display, { controller: params[:controller], sort: attribute, direction: direction }, { class: css_class }
   end
 
   def selected_month(have_read_book)
     if have_read_book&.date_completed.nil?
-      Time.zone.now.strftime("%b")
+      Time.zone.now.strftime('%b')
     else
-      have_read_book.date_completed.strftime("%b")
+      have_read_book.date_completed.strftime('%b')
     end
   end
 
@@ -39,6 +39,6 @@ module ApplicationHelper
   end
 
   def is_active?(book_list)
-    "is-active" if book_list.present?
+    'is-active' if book_list.present?
   end
 end

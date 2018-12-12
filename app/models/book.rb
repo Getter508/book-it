@@ -1,11 +1,3 @@
-class YearValidator < ActiveModel::Validator
-  def validate(record)
-    if record.year.to_i > Time.zone.today.year
-      record.errors[:base] << "Publication year cannot be in the future"
-    end
-  end
-end
-
 class InvalidSortParamError < StandardError; end
 class InvalidDirectionParamError < StandardError; end
 
@@ -24,43 +16,36 @@ class Book < ApplicationRecord
 
   paginates_per 30
 
+  DEFAULT_COVER = 'generic_book_cover1.png'.freeze
+  SORTING_ATTRIBUTES = ['title', 'author', nil].freeze
+
   def display_cover
-    cover.nil? ? "generic_book_cover1.png" : cover
-  end
-
-  def display_have_read_date(user)
-    have_read_books.detect { |hrb| hrb.user_id == user.id }&.display_date
-  end
-
-  def display_to_read_rank
-    to_read_books.first&.rank
+    cover.nil? ? DEFAULT_COVER : cover
   end
 
   def brief_description
-    if description&.length.nil? || description.length <= 220
+    if description.nil? || description.length <= 220
       description
     else
-      description.slice(0..220) + "..."
+      description.slice(0..220) + '...'
     end
   end
 
   def display_genres
-    genres.pluck(:name).join(", ")
+    genres.pluck(:name).join(', ')
   end
 
   def display_authors
     if authors.size == 2
-      authors.pluck(:name).join(" & ")
+      authors.pluck(:name).join(' & ')
     else
-      authors.pluck(:name).join(", ")
+      authors.pluck(:name).join(', ')
     end
   end
 
-  def self.filter(filter)
-    self.joins(:genres).where(genres: { id: filter }) if filter
+  def self.filter(genre_id: nil)
+    self.joins(:genres).where(genres: { id: genre_id })
   end
-
-  SORTING_ATTRIBUTES = ['title', 'author', nil]
 
   def self.order_by(params, model)
     raise InvalidSortParamError unless SORTING_ATTRIBUTES.include?(params[:sort])
@@ -82,6 +67,6 @@ class Book < ApplicationRecord
   private
 
   def self.query_for(sort)
-    sort == 'author' ? "authors.name" : sort
+    sort == 'author' ? 'authors.name' : sort
   end
 end

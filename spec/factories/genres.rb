@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :genre do
-    name { "Fantasy" }
+    name { 'Fantasy' }
   end
 end

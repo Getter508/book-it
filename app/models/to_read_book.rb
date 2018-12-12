@@ -29,10 +29,4 @@ class ToReadBook < ApplicationRecord
   def self.default_sort
     "#{table_name}.rank asc"
   end
-
-  def self.find_and_destroy(user:, book_id:)
-    to_read_book = self.find_by(user: user, book_id: book_id)
-    user.update_ranks(book_id: book_id, old_rank: to_read_book&.rank, new_rank: nil)
-    to_read_book&.destroy
-  end
 end

@@ -2,31 +2,31 @@ class ToReadBooksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @to_read_books = current_user.to_complete_books.order_by(sort_params, ToReadBook).includes(:authors, :genres)&.page params[:page]
+    @to_read_books = current_user.to_complete_books.order_by(sort_params, ToReadBook).includes(:authors, :genres, :to_read_books, :have_read_books)&.page params[:page]
   end
 
   def create
     to_read_book = ToReadBook.new(user: current_user, book_id: create_params)
     if to_read_book.save
-      redirect_to books_path, notice: "Book successfully added To Read"
+      redirect_to books_path, notice: 'Book successfully added To Read'
     else
-      redirect_to books_path, alert: "Adding To Read failed"
+      redirect_to books_path, alert: 'Adding To Read failed'
     end
   end
 
   def update
     to_read_book = ToReadBook.find_by(user: current_user, book_id: params[:id])
     if current_user.update_ranks(book_id: params[:id], old_rank: to_read_book.rank, new_rank: to_read_params[:rank])
-      redirect_to to_read_books_path, notice: "Rank successfully saved"
+      redirect_to to_read_books_path, notice: 'Rank successfully saved'
     else
-      redirect_to to_read_books_path, alert: "Rank failed to update"
+      redirect_to to_read_books_path, alert: 'Rank failed to update'
     end
   end
 
   def destroy
     to_read_book = ToReadBook.find(params[:id])
     to_read_book.destroy
-    redirect_to to_read_books_path, notice: "Book removed from your To Read list"
+    redirect_to to_read_books_path, notice: 'Book removed from your To Read list'
   end
 
   private

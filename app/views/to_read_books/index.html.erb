@@ -17,7 +17,7 @@
         <div class="book-rank cell small-3 large-1">
           <%= form_tag(to_read_book_path(book), method: :put, class: "rank-form grid-x") do %>
             <div class="dropdown cell">
-              <%= select_tag(:rank, options_for_select(ToReadBook::RANKS, selected: book.display_to_read_rank), include_blank: true, id: "rank-#{book.id}") %>
+              <%= select_tag(:rank, options_for_select(ToReadBook::RANKS, selected: to_read(book)&.rank), include_blank: true, id: "rank-#{book.id}") %>
             </div>
             <div class="actions cell"><%= submit_tag "Submit", name: nil %></div>
           <% end %>
@@ -42,7 +42,7 @@
         </div>
 
         <div class="cell medium-1 text-right">
-          <%= button_to "Delete", {action: :destroy, id: to_read(book).id}, method: :delete, class: "clear button", id: "delete-to-read-#{book.id}"  %>
+          <%= button_to "Delete", { action: :destroy, id: to_read(book).id }, method: :delete, class: "clear button", id: "delete-to-read-#{book.id}"  %>
         </div>
       </div>
 
