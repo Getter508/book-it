@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "user deletes 'have read' book" do
+feature 'user deletes have_read book' do
   before(:each) do
     sign_in user
   end
@@ -22,11 +22,11 @@ feature "user deletes 'have read' book" do
   # Acceptance Criteria:
   #   Have Read book is removed from list when clicking delete
   #   I receive a notification of success
-  scenario "successfully deletes a Have Read book" do
+  scenario 'successfully deletes a Have Read book' do
     visit have_read_books_path
     find("#delete-have-read-#{book1.id}").click
 
-    expect(page).to have_content("Book removed from your Have Read list")
+    expect(page).to have_content('Book removed from your Have Read list')
     expect(page).to have_content(book2.title)
     expect(page).not_to have_content(book1.title)
   end

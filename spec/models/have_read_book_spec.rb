@@ -19,7 +19,7 @@ RSpec.describe Book, type: :model do
   describe '#build_date' do
     it 'converts date params into a datetime object if valid' do
       have_read_book = create(:have_read_book, date_completed: nil)
-      params = ["Dec", "7", "2018"]
+      params = ['Dec', '7', '2018']
 
       have_read_book.build_date(params)
 
@@ -28,7 +28,7 @@ RSpec.describe Book, type: :model do
 
     it 'returns an error message if the datetime object is invalid' do
       have_read_book = create(:have_read_book, date_completed: nil)
-      params = ["Feb", "31", "2018"]
+      params = ['Feb', '31', '2018']
 
       expect(have_read_book.build_date(params)).to eq('invalid date')
       expect(have_read_book.date_completed).to be_nil

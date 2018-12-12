@@ -1,7 +1,7 @@
 class YearValidator < ActiveModel::Validator
   def validate(record)
     if record.year.to_i > Time.zone.today.year
-      record.errors[:base] << "Publication year cannot be in the future"
+      record.errors[:base] << 'Publication year cannot be in the future'
     end
   end
 end
@@ -40,14 +40,14 @@ class Book < ApplicationRecord
   end
 
   def display_genres
-    genres.pluck(:name).join(", ")
+    genres.pluck(:name).join(', ')
   end
 
   def display_authors
     if authors.size == 2
-      authors.pluck(:name).join(" & ")
+      authors.pluck(:name).join(' & ')
     else
-      authors.pluck(:name).join(", ")
+      authors.pluck(:name).join(', ')
     end
   end
 
@@ -75,6 +75,6 @@ class Book < ApplicationRecord
   private
 
   def self.query_for(sort)
-    sort == 'author' ? "authors.name" : sort
+    sort == 'author' ? 'authors.name' : sort
   end
 end

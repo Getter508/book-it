@@ -16,9 +16,9 @@ class HaveReadBooksController < ApplicationController
       current_user.update_ranks(book_id: have_read_params[:book_id], old_rank: to_read_book&.rank, new_rank: nil)
       to_read_book&.destroy
 
-      redirect_to book_path(book), notice: "Book successfully added to Have Read"
+      redirect_to book_path(book), notice: 'Book successfully added to Have Read'
     else
-      redirect_to book_path(book), alert: "Book failed to save to Have Read"
+      redirect_to book_path(book), alert: 'Book failed to save to Have Read'
     end
   end
 
@@ -29,9 +29,9 @@ class HaveReadBooksController < ApplicationController
     @have_read_book.assign_attributes(have_read_params)
 
     if @have_read_book.save
-      redirect_to book_path(@book), notice: "Have Read book successfully updated"
+      redirect_to book_path(@book), notice: 'Have Read book successfully updated'
     else
-      redirect_to book_path(@book), alert: "Have Read book failed to update"
+      redirect_to book_path(@book), alert: 'Have Read book failed to update'
     end
   end
 
@@ -45,18 +45,18 @@ class HaveReadBooksController < ApplicationController
     @have_read_book.build_date(date_params)
 
     if @have_read_book.date_completed.nil?
-      redirect_to have_read_books_path, alert: "Invalid date"
+      redirect_to have_read_books_path, alert: 'Invalid date'
     elsif @have_read_book.save
-      redirect_to have_read_books_path, notice: "Date completed successfully updated"
+      redirect_to have_read_books_path, notice: 'Date completed successfully updated'
     else
-      redirect_to have_read_books_path, alert: "Date completed failed to update"
+      redirect_to have_read_books_path, alert: 'Date completed failed to update'
     end
   end
 
   def destroy
     have_read_book = HaveReadBook.find(params[:id])
     have_read_book.destroy
-    redirect_to have_read_books_path, notice: "Book removed from your Have Read list"
+    redirect_to have_read_books_path, notice: 'Book removed from your Have Read list'
   end
 
   private

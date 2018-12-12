@@ -34,7 +34,7 @@ class User < ApplicationRecord
   end
 
   def add_one_to_ranked_books(new_rank)
-    to_read_books.where("rank >= ?", new_rank).order(rank: :asc).each do |to_read_book|
+    to_read_books.where('rank >= ?', new_rank).order(rank: :asc).each do |to_read_book|
       if to_read_book.rank == new_rank
         to_read_book.increment_rank!
       end
@@ -43,19 +43,19 @@ class User < ApplicationRecord
   end
 
   def minus_one_from_ranked_books(old_rank)
-    to_read_books.where("rank > ?", old_rank).each do |to_read_book|
+    to_read_books.where('rank > ?', old_rank).each do |to_read_book|
       to_read_book.decrement_rank!
     end
   end
 
   def demote_rank(old_rank, new_rank)
-    to_read_books.where("rank > ?", old_rank).where("rank <= ?", new_rank).each do |to_read_book|
+    to_read_books.where('rank > ?', old_rank).where('rank <= ?', new_rank).each do |to_read_book|
       to_read_book.decrement_rank!
     end
   end
 
   def promote_rank(old_rank, new_rank)
-    to_read_books.where("rank >= ?", new_rank).where("rank < ?", old_rank).order(rank: :asc).each do |to_read_book|
+    to_read_books.where('rank >= ?', new_rank).where('rank < ?', old_rank).order(rank: :asc).each do |to_read_book|
       if to_read_book.rank == new_rank
         to_read_book.increment_rank!
       end
