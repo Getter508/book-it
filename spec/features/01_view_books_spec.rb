@@ -30,7 +30,7 @@ feature 'user views books' do
     expect(page).to have_content(book_author1.author.name)
     expect(page).to have_content(book_author2.author.name)
     expect(page).to have_content(book_genre1.genre.name)
-    expect(page).to have_content('So begins the tale of Kvothe.', count: 2)
+    expect(page).to have_content(book1.description, count: 2)
     expect(page).to have_xpath('//img[contains(@src,"8259447-L.jpg")]')
     expect(page).to have_xpath('//img[contains(@src,"8155423-L.jpg")]')
   end

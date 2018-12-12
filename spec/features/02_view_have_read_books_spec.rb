@@ -95,7 +95,7 @@ feature 'user views have_read books' do
       expect(first('li')).to have_content(book2.title)
       expect(first('li')).to have_content('No rating')
       expect(all('li')[1]).to have_content(book1.title)
-      expect(all('li')[1]).to have_content('9 out of 10')
+      expect(all('li')[1]).to have_content("#{have_read_book1.rating} out of 10")
     end
   end
 
