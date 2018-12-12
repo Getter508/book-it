@@ -2,7 +2,7 @@ class ToReadBooksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @to_read_books = current_user.to_complete_books.order_by(sort_params, ToReadBook).includes(:authors, :genres)&.page params[:page]
+    @to_read_books = current_user.to_complete_books.order_by(sort_params, ToReadBook).includes(:authors, :genres, :to_read_books, :have_read_books)&.page params[:page]
   end
 
   def create
