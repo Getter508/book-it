@@ -7,6 +7,3 @@ FactoryBot.define do
     cover { "http://covers.openlibrary.org/b/id/8259447-L.jpg" }
   end
 end
-
-# cover { Rack::Test::UploadedFile.new(Rails.root.join('spec/support/NameofWindCover.jpg'), 'image/jpeg') }
-# cover { Rack::Test::UploadedFile.new(Rails.root.join('spec/support/WiseMansFearCover.jpg'), 'image/jpeg')) }
