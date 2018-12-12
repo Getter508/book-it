@@ -9,5 +9,10 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(
       :sign_up, keys: [:username, :first_name, :last_name, :avatar, :admin]
     )
+
+    devise_parameter_sanitizer.permit(
+      :account_update,
+      keys: [:first_name, :last_name, :username, :admin, :avatar, :remove_avatar]
+    )
   end
 end

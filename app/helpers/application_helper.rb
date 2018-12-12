@@ -31,11 +31,11 @@ module ApplicationHelper
   end
 
   def have_read(book)
-    book.have_read_books.detect { |b| b.user_id == current_user.id }
+    book.have_read_books.detect { |b| b.user_id == current_user&.id }
   end
 
   def to_read(book)
-    book.to_read_books.detect { |b| b.user_id == current_user.id }
+    book.to_read_books.detect { |b| b.user_id == current_user&.id }
   end
 
   def is_active?(book_list)
