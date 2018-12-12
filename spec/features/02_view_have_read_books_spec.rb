@@ -11,17 +11,20 @@ feature "user views 'have read' books" do
   let!(:have_read_book1) {
     create(:have_read_book,
       book: book1,
-      date_completed: DateTime.current.prev_day,
-      rating: 9)
+      date_completed: DateTime.current.prev_day
+    )
   }
   let!(:user) { have_read_book1.user }
   let!(:book2) {
     create(:book,
-    title: "The Wise Man's Fear",
-    cover: "http://covers.openlibrary.org/b/id/8155423-L.jpg")
+      title: "The Wise Man's Fear",
+      cover: "http://covers.openlibrary.org/b/id/8155423-L.jpg"
+    )
   }
   let!(:book_author2) { create(:book_author, book: book2) }
-  let!(:have_read_book2) { create(:have_read_book, book: book2, user: user) }
+  let!(:have_read_book2) {
+    create(:have_read_book, book: book2, user: user, rating: nil)
+  }
   let!(:book_author3) { create(:book_author) }
   let!(:book3) { book_author3.book }
 
