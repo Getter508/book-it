@@ -8,7 +8,7 @@ class Api::V1::HaveReadBooksController < ApplicationController
       to_read_book = ToReadBook.find_and_destroy(user: current_user, book_id: ajax_params[:book_id])
 
       to_read_books = current_user.to_read_books.where.not(rank: nil).map do |trb|
-        {trb_id: trb.book_id, trb_rank: trb.rank}
+        { trb_id: trb.book_id, trb_rank: trb.rank }
       end
 
       render json: {

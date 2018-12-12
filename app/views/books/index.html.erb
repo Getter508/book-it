@@ -42,7 +42,7 @@
             <% elsif to_read(book)&.id.present? %>
               <p class="read-sign">Added To Read</p>
             <% else %>
-              <%= button_to "Add To Read", {controller: 'to_read_books', method: "post", book_id: book.id}, {class: "add-from-index button", id: "add-to-read-#{book.id}"} %>
+              <%= button_to "Add To Read", { controller: 'to_read_books', method: "post", book_id: book.id }, { class: "add-from-index button", id: "add-to-read-#{book.id}" } %>
               <button class="already-from-index button" data-open="modal-<%= book.id %>">Already Read</button>
             <% end %>
           </div>

@@ -59,7 +59,7 @@
           <button class="clear button" data-open="modal-<%= book.id %>">Edit</button>
         </div>
         <div class="cell shrink">
-          <%= button_to "Delete", {action: :destroy, id: have_read(book).id}, method: :delete, class: "clear button", id: "delete-have-read-#{book.id}" %>
+          <%= button_to "Delete", { action: :destroy, id: have_read(book).id }, method: :delete, class: "clear button", id: "delete-have-read-#{book.id}" %>
         </div>
       </div>
 
