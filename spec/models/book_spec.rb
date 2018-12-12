@@ -180,30 +180,4 @@ RSpec.describe Book, type: :model do
       expect(Book.order_by(params, Book)).to eq([book3, book2, book])
     end
   end
-
-# moved to application helper as have_read
-  # describe '#display_have_read_date' do
-  #   it 'returns nil if no one has read this book' do
-  #     book = create(:book)
-  #     user = create(:user)
-  #
-  #     expect(book.display_have_read_date(user)).to be_nil
-  #   end
-  #
-  #   it 'returns nil if user has read no books' do
-  #     have_read_book = create(:have_read_book)
-  #     user = create(:user)
-  #     book = have_read_book.book
-  #
-  #     expect(book.display_have_read_date(user)).to be_nil
-  #   end
-  #
-  #   it 'returns the display date' do
-  #     have_read_book = create(:have_read_book)
-  #     user = have_read_book.user
-  #     book = have_read_book.book
-  #
-  #     expect(book.display_have_read_date(user)).to eq(have_read_book.display_date)
-  #   end
-  # end
 end
