@@ -35,7 +35,7 @@
 
           <div class="field">
             <h6 class="date-label">Date Completed</h6>
-            <% if @have_read_book.date_completed.nil? || params[:condition].present? %>
+            <% if params[:condition].present? %>
               <div class="grid-x select-spacing">
                 <div><%= select_tag(:month, options_for_select(HaveReadBook::MONTHS, selected: selected_month(@have_read_book))) %></div>
                 <div><%= select_tag(:day, options_for_select(HaveReadBook::DAYS, selected: selected_day(@have_read_book))) %></div>
@@ -48,7 +48,7 @@
 
           <div class="field">
             <%= label_tag :rating %>
-            <% if @have_read_book.rating.nil? || params[:condition].present? %>
+            <% if params[:condition].present? %>
               <div class="grid-x" id="no-bottom-padding">
                 <div class="cell small-2">
                   <%= select_tag(:rating, options_for_select(HaveReadBook::RATINGS, selected: @have_read_book.rating), include_blank: true) %>
@@ -61,7 +61,7 @@
 
           <div class="field">
             <%= label_tag :note, "Review" %>
-            <% if @have_read_book.note.nil? || params[:condition].present? %>
+            <% if params[:condition].present? %>
               <%= text_area_tag(:note, @have_read_book.note, size: "24x8") %>
             <% else %>
               <p><%= @have_read_book.note %></p>
@@ -69,7 +69,7 @@
           </div>
 
           <div class="actions grid-x align-right" id="remove-padding">
-            <% if @have_read_book.has_empty_field? || params[:condition].present? %>
+            <% if params[:condition].present? %>
               <%= link_to "Cancel", book_path(@book), class: "cancel" %>
               <%= submit_tag "Submit", name: nil %>
             <% else %>

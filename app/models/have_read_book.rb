@@ -28,10 +28,6 @@ class HaveReadBook < ApplicationRecord
     return e.message
   end
 
-  def has_empty_field?
-    date_completed.nil? || rating.nil? || note.nil?
-  end
-
   def no_data?
     rating.nil? && note.nil?
   end

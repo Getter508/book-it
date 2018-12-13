@@ -35,20 +35,6 @@ RSpec.describe Book, type: :model do
     end
   end
 
-  describe '#has_empty_field?' do
-    it 'returns true if date_completed, rating, or note are nil' do
-      have_read_book = create(:have_read_book, date_completed: nil)
-
-      expect(have_read_book.has_empty_field?).to be true
-    end
-
-    it 'returns false if date_completed, rating, or note are not nil' do
-      have_read_book = create(:have_read_book)
-
-      expect(have_read_book.has_empty_field?).to be false
-    end
-  end
-
   describe '#no_data?' do
     it 'returns true if there is no rating or note' do
       have_read_book = create(:have_read_book, note: nil, rating: nil)
