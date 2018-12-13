@@ -14,6 +14,7 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @to_read_book = ToReadBook.find_or_initialize_by(user: current_user, book_id: params[:id])
     @have_read_book = HaveReadBook.find_or_initialize_by(user: current_user, book_id: params[:id])
+    @reviews = HaveReadBook.order_list(book_id: params[:id], user: current_user)
   end
 
   private

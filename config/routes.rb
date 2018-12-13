@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   post 'have_read_books/create_or_update', to: 'have_read_books#create_or_update'
   post 'have_read_books/update_date', to: 'have_read_books#update_date'
+  get 'have_read_books/destroy_review', to: 'have_read_books#destroy_review'
 
   root to: 'books#index'
 

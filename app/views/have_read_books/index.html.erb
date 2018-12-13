@@ -9,94 +9,96 @@
   </div>
 </div>
 
-<ul class="books-list have-read-list">
-  <% @have_read_books.each do |book| %>
-    <li class="callout secondary">
-      <div class="grid-x align-middle">
+<div class="view-books">
+  <ul class="books-list have-read-list">
+    <% @have_read_books.each do |book| %>
+      <li class="callout secondary">
+        <div class="grid-x align-middle">
 
-        <div class="have-read-info buffer cell small-12 medium-9 large-4">
-          <div class="grid-x align-middle">
-            <div class="cell shrink">
-              <%= link_to(image_tag(book.display_cover), book_path(book), class: "thumbnail-cover book-#{book.id}") %>
-            </div>
-            <div class="book-info cell small-8">
-              <p><%= book.title %></p>
-              <p>by <%= book.display_authors %></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="buffer cell small-6 medium-3 large-2" id="have-read-rating-<%= book.id %>">
-          <% if have_read(book)&.rating.nil? %>
-            <div>No rating</div>
-          <% else %>
-            <div>My rating</div>
-            <div><%= have_read(book).rating %> out of 10</div>
-          <% end %>
-        </div>
-
-        <div class="have-read-rec buffer cell small-6 medium-5 large-3">Not Recommended</div>
-
-        <div class="cell medium-7 large-3" id="have-read-date-<%= book.id %>">
-          <% if have_read(book)&.display_date.nil? %>
-            <h6>Add Date Completed</h6>
-            <%= form_tag(have_read_books_update_date_path, class: "date-form grid-x") do %>
-              <%= hidden_field_tag(:id, have_read(book)&.id) %>
-              <div><%= select_tag(:month, options_for_select(HaveReadBook::MONTHS, selected: selected_month(have_read(book)))) %></div>
-              <div><%= select_tag(:day, options_for_select(HaveReadBook::DAYS, selected: selected_day(have_read(book)))) %></div>
-              <div><%= select_tag(:year, options_for_select(HaveReadBook::YEARS, selected: selected_year(have_read(book)))) %></div>
-              <div class="actions cell large-12"><%= submit_tag "Submit", name: nil %></div>
-            <% end %>
-          <% else %>
-            <h6>Date Completed</h6>
-            <div><%= have_read(book)&.display_date %></div>
-          <% end %>
-        </div>
-      </div>
-
-      <div class="grid-x align-right">
-        <div class="cell shrink">
-          <button class="clear button" data-open="modal-<%= book.id %>">Edit</button>
-        </div>
-        <div class="cell shrink">
-          <%= button_to "Delete", { action: :destroy, id: have_read(book).id }, method: :delete, class: "clear button", id: "delete-have-read-#{book.id}" %>
-        </div>
-      </div>
-
-      <div class="reveal" id="modal-<%= book.id %>" data-reveal>
-        <%= form_tag(have_read_books_create_or_update_path, class: "modal-update-form", id: "modal-form-#{book.id}") do |f| %>
-          <%= hidden_field_tag(:id, have_read(book)&.id) %>
-          <%= hidden_field_tag(:book_id, book[:id]) %>
-          <div class="field">
-            <h6 class="date-label">Date Completed</h6>
-            <div class="grid-x select-spacing">
-              <div><%= select_tag(:month, options_for_select(HaveReadBook::MONTHS, selected: selected_month(have_read(book)))) %></div>
-              <div><%= select_tag(:day, options_for_select(HaveReadBook::DAYS, selected: selected_day(have_read(book)))) %></div>
-              <div><%= select_tag(:year, options_for_select(HaveReadBook::YEARS, selected: selected_year(have_read(book)))) %></div>
-            </div>
-          </div>
-          <div class="field">
-            <%= label_tag :rating %>
-            <div class="grid-x" id="no-bottom-padding">
-              <div class="cell small-2">
-                <%= select_tag(:rating, options_for_select(HaveReadBook::RATINGS, selected: have_read(book)&.rating), include_blank: true) %>
+          <div class="have-read-info buffer cell small-12 medium-9 large-4">
+            <div class="grid-x align-middle">
+              <div class="cell shrink">
+                <%= link_to(image_tag(book.display_cover), book_path(book), class: "thumbnail-cover book-#{book.id}") %>
+              </div>
+              <div class="book-info cell small-8">
+                <p><%= book.title %></p>
+                <p>by <%= book.display_authors %></p>
               </div>
             </div>
           </div>
-          <div class="field">
-            <%= label_tag :note, "Review" %>
-            <%= text_area_tag(:note, have_read(book)&.note, size: "24x8") %>
+
+          <div class="buffer cell small-6 medium-3 large-2" id="have-read-rating-<%= book.id %>">
+            <% if have_read(book)&.rating.nil? %>
+              <div>No rating</div>
+            <% else %>
+              <div>My rating</div>
+              <div><%= have_read(book).rating %> out of 10</div>
+            <% end %>
           </div>
-          <div class="actions grid-x align-right" id="remove-padding">
-            <%= submit_tag "Submit", class: "submit-modal", id: "#{book.id}" %>
+
+          <div class="have-read-rec buffer cell small-6 medium-5 large-3">Not Recommended</div>
+
+          <div class="cell medium-7 large-3" id="have-read-date-<%= book.id %>">
+            <% if have_read(book)&.display_date.nil? %>
+              <h6>Add Date Completed</h6>
+              <%= form_tag(have_read_books_update_date_path, class: "date-form grid-x") do %>
+                <%= hidden_field_tag(:id, have_read(book)&.id) %>
+                <div><%= select_tag(:month, options_for_select(HaveReadBook::MONTHS, selected: selected_month(have_read(book)))) %></div>
+                <div><%= select_tag(:day, options_for_select(HaveReadBook::DAYS, selected: selected_day(have_read(book)))) %></div>
+                <div><%= select_tag(:year, options_for_select(HaveReadBook::YEARS, selected: selected_year(have_read(book)))) %></div>
+                <div class="actions cell large-12"><%= submit_tag "Submit", name: nil %></div>
+              <% end %>
+            <% else %>
+              <h6>Date Completed</h6>
+              <div><%= have_read(book)&.display_date %></div>
+            <% end %>
           </div>
-        <% end %>
-        <button class="close-button" data-close aria-label="Close modal" type="button">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    </li>
-  <% end %>
-</ul>
+        </div>
+
+        <div class="grid-x align-right">
+          <div class="cell shrink">
+            <button class="clear button" data-open="modal-<%= book.id %>">Edit</button>
+          </div>
+          <div class="cell shrink">
+            <%= button_to "Delete", { action: :destroy, id: have_read(book).id }, method: :delete, class: "clear button", id: "delete-have-read-#{book.id}" %>
+          </div>
+        </div>
+
+        <div class="reveal" id="modal-<%= book.id %>" data-reveal>
+          <%= form_tag(have_read_books_create_or_update_path, class: "modal-update-form", id: "modal-form-#{book.id}") do |f| %>
+            <%= hidden_field_tag(:id, have_read(book)&.id) %>
+            <%= hidden_field_tag(:book_id, book[:id]) %>
+            <div class="field">
+              <h6 class="date-label">Date Completed</h6>
+              <div class="grid-x select-spacing">
+                <div><%= select_tag(:month, options_for_select(HaveReadBook::MONTHS, selected: selected_month(have_read(book)))) %></div>
+                <div><%= select_tag(:day, options_for_select(HaveReadBook::DAYS, selected: selected_day(have_read(book)))) %></div>
+                <div><%= select_tag(:year, options_for_select(HaveReadBook::YEARS, selected: selected_year(have_read(book)))) %></div>
+              </div>
+            </div>
+            <div class="field">
+              <%= label_tag :rating %>
+              <div class="grid-x" id="no-bottom-padding">
+                <div class="cell small-2">
+                  <%= select_tag(:rating, options_for_select(HaveReadBook::RATINGS, selected: have_read(book)&.rating), include_blank: true) %>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <%= label_tag :note, "Review" %>
+              <%= text_area_tag(:note, have_read(book)&.note, size: "24x8") %>
+            </div>
+            <div class="actions grid-x align-right" id="remove-padding">
+              <%= submit_tag "Submit", class: "submit-modal", id: "#{book.id}" %>
+            </div>
+          <% end %>
+          <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
 
 <%= paginate @have_read_books, left: 2, right: 2, window: 1 %>

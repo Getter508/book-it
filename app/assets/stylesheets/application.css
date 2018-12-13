@@ -72,7 +72,7 @@
   border: 1px solid #333333;
 }
 
-.cancel {
+.cancel, .edit-review {
   margin-right: 16px;
 }
 
@@ -92,6 +92,14 @@
 
 .detail-buttons > :first-child, .index-buttons > :first-child {
   margin-right: 25px;
+}
+
+.view-reviews, .view-books {
+  padding-bottom: 15px;
+}
+
+.review-list {
+  margin-left: 0;
 }
 
 .select-spacing * {
@@ -144,6 +152,10 @@ li dl {
 
 dt {
   margin-top: 12px;
+}
+
+p.cell {
+  margin-bottom:0;
 }
 
 .have-read-list, .to-read-list {

@@ -25,13 +25,15 @@ class HaveReadBooksController < ApplicationController
   def update
     @book = Book.find(have_read_params[:book_id])
     @have_read_book = HaveReadBook.find_by(user: current_user, book_id: have_read_params[:book_id])
-    @have_read_book.build_date(date_params)
     @have_read_book.assign_attributes(have_read_params)
 
     if @have_read_book.save
       redirect_to book_path(@book), notice: 'Have Read book successfully updated'
     else
-      redirect_to book_path(@book), alert: 'Have Read book failed to update'
+      params[:condition] = 'edit'
+      @reviews = HaveReadBook.order_list(book_id: params[:id], user: current_user)
+      flash[:alert] = 'Have Read book failed to update'
+      render 'books/show'
     end
   end
 
@@ -57,6 +59,19 @@ class HaveReadBooksController < ApplicationController
     have_read_book = HaveReadBook.find(params[:id])
     have_read_book.destroy
     redirect_to have_read_books_path, notice: 'Book removed from your Have Read list'
+  end
+
+  def destroy_review
+    @have_read_book = HaveReadBook.find(params[:id])
+    @have_read_book.rating = nil
+    @have_read_book.note = nil
+    @have_read_book.save
+
+    @book = @have_read_book.book
+    @reviews = HaveReadBook.order_list(book_id: params[:id], user: current_user)
+    params[:condition] = 'deleted'
+    flash[:notice] = 'Your review has been deleted'
+    render 'books/show'
   end
 
   private

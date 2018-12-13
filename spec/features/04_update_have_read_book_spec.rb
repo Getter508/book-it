@@ -64,24 +64,4 @@ feature 'user updates have_read book' do
       expect(page).not_to have_content('02/31/2018')
     end
   end
-
-  scenario 'updates date completed' do
-    visit have_read_books_path
-    within 'form.date-form' do
-      find('#month').select('Nov')
-      find('#day').select('8')
-      find('#year').select('2018')
-      click_on('Submit')
-    end
-
-    click_on('Edit')
-    find('#month').select('Oct')
-    find('#day').select('7')
-    find('#year').select('2017')
-    click_on('Submit')
-
-    expect(page).to have_content('10/07/2017')
-    expect(page).not_to have_content('Add Date Completed')
-    expect(page).not_to have_content('11/08/2018')
-  end
 end
