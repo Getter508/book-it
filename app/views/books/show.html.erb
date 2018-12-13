@@ -87,7 +87,7 @@
         <li class="callout <%= "#{color(review)}" %>" id="review-<%= review.id %>">
           <div class="grid-x grid-padding-x">
             <div class="user-info cell shrink text-center">
-              <%= image_tag review.user.avatar.thumb.url if review.user.avatar.file %>
+              <%= image_tag review.user.avatar.thumb.url, class: 'avatar' if review.user.avatar.file %>
               <p><%= review.user.username %></p>
             </div>
             <div class="review-info cell auto">

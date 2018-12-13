@@ -102,6 +102,10 @@
   margin-left: 0;
 }
 
+.avatar {
+  border-radius: 50%;
+}
+
 .select-spacing * {
   margin-right: 4px;
 }
