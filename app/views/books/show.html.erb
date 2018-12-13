@@ -9,8 +9,8 @@
         <% elsif @to_read_book.id.present? %>
           <p class="read-sign">Added To Read</p>
         <% else %>
-          <%= button_to "Add To Read", { controller: 'to_read_books', method: "post", book_id: @book.id }, { class: "button" } %>
-          <%= button_to "Already Read", { controller: 'have_read_books', method: "post", book_id: @book.id }, { class: "button" } %>
+          <%= button_to "Add To Read", { controller: "to_read_books", method: "post", book_id: @book.id }, { class: "button" } %>
+          <%= button_to "Already Read", { controller: "have_read_books", method: "post", book_id: @book.id }, { class: "button" } %>
         <% end %>
       </div>
       <dl>
@@ -62,7 +62,8 @@
               <%= link_to "Cancel", book_path(@book), class: "cancel" %>
               <%= submit_tag "Submit", name: nil %>
             <% else %>
-              <%= link_to "Edit", book_path(@book, condition: "edit") %>
+              <%= link_to "Edit", book_path(@book, condition: "edit"), class: 'edit-review' %>
+              <%= link_to "Delete", { controller: "have_read_books", action: "destroy_review", id: @have_read_book.id } %>
             <% end %>
           </div>
         <% end %>

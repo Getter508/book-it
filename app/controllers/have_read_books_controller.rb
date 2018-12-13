@@ -61,6 +61,19 @@ class HaveReadBooksController < ApplicationController
     redirect_to have_read_books_path, notice: 'Book removed from your Have Read list'
   end
 
+  def destroy_review
+    @have_read_book = HaveReadBook.find(params[:id])
+    @have_read_book.rating = nil
+    @have_read_book.note = nil
+    @have_read_book.save
+
+    @book = @have_read_book.book
+    @reviews = HaveReadBook.order_list(book_id: params[:id], user: current_user)
+    params[:condition] = 'deleted'
+    flash[:notice] = 'Your review has been deleted'
+    render 'books/show'
+  end
+
   private
 
   def date_params
