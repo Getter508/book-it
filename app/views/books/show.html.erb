@@ -29,7 +29,7 @@
     <div class="cell large-5" data-sticky-container>
       <div class="sticky secondary callout" data-sticky data-options="stickyOn:large" data-margin-top="8" data-anchor="form-anchor">
 
-        <%= form_tag(have_read_books_create_or_update_path) do |f| %>
+        <%= form_tag(have_read_books_create_or_update_path, class: "review-form") do |f| %>
           <%= hidden_field_tag(:id, @have_read_book.id) %>
           <%= hidden_field_tag(:book_id, @book.id) %>
 
@@ -83,6 +83,31 @@
   </div>
 </div>
 
-<div class="view_reviews grid-container">
+<hr>
+
+<div class="view-reviews grid-container">
   <h1 class="h2">Reviews</h1>
+  <% if @reviews.empty? %>
+    <h2 class="h4 none">None</h2>
+  <% end %>
+
+  <ul class="review-list">
+    <% @reviews.each do |review| %>
+      <% unless review.no_data? %>
+        <li class="callout secondary" id="review-<%= review.id %>">
+          <div class="grid-x grid-padding-x">
+            <div class="user-info cell shrink text-center">
+              <%= image_tag review.user.avatar.thumb.url if review.user.avatar.file %>
+              <p><%= review.user.username %></p>
+            </div>
+            <div class="review-info cell auto">
+              <h2 class="h4"><%= review.rating %> out of 10</h2>
+              <p><%= review.note %></p>
+              <p><small>Posted on <%= review.display_date %></small></p>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
 </div>

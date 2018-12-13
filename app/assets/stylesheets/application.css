@@ -94,6 +94,14 @@
   margin-right: 25px;
 }
 
+.view-reviews, .view-books {
+  padding-bottom: 15px;
+}
+
+.review-list {
+  margin-left: 0;
+}
+
 .select-spacing * {
   margin-right: 4px;
 }
@@ -144,6 +152,10 @@ li dl {
 
 dt {
   margin-top: 12px;
+}
+
+p.cell {
+  margin-bottom:0;
 }
 
 .have-read-list, .to-read-list {

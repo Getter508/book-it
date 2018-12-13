@@ -32,7 +32,17 @@ class HaveReadBook < ApplicationRecord
     date_completed.nil? || rating.nil? || note.nil?
   end
 
+  def no_data?
+    rating.nil? && note.nil?
+  end
+
   def self.default_sort
     "#{table_name}.rating desc, date_completed desc"
+  end
+
+  def self.order_list(book_id:, user:)
+    list = self.where(book_id: book_id).order(created_at: :desc).to_a
+    user_review = list.detect { |review| review.user == user }
+    list.insert(0, list.delete(user_review)).compact
   end
 end

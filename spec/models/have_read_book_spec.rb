@@ -48,4 +48,42 @@ RSpec.describe Book, type: :model do
       expect(have_read_book.has_empty_field?).to be false
     end
   end
+
+  describe '#no_data?' do
+    it 'returns true if there is no rating or note' do
+      have_read_book = create(:have_read_book, note: nil, rating: nil)
+
+      expect(have_read_book.no_data?).to be true
+    end
+
+    it 'returns false if rating or note are present' do
+      have_read_book = create(:have_read_book, note: nil)
+
+      expect(have_read_book.no_data?).to be false
+    end
+  end
+
+  describe '.order_list' do
+    it 'orders list with the current user on top and then newest to oldest' do
+      have_read_book = create(:have_read_book, created_at: DateTime.current.prev_day)
+      user = have_read_book.user
+      book = have_read_book.book
+      date = have_read_book.created_at
+      have_read_book2 = create(:have_read_book, book: book, created_at: date.prev_day)
+      have_read_book3 = create(:have_read_book, book: book)
+
+      list = HaveReadBook.order_list(book_id: book.id, user: user)
+
+      expect(list).to eq([have_read_book, have_read_book3, have_read_book2])
+    end
+
+    it 'returns empty if there are no have read books' do
+      book = create(:book)
+      user = create(:user)
+
+      list = HaveReadBook.order_list(book_id: book.id, user: user)
+
+      expect(list).to be_empty
+    end
+  end
 end

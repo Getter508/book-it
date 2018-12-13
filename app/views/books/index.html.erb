@@ -38,7 +38,10 @@
         <div class="cell auto">
           <div class="index-buttons button-group" id="buttons-<%= book.id %>">
             <% if have_read(book)&.id.present? %>
-              <p class="read-sign">Already Read</p>
+              <div class="grid-x">
+                <p class="read-sign cell">Already Read</p>
+                <p class="cell"><strong>My Rating:</strong> <%= have_read(book).rating %> out of 10</p>
+              </div>
             <% elsif to_read(book)&.id.present? %>
               <p class="read-sign">Added To Read</p>
             <% else %>
