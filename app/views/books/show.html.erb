@@ -92,10 +92,7 @@
             <div class="review-info cell auto">
               <h2 class="h4"><%= review.rating %> out of 10</h2>
               <p><%= review.note %></p>
-              <div class="grid-x review-tags">
-                <p class="cell shrink"><small>Posted on <%= review.display_date_created %></small></p>
-                <p class="cell shrink"><small>Finished reading <%= review.display_date_completed %></small></p>
-            </div>
+              <p><small>Finished reading <%= review.display_date %></small></p>
           </div>
         </li>
       <% end %>

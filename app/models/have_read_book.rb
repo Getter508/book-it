@@ -18,12 +18,8 @@ class HaveReadBook < ApplicationRecord
   YEARS = ((Time.zone.now.year - 9)..Time.zone.now.year).to_a
   RATINGS = (1..10).to_a
 
-  def display_date_completed
+  def display_date
     date_completed&.strftime('%m/%d/%Y')
-  end
-
-  def display_date_created
-    created_at.strftime('%m/%d/%Y')
   end
 
   def build_date(params)

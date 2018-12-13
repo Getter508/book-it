@@ -39,7 +39,7 @@
           <div class="have-read-rec buffer cell small-6 medium-5 large-3">Not Recommended</div>
 
           <div class="cell medium-7 large-3" id="have-read-date-<%= book.id %>">
-            <% if have_read(book)&.display_date_completed.nil? %>
+            <% if have_read(book)&.display_date.nil? %>
               <h6>Add Date Completed</h6>
               <%= form_tag(have_read_books_update_date_path, class: "date-form grid-x") do %>
                 <%= hidden_field_tag(:id, have_read(book)&.id) %>
@@ -50,7 +50,7 @@
               <% end %>
             <% else %>
               <h6>Date Completed</h6>
-              <div><%= have_read(book)&.display_date_completed %></div>
+              <div><%= have_read(book)&.display_date %></div>
             <% end %>
           </div>
         </div>
