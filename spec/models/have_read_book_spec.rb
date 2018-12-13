@@ -1,18 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe Book, type: :model do
-  describe '#display_date' do
+  describe '#display_date_completed' do
     it 'returns nil if have_read_book does not have a date completed' do
       have_read_book = create(:have_read_book, date_completed: nil)
 
-      expect(have_read_book.display_date).to be_nil
+      expect(have_read_book.display_date_completed).to be_nil
     end
 
     it 'formats have_read_book date completed to mm/dd/yyyy' do
       have_read_book = create(:have_read_book)
       date = have_read_book.date_completed
 
-      expect(have_read_book.display_date).to eq("#{date.strftime('%m/%d/%Y')}")
+      expect(have_read_book.display_date_completed).to eq("#{date.strftime('%m/%d/%Y')}")
+    end
+  end
+
+  describe '#display_date_created' do
+    it 'formats have_read_book created_at date to mm/dd/yyyy' do
+      have_read_book = create(:have_read_book)
+      date = have_read_book.created_at
+
+      expect(have_read_book.display_date_created).to eq("#{date.strftime('%m/%d/%Y')}")
     end
   end
 

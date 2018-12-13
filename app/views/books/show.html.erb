@@ -28,23 +28,12 @@
     </div>
     <div class="cell large-5" data-sticky-container>
       <div class="sticky secondary callout" data-sticky data-options="stickyOn:large" data-margin-top="8" data-anchor="form-anchor">
+        <h1 class="h4">My Review</h1>
+        <p>Use the form below to submit or edit a review of this book</p>
 
         <%= form_tag(have_read_books_create_or_update_path, class: "review-form") do |f| %>
           <%= hidden_field_tag(:id, @have_read_book.id) %>
           <%= hidden_field_tag(:book_id, @book.id) %>
-
-          <div class="field">
-            <h6 class="date-label">Date Completed</h6>
-            <% if params[:condition].present? %>
-              <div class="grid-x select-spacing">
-                <div><%= select_tag(:month, options_for_select(HaveReadBook::MONTHS, selected: selected_month(@have_read_book))) %></div>
-                <div><%= select_tag(:day, options_for_select(HaveReadBook::DAYS, selected: selected_day(@have_read_book))) %></div>
-                <div><%= select_tag(:year, options_for_select(HaveReadBook::YEARS, selected: selected_year(@have_read_book))) %></div>
-              </div>
-            <% else %>
-              <p><%= @have_read_book.display_date %></p>
-            <% end %>
-          </div>
 
           <div class="field">
             <%= label_tag :rating %>
@@ -103,7 +92,9 @@
             <div class="review-info cell auto">
               <h2 class="h4"><%= review.rating %> out of 10</h2>
               <p><%= review.note %></p>
-              <p><small>Posted on <%= review.display_date %></small></p>
+              <div class="grid-x review-tags">
+                <p class="cell shrink"><small>Posted on <%= review.display_date_created %></small></p>
+                <p class="cell shrink"><small>Finished reading <%= review.display_date_completed %></small></p>
             </div>
           </div>
         </li>

@@ -25,13 +25,15 @@ class HaveReadBooksController < ApplicationController
   def update
     @book = Book.find(have_read_params[:book_id])
     @have_read_book = HaveReadBook.find_by(user: current_user, book_id: have_read_params[:book_id])
-    @have_read_book.build_date(date_params)
     @have_read_book.assign_attributes(have_read_params)
 
     if @have_read_book.save
       redirect_to book_path(@book), notice: 'Have Read book successfully updated'
     else
-      redirect_to book_path(@book), alert: 'Have Read book failed to update'
+      params[:condition] = 'edit'
+      @reviews = HaveReadBook.order_list(book_id: params[:id], user: current_user)
+      flash[:alert] = 'Have Read book failed to update'
+      render 'books/show'
     end
   end
 

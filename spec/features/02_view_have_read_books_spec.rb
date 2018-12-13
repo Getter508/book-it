@@ -42,11 +42,11 @@ feature 'user views have_read books' do
     within 'ul.have-read-list' do
       expect(first('li')).to have_content(book2.title)
       expect(first('li')).to have_content(book_author2.author.name)
-      expect(first('li')).to have_content(have_read_book2.display_date)
+      expect(first('li')).to have_content(have_read_book2.display_date_completed)
       expect(first('li')).to have_xpath('//img[contains(@src,"8155423-L.jpg")]')
       expect(all('li')[1]).to have_content(book1.title)
       expect(all('li')[1]).to have_content(book_author1.author.name)
-      expect(all('li')[1]).to have_content(have_read_book1.display_date)
+      expect(all('li')[1]).to have_content(have_read_book1.display_date_completed)
       expect(all('li')[1]).to have_xpath('//img[contains(@src,"8259447-L.jpg")]')
     end
     expect(page).not_to have_content(book3.title)

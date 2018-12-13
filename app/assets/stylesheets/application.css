@@ -72,7 +72,7 @@
   border: 1px solid #333333;
 }
 
-.cancel {
+.cancel, .review-tags * {
   margin-right: 16px;
 }
 

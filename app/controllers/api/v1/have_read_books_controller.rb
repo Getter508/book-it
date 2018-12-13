@@ -33,7 +33,7 @@ class Api::V1::HaveReadBooksController < ApplicationController
       render json: {
         book_id: ajax_params[:book_id],
         rating: ajax_params[:rating],
-        date: have_read_book.display_date,
+        date: have_read_book.display_date_completed,
         status: :created
       }
     else
