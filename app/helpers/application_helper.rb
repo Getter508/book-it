@@ -41,4 +41,12 @@ module ApplicationHelper
   def is_active?(book_list)
     'is-active' if book_list.present?
   end
+
+  def color(review)
+    if review.user == current_user
+      'warning'
+    else
+      'secondary'
+    end
+  end
 end

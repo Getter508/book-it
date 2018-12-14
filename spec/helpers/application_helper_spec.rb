@@ -209,4 +209,18 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.is_active?(book_list)).to eq('is-active')
     end
   end
+
+  describe '#color' do
+    it 'returns warning if review user is the current user' do
+      have_read_book = create(:have_read_book, user: current_user)
+
+      expect(helper.color(have_read_book)).to eq('warning')
+    end
+
+    it 'returns secondary if review user is not the current user' do
+      have_read_book = create(:have_read_book)
+
+      expect(helper.color(have_read_book)).to eq('secondary')
+    end
+  end
 end

@@ -22,7 +22,7 @@
     <%= f.label :avatar %><br />
     <%= f.file_field :avatar, autofocus: true %>
     <% if f.object.avatar? %>
-      <%= image_tag f.object.avatar.thumb.url %>
+      <%= image_tag f.object.avatar.thumb.url, class: 'avatar' %>
       <%= f.label :remove_avatar %>
       <%= f.check_box :remove_avatar %>
     <% end %>
