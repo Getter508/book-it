@@ -29,6 +29,7 @@ gem 'kaminari'
 gem 'rack', '>=2.0.6'
 gem 'foundation-rails'
 gem 'autoprefixer-rails'
+gem 'fastimage'
 
 group :development, :test do
   gem 'pry-rails'

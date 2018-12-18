@@ -10,7 +10,6 @@ class BookImporterService
   end
 
   def call
-    sleep 2
     errors = []
     isbns.each do |isbn|
       begin
