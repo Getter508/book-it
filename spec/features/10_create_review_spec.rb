@@ -16,9 +16,17 @@ feature 'user creates a review for a book' do
   # Acceptance Criteria:
   #   A review consists of a rating and optional notes
   #   I can review a book only once using the form on the book details page
+  scenario 'add review note to have_read_book' do
+    visit book_path(book)
+    find('#note').set('asdfjkl')
+    click_on 'Submit'
+
+    expect(page).to have_content('Not rated', count: 2)
+    expect(page).to have_content('asdfjkl', count: 2)
+  end
+
   scenario 'add rating and review note to have_read_book' do
     visit book_path(book)
-    click_on 'Edit'
     find('#rating').select(9)
     find('#note').set('asdfjkl')
     click_on 'Submit'

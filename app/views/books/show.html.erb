@@ -37,12 +37,14 @@
 
           <div class="field">
             <%= label_tag :rating %>
-            <% if params[:condition].present? %>
+            <% if @have_read_book.no_review_data? || params[:condition].present? %>
               <div class="grid-x" id="no-bottom-padding">
                 <div class="cell small-2">
                   <%= select_tag(:rating, options_for_select(HaveReadBook::RATINGS, selected: @have_read_book.rating), include_blank: true) %>
                 </div>
               </div>
+            <% elsif @have_read_book.rating.nil? %>
+                <p>Not rated</p>
             <% else %>
               <p><%= @have_read_book.rating %> out of 10</p>
             <% end %>
@@ -50,7 +52,7 @@
 
           <div class="field">
             <%= label_tag :note, "Review" %>
-            <% if params[:condition].present? %>
+            <% if @have_read_book.no_review_data? || params[:condition].present? %>
               <%= text_area_tag(:note, @have_read_book.note, size: "24x8") %>
             <% else %>
               <p><%= @have_read_book.note %></p>
@@ -58,7 +60,7 @@
           </div>
 
           <div class="actions grid-x align-right" id="remove-padding">
-            <% if params[:condition].present? %>
+            <% if @have_read_book.no_review_data? || params[:condition].present? %>
               <%= link_to "Cancel", book_path(@book), class: "cancel" %>
               <%= submit_tag "Submit", name: nil %>
             <% else %>
@@ -77,13 +79,13 @@
 
 <div class="view-reviews grid-container">
   <h1 class="h2">Reviews</h1>
-  <% if @reviews.empty? %>
+  <% if @reviews.all? { |review| review.no_review_data? } %>
     <h2 class="h4 none">None</h2>
   <% end %>
 
   <ul class="review-list">
     <% @reviews.each do |review| %>
-      <% unless review.no_data? %>
+      <% unless review.no_review_data? %>
         <li class="callout <%= "#{color(review)}" %>" id="review-<%= review.id %>">
           <div class="grid-x grid-padding-x">
             <div class="user-info cell shrink text-center">
@@ -91,9 +93,21 @@
               <p><%= review.user.username %></p>
             </div>
             <div class="review-info cell auto">
-              <h2 class="h4"><%= review.rating %> out of 10</h2>
+              <% if review.rating.nil? %>
+                <h2 class="h4">Not rated</h2>
+              <% else %>
+                <h2 class="h4"><%= review.rating %> out of 10</h2>
+              <% end %>
+
               <p><%= review.note %></p>
-              <p><small>Finished reading <%= review.display_date %></small></p>
+
+              <% if review.date_completed.nil? && review.user == current_user %>
+                <p><small><%= link_to 'Add date completed', have_read_books_path %></small></p>
+              <% elsif review.date_completed.nil? %>
+                <p><small>Date completed not available</small></p>
+              <% else %>
+                <p><small>Finished reading <%= review.display_date %></small></p>
+              <% end %>
           </div>
         </li>
       <% end %>

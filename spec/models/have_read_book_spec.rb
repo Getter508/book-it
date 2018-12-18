@@ -35,17 +35,29 @@ RSpec.describe Book, type: :model do
     end
   end
 
-  describe '#no_data?' do
-    it 'returns true if there is no rating or note' do
+  describe '#no_review_data?' do
+    it 'returns true if rating and note are nil' do
       have_read_book = create(:have_read_book, note: nil, rating: nil)
 
-      expect(have_read_book.no_data?).to be true
+      expect(have_read_book.no_review_data?).to be true
     end
 
-    it 'returns false if rating or note are present' do
+    it 'returns true if rating is nil and note is empty' do
+      have_read_book = create(:have_read_book, note: '', rating: nil)
+
+      expect(have_read_book.no_review_data?).to be true
+    end
+
+    it 'returns false if rating is present' do
       have_read_book = create(:have_read_book, note: nil)
 
-      expect(have_read_book.no_data?).to be false
+      expect(have_read_book.no_review_data?).to be false
+    end
+
+    it 'returns false if note is present' do
+      have_read_book = create(:have_read_book, rating: nil)
+
+      expect(have_read_book.no_review_data?).to be false
     end
   end
 

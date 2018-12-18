@@ -51,7 +51,7 @@ feature 'user views reviews for a book' do
     expect(page).not_to have_css("#review-#{have_read_book4.id}")
   end
 
-  scenario 'reviews ordered newest to oldest with mine first' do
+  scenario 'reviews ordered newest to oldest with current user first' do
     visit book_path(book)
 
     within '.view-reviews' do
@@ -61,7 +61,7 @@ feature 'user views reviews for a book' do
     end
   end
 
-  scenario 'my review appears in the review form' do
+  scenario 'current user review appears in the review form' do
     visit book_path(book)
 
     expect(page).to have_content("#{have_read_book2.rating} out of 10", count: 2)
@@ -78,5 +78,25 @@ feature 'user views reviews for a book' do
     visit books_path
 
     expect(page).to have_content("My Rating: #{have_read_book2.rating} out of 10", count: 1)
+  end
+end
+
+feature 'user can link to have read books to add date completed' do
+  before(:each) do
+    sign_in user
+  end
+
+  let!(:have_read_book) { create(:have_read_book, date_completed: nil) }
+  let!(:user) { create(:user) }
+  let!(:book) { have_read_book.book }
+  let!(:have_read_book2) {
+    create(:have_read_book, book: book, user: user, rating: 8, date_completed: nil)
+  }
+
+  scenario 'add date completed appears only for current user review' do
+    visit book_path(book)
+
+    expect(page).to have_content('Add date completed', count: 1)
+    expect(page).to have_content('Date completed not available', count: 1)
   end
 end

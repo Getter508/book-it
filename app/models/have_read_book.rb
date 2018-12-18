@@ -28,8 +28,8 @@ class HaveReadBook < ApplicationRecord
     return e.message
   end
 
-  def no_data?
-    rating.nil? && note.nil?
+  def no_review_data?
+    note.nil? ? rating.nil? && note.nil? : rating.nil? && note.empty?
   end
 
   def self.default_sort

@@ -133,9 +133,12 @@ RSpec.describe Book, type: :model do
     end
 
     it 'sorts alpahbetically by author if sorted by asc author' do
-      book_author = create(:book_author)
-      book_author2 = create(:book_author)
-      book_author3 = create(:book_author)
+      author = create(:author, name: 'A')
+      author2 = create(:author, name: 'B')
+      author3 = create(:author, name: 'C')
+      book_author = create(:book_author, author: author)
+      book_author2 = create(:book_author, author: author2)
+      book_author3 = create(:book_author, author: author3)
       book = book_author.book
       book2 = book_author2.book
       book3 = book_author3.book
@@ -145,9 +148,12 @@ RSpec.describe Book, type: :model do
     end
 
     it 'sorts reverse alpahbetically by author if sorted by desc author' do
-      book_author = create(:book_author)
-      book_author2 = create(:book_author)
-      book_author3 = create(:book_author)
+      author = create(:author, name: 'A')
+      author2 = create(:author, name: 'B')
+      author3 = create(:author, name: 'C')
+      book_author = create(:book_author, author: author)
+      book_author2 = create(:book_author, author: author2)
+      book_author3 = create(:book_author, author: author3)
       book = book_author.book
       book2 = book_author2.book
       book3 = book_author3.book
@@ -157,24 +163,24 @@ RSpec.describe Book, type: :model do
     end
 
     it 'sorts alphabetically by title if sorted by asc title' do
-      book_author = create(:book_author)
-      book_author2 = create(:book_author)
-      book_author3 = create(:book_author)
-      book = book_author.book
-      book2 = book_author2.book
-      book3 = book_author3.book
+      book = create(:book, title: 'A')
+      book2 = create(:book, title: 'B')
+      book3 = create(:book, title: 'C')
+      book_author = create(:book_author, book: book)
+      book_author2 = create(:book_author, book: book2)
+      book_author3 = create(:book_author, book: book3)
       params = { sort: 'title', direction: 'asc' }
 
       expect(Book.order_by(params, Book)).to eq([book, book2, book3])
     end
 
     it 'sorts reverse alpahbetically by title if sorted by desc title' do
-      book_author = create(:book_author)
-      book_author2 = create(:book_author)
-      book_author3 = create(:book_author)
-      book = book_author.book
-      book2 = book_author2.book
-      book3 = book_author3.book
+      book = create(:book, title: 'A')
+      book2 = create(:book, title: 'B')
+      book3 = create(:book, title: 'C')
+      book_author = create(:book_author, book: book)
+      book_author2 = create(:book_author, book: book2)
+      book_author3 = create(:book_author, book: book3)
       params = { sort: 'title', direction: 'desc' }
 
       expect(Book.order_by(params, Book)).to eq([book3, book2, book])
