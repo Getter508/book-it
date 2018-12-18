@@ -23,6 +23,14 @@
   min-height: 650px;
 }
 
+.search-form {
+  margin: 6px;
+}
+
+.search-field {
+  margin-bottom: 0;
+}
+
 .list-tabs {
   margin: 0px 67.5px;
   background-color: #86122c;

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-xfeature 'user searches books' do
+feature 'user searches books' do
 
   # As a user
   # I can search for books
@@ -8,7 +8,6 @@ xfeature 'user searches books' do
   #
   # Acceptance Criteria:
   #   I can search by title and/or author
-  #   The search results can be sorted by title, author, genre, or year
   #   Book results are paginated
   scenario 'search for books' do
 
