@@ -31,6 +31,10 @@
   margin-bottom: 0;
 }
 
+#category {
+  margin: 0;
+}
+
 .list-tabs {
   margin: 0px 67.5px;
   background-color: #86122c;

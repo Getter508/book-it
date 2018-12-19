@@ -2,8 +2,8 @@ class BooksController < ApplicationController
   def index
     @genre_select_options = Genre.select_options
 
-    if params[:search]
-      @books = Search.run(params[:search]).includes(:authors, :genres, :have_read_books, :to_read_books)&.page params[:page]
+    if search_params.present?
+      @books = Search.run(search_params).includes(:authors, :genres, :have_read_books, :to_read_books)&.page params[:page]
     elsif filter_params.present?
       @books = Book.filter(genre_id: filter_params).includes(:authors, :genres, :have_read_books, :to_read_books)&.page params[:page]
       @selected_genre = filter_params
@@ -27,5 +27,9 @@ class BooksController < ApplicationController
 
   def filter_params
     params.dig(:genre, :id)
+  end
+
+  def search_params
+    params.permit(:search, :category)
   end
 end
