@@ -1,5 +1,5 @@
 <div class="book-index">
-  <% if @search %>
+  <% if @search.present? %>
     <div class="search-message">
       <h1 class="h2">Search results</h1>
       <% if @books.empty? %>

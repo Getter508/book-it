@@ -29,10 +29,14 @@ class BookImporterService
     end
 
     def ratio
-      if width.nil? || height.nil?
-        @ratio ||= 0
+      @ratio ||= set_ratio
+    end
+
+    def set_ratio
+      if width.nil? || height.nil? || width.zero?
+        0
       else
-        @ratio ||= height.to_f / width.to_f
+        height.to_f / width.to_f
       end
     end
 

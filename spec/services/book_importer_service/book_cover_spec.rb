@@ -42,6 +42,13 @@ RSpec.describe Book, type: :service do
 
       expect(book_cover.ratio).to eq(0)
     end
+
+    it 'returns 0 if width is 0' do
+      allow(FastImage).to receive(:size).and_return([319, 0])
+      book_cover = BookImporterService::BookCover.create(654321)
+
+      expect(book_cover.ratio).to eq(0)
+    end
   end
 
   describe '#qualifies?' do
