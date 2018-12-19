@@ -3,6 +3,7 @@ class BooksController < ApplicationController
     @genre_select_options = Genre.select_options
 
     if search_params.present?
+      @search = true
       @books = Search.run(search_params).includes(:authors, :genres, :have_read_books, :to_read_books)&.page params[:page]
     elsif filter_params.present?
       @books = Book.filter(genre_id: filter_params).includes(:authors, :genres, :have_read_books, :to_read_books)&.page params[:page]

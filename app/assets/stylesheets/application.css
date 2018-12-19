@@ -35,6 +35,11 @@
   margin: 0;
 }
 
+.search-message {
+  padding-top: 20px;
+  margin-left: 35px;
+}
+
 .list-tabs {
   margin: 0px 67.5px;
   background-color: #86122c;
@@ -106,7 +111,7 @@
   margin-right: 25px;
 }
 
-.view-reviews, .view-books {
+.view-reviews, .view-books, .book-index {
   padding-bottom: 15px;
 }
 
@@ -229,7 +234,7 @@ nav.pagination {
     margin-right: 0;
   }
 
-  .books-list {
+  .books-list, .search-message {
     margin-left: 0;
     margin-right: 0;
     padding-left: 0;

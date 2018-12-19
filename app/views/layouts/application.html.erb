@@ -12,7 +12,7 @@
   <body>
     <section class="top-bar">
       <div class="search">
-        <%= form_tag(books_path, method: :get, class: 'search-form cell shrink grid-x') do %>
+        <%= form_tag(books_path, method: :get, class: 'search-form grid-x') do %>
           <%= select_tag(:category, options_for_select(['Title', 'Author'], params[:category]), class: 'cell shrink') %>
           <%= text_field_tag :search, params[:search], placeholder: "Search by title or author", class: 'search-field cell shrink', size: 25 %>
           <%= submit_tag "Search", name: nil, class: 'cell shrink' %>
