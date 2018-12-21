@@ -88,10 +88,21 @@ feature 'user views books' do
   # So that I know more about it
   #
   # Acceptance Criteria:
-  #   If I click a book cover, I am taken to the details page
+  #   I am directed to sign in or sign up if I am not already signed in
+  #   If I click a book cover, I am taken to the details page if I am signed in
   #   This page displays book cover, title, genre, year, author, synopsis, and
   #     overall rating
+  scenario 'tries to view book details before signing in' do
+    visit books_path
+    find(".book-#{book1.id}").click
+
+    expect(page).to have_content('You need to sign in or sign up before continuing')
+    expect(page).not_to have_content(book1.title)
+  end
+
   scenario 'view book details' do
+    user = create(:user)
+    sign_in user
     visit books_path
     find(".book-#{book1.id}").click
 

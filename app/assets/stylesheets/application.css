@@ -27,7 +27,7 @@
   margin: 6px;
 }
 
-.search-field {
+.search-field, .flash * {
   margin-bottom: 0;
 }
 
