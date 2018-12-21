@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
+  
   def index
     @genre_select_options = Genre.select_options
 
