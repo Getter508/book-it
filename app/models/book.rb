@@ -16,7 +16,7 @@ class Book < ApplicationRecord
 
   paginates_per 30
 
-  DEFAULT_COVER = 'generic_book_cover1.png'.freeze
+  DEFAULT_COVER = 'generic_book_cover.png'.freeze
   SORTING_ATTRIBUTES = ['title', 'author', nil].freeze
 
   def display_cover
