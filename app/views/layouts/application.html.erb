@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <%= favicon_link_tag %>
     <title>BookIt</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +12,10 @@
 
   <body>
     <section class="top-bar">
+      <div class="logo">
+        <%= image_tag('BookIt_Logo2.png') %>
+      </div>
+
       <div class="search">
         <%= form_tag(books_path, method: :get, class: 'search-form grid-x') do %>
           <%= select_tag(:category, options_for_select(['Title', 'Author'], params[:category]), class: 'cell shrink') %>
