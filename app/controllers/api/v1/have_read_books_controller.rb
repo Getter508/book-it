@@ -1,4 +1,6 @@
 class Api::V1::HaveReadBooksController < ApplicationController
+  before_action :authenticate_user!
+  
   def create
     have_read_book = HaveReadBook.new(ajax_params)
     have_read_book.user = current_user
