@@ -23,6 +23,10 @@
   min-height: 650px;
 }
 
+.logo img {
+  max-height: 25px;
+}
+
 .search-form {
   margin: 6px;
 }
