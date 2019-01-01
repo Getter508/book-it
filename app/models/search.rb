@@ -1,7 +1,7 @@
 class Search
   class InvalidSearchError < StandardError; end
 
-  attr_accessor :query
+  attr_reader :query
 
   MIN_LENGTH = 3
 
