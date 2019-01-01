@@ -16,6 +16,10 @@
 
  */
 
+body {
+  width: 100%;
+}
+
 .container {
   background-color: #FFFFFF;
   padding: 0px 15px;
@@ -85,6 +89,10 @@
 
 .desc {
   background-image: url('down_arrow.png');
+}
+
+.large-up-2 li {
+  min-width: 605px;
 }
 
 .book-cover img {
