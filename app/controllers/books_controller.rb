@@ -11,15 +11,14 @@ class BooksController < ApplicationController
       @books = Book.filter(genre_id: filter_params).includes(:authors, :genres, :have_read_books, :to_read_books)&.page params[:page]
       @selected_genre = filter_params
     else
-      binding.pry
-      # need to address nil case
-      used_ids = cookies[:books].split("&").map { |id| id.to_i }
-      @books = Book.where.not(id: used_ids.any?).order_by(sort_params, Book).includes(:authors, :genres, :have_read_books, :to_read_books)&.page params[:page]
-      #need to incorporate page number and nils
-      # add if else to pull from positions if not nil or grab more books if nil?
-      used_ids += @books.pluck(:id)
-      cookies[:books] = used_ids
-      binding.pry
+      # ken
+      book_fetch_service = BookService::Fetch.call(
+        sort_params: sort_params,
+        cookie: cookies[:books],
+        page: params[:page]
+      )
+      @books = book_fetch_service.books
+      cookies[:books] = book_fetch_service.updated_cookie
     end
   end
 
