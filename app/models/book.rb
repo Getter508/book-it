@@ -70,7 +70,7 @@ class Book < ApplicationRecord
       order_clause << sanitize_sql_array(["WHEN ? THEN ? ", id, index])
     end
     order_clause << sanitize_sql_array(["ELSE ? END", ids.length])
-    where(id: ids).order(order_clause)
+    where(id: ids).order(Arel.sql(order_clause))
   end
 
   private
