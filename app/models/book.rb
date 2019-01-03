@@ -64,6 +64,15 @@ class Book < ApplicationRecord
     Arel.sql('random()')
   end
 
+  def self.find_ordered(ids)
+    order_clause = "CASE id "
+    ids.each_with_index do |id, index|
+      order_clause << sanitize_sql_array(["WHEN ? THEN ? ", id, index])
+    end
+    order_clause << sanitize_sql_array(["ELSE ? END", ids.length])
+    where(id: ids).order(order_clause)
+  end
+
   private
 
   def self.query_for(sort)
