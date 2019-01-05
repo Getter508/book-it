@@ -42,7 +42,7 @@ module BookService
       if @cookie.nil? || @cookie.empty?
         @used_ids = []
       else
-        @used_ids = @cookie.split('&').map { |id| id.to_i }
+        @used_ids = @cookie.split('&').map(&:to_i)
       end
     end
 
@@ -69,8 +69,7 @@ module BookService
     end
 
     def determine_indices_in_question
-      last_index = first_index + (@per_page - 1)
-      @indices_in_question = (first_index..last_index).to_a
+      @indices_in_question = (first_index...(first_index + @per_page)).to_a
     end
   end
 end
