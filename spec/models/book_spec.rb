@@ -118,18 +118,9 @@ RSpec.describe Book, type: :model do
     end
 
     it 'raises an error if direction params are invalid' do
-      params = { direction: 'ken' }
+      params = { sort: 'title', direction: 'ken' }
 
       expect { Book.order_by(params, Book) }.to raise_error(InvalidDirectionParamError)
-    end
-
-    it 'sorts by default if there are no sort params' do
-      params = { direction: 'asc' }
-      allow(Book).to receive(:order).with(Arel.sql('random()'))
-
-      Book.order_by(params, Book)
-
-      expect(Book).to have_received(:order).with(Arel.sql('random()'))
     end
 
     it 'sorts alpahbetically by author if sorted by asc author' do
@@ -184,6 +175,26 @@ RSpec.describe Book, type: :model do
       params = { sort: 'title', direction: 'desc' }
 
       expect(Book.order_by(params, Book)).to eq([book3, book2, book])
+    end
+  end
+
+  describe '.randomize' do
+    it 'sorts by default if there are no sort params' do
+      allow(Book).to receive(:order).with(Arel.sql('random()'))
+
+      Book.randomize
+
+      expect(Book).to have_received(:order).with(Arel.sql('random()'))
+    end
+  end
+
+  describe '.find_ordered' do
+    it 'returns a list of Books in the order of the book ids' do
+      books = []
+      10.times { books << create(:book) }
+      ids = books.shuffle!.pluck(:id)
+
+      expect(Book.find_ordered(ids)).to eq(books)
     end
   end
 end

@@ -10,15 +10,16 @@ class BooksController < ApplicationController
     elsif filter_params.present?
       @books = Book.filter(genre_id: filter_params).includes(:authors, :genres, :have_read_books, :to_read_books)&.page params[:page]
       @selected_genre = filter_params
+    elsif sort_params.present?
+      @books = Book.order_by(sort_params, Book).includes(:authors, :genres, :have_read_books, :to_read_books)&.page params[:page]
     else
-      # ken
       book_fetch_service = BookService::Fetch.call(
-        sort_params: sort_params,
         cookie: cookies[:books],
-        page: params[:page]
+        page: page_params[:page]
       )
-      @books = book_fetch_service.books
       cookies[:books] = book_fetch_service.updated_cookie
+      @books = book_fetch_service.books
+      @total_pages = (Book.count / 30.0).ceil
     end
   end
 
@@ -41,5 +42,9 @@ class BooksController < ApplicationController
 
   def search_params
     params.permit(:search, :category)
+  end
+
+  def page_params
+    params.permit(:page)
   end
 end

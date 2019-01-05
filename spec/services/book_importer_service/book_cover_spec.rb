@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Book, type: :service do
+RSpec.describe BookImporterService::BookCover, type: :service do
   describe '#image_size' do
     it 'returns the size array' do
       allow(FastImage).to receive(:size).and_return([286, 475])
