@@ -52,7 +52,7 @@ class Book < ApplicationRecord
     raise InvalidDirectionParamError unless ['asc', 'desc', nil].include?(params[:direction])
     query = "#{query_for(params[:sort])} #{params[:direction]}"
     if params[:sort].nil?
-      self.order("#{model.default_sort}")
+      self.order(model.default_sort)
     elsif params[:sort] == 'author'
       self.joins(:authors).order(query)
     else
