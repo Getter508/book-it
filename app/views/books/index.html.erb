@@ -114,5 +114,5 @@
     <% end %>
   </ul>
 
-  <%= paginate @books, left: 2, right: 2, window: 1 %>
+  <%= paginate @books, left: 2, right: 2, window: 1, total_pages: @total_pages %>
 </div>

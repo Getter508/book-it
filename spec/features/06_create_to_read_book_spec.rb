@@ -40,7 +40,7 @@ feature 'user tries to add to_read books' do
     expect(page).not_to have_content(book2.title)
   end
 
-  scenario 'fails to add a to-red book from browse' do
+  scenario 'fails to add a to-read book from browse' do
     allow_any_instance_of(ToReadBook).to receive(:save).and_return(false)
     visit books_path
     find("#add-to-read-#{book1.id}").click
@@ -67,7 +67,7 @@ feature 'user tries to add to_read books' do
     expect(page).not_to have_content(book2.title)
   end
 
-  scenario 'fails to add a to-red book from details' do
+  scenario 'fails to add a to-read book from details' do
     allow_any_instance_of(ToReadBook).to receive(:save).and_return(false)
     visit books_path
     find(".book-#{book1.id}").click

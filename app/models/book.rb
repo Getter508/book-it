@@ -44,7 +44,7 @@ class Book < ApplicationRecord
   end
 
   def self.filter(genre_id: nil)
-    self.joins(:genres).where(genres: { id: genre_id })
+    self.joins(:genres).where(genres: { id: genre_id }).order(title: :asc)
   end
 
   def self.order_by(params, model)
@@ -60,8 +60,21 @@ class Book < ApplicationRecord
     end
   end
 
-  def self.default_sort
-    Arel.sql('random()')
+  def self.randomize
+    self.order(Arel.sql('random()'))
+  end
+
+  def self.find_ordered(ids)
+    order_sql = "CASE id "
+    ids.each_with_index do |id, index|
+      order_sql << sanitize_sql_array(["WHEN ? THEN ? ", id, index])
+    end
+    order_sql << sanitize_sql_array(["ELSE ? END", ids.length])
+    where(id: ids).order(Arel.sql(order_sql))
+  end
+
+  def self.current_page
+    @current_page
   end
 
   private
