@@ -67,8 +67,8 @@ RSpec.describe BookImporterService::BookCover, type: :service do
     end
 
     it 'returns false if the height is too small' do
-      width = BookImporterService::BookCover::MAX_WIDTH * 0.85 + 2
-      height = BookImporterService::BookCover::MAX_HEIGHT * 0.85 - 2
+      width = BookImporterService::BookCover::MAX_WIDTH * 0.8 + 2
+      height = BookImporterService::BookCover::MAX_HEIGHT * 0.8 - 2
       allow(FastImage).to receive(:size).and_return([width, height])
       book_cover = BookImporterService::BookCover.create(2419829)
 
@@ -76,8 +76,8 @@ RSpec.describe BookImporterService::BookCover, type: :service do
     end
 
     it 'returns false if width is too small' do
-      width = BookImporterService::BookCover::MAX_WIDTH * 0.85 - 2
-      height = BookImporterService::BookCover::MAX_HEIGHT * 0.85 + 2
+      width = BookImporterService::BookCover::MAX_WIDTH * 0.8 - 2
+      height = BookImporterService::BookCover::MAX_HEIGHT * 0.8 + 2
       allow(FastImage).to receive(:size).and_return([width, height])
       book_cover = BookImporterService::BookCover.create(2578963)
 
@@ -85,8 +85,8 @@ RSpec.describe BookImporterService::BookCover, type: :service do
     end
 
     it 'returns true if it meets the criteria' do
-      width = BookImporterService::BookCover::MAX_WIDTH * 0.85 + 2
-      height = BookImporterService::BookCover::MAX_HEIGHT * 0.85 + 2
+      width = BookImporterService::BookCover::MAX_WIDTH * 0.8 + 2
+      height = BookImporterService::BookCover::MAX_HEIGHT * 0.8 + 2
       allow(FastImage).to receive(:size).and_return([width, height])
       book_cover = BookImporterService::BookCover.create(2835973)
 

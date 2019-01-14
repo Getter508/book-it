@@ -11,13 +11,20 @@ class BookImporterService
       uri = URI("#{domain}bibkeys=ISBN:#{isbn}&jscmd=data&format=json")
       response = Net::HTTP.get(uri)
       @book_hash = JSON.parse(response)
-      search_call
-      {
-        genres: genres,
-        cover: cover,
-        isbns: isbns,
-        alt_author_names: alt_author_names
-      }
+
+      return { isbns: [isbn] } if @book_hash.blank?
+
+      begin
+        search_call
+        {
+          genres: genres,
+          cover: cover,
+          isbns: isbns,
+          alt_author_names: alt_author_names
+        }
+      rescue URI::InvalidURIError
+        { isbns: [isbn] }
+      end
     end
 
     def book_info
@@ -35,12 +42,9 @@ class BookImporterService
     end
 
     def search_call
-      subs = { ' ' => '+', "'" => '&#39;' }
-      regex = "#{subs.keys.join('|')}"
-      uri_title = title.gsub(Regexp.new(regex), subs)
-      uri_authors = authors.join('+').gsub(Regexp.new(regex), subs)
+      authors_str = authors.join('+')
       domain = 'http://openlibrary.org/search.json?'
-      uri = URI("#{domain}title=#{uri_title}&author=#{uri_authors}")
+      uri = URI("#{domain}title=#{title}&author=#{authors_str}")
       response = Net::HTTP.get(uri)
       @search_hash = JSON.parse(response)
     end
@@ -60,7 +64,7 @@ class BookImporterService
 
     def cover
       book_covers = search_info.map do |book|
-        unless book['cover_i'].nil?
+        unless book['cover_i'].nil? || book['cover_i'] == -1
           BookImporterService::BookCover.create(book['cover_i'])
         end
       end.compact
@@ -70,12 +74,12 @@ class BookImporterService
       end.compact
 
       return nil if target_covers.empty?
-      target_covers.sort_by { |cover| (cover.ratio - 1.5).abs }.first
+      target_covers.sort_by { |cover| (cover.ratio - 1.5).abs }.first.url
     end
 
     def isbns
       isbns = []
-      orig_isbns = search_info.first['isbn']
+      orig_isbns = search_info.map { |entry| entry['isbn'] }.flatten.compact.uniq
       orig_isbns.each do |isbn|
         without_dashes = isbn.delete('-')
         isbns << without_dashes if Isbn::LENGTHS.include?(without_dashes.length)
