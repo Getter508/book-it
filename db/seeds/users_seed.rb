@@ -1,0 +1,1 @@
+User.find_or_create_by(email: "first@last.com", encrypted_password: "$2a$11$HC63h3LCNGZYb2nB9BI.w.h0S1d7YzSSNb178h6SNLoe51RcR22wu", first_name: "First", last_name: "Last", username: "firstlast", admin: false)
