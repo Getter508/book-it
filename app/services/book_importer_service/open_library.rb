@@ -42,20 +42,15 @@ class BookImporterService
     end
 
     def search_call
-      subs = { ' ' => '+', "'" => '&#39;', '"' => '' }
-      regex = "#{subs.keys.join('|')}"
-      uri_title = title.gsub(Regexp.new(regex), subs)
-      uri_authors = authors.join('+').gsub(Regexp.new(regex), subs)
+      authors_str = authors.join('+')
       domain = 'http://openlibrary.org/search.json?'
-      uri = URI("#{domain}title=#{uri_title}&author=#{uri_authors}")
+      uri = URI("#{domain}title=#{title}&author=#{authors_str}")
       response = Net::HTTP.get(uri)
       @search_hash = JSON.parse(response)
     end
 
     def search_info
-      @search_info ||= @search_hash['docs'].select do |book|
-        book['title_suggest'] == title && (authors & book['author_name']).present?
-      end
+      @search_info ||= @search_hash['docs']
     end
 
     def genres

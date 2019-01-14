@@ -24,7 +24,8 @@ class BookImporterService
         errors[isbn] = "#{e.class}: #{e.full_messages}"
       end
     end
-    puts "ERRORS: #{errors.join(', ')}"
+    binding.pry
+    puts "ERRORS: #{errors.join(', ')}" unless errors.empty?
   end
 
   def create_book(data)
