@@ -26,10 +26,14 @@ class BookImporterService
       n = 0
       @size = nil
       until (@size.present? || n == 5)
-        @size = FastImage.size("http://covers.openlibrary.org/b/id/#{@id}-L.jpg")
+        @size = FastImage.size(url)
         n += 1
       end
       @size
+    end
+
+    def url
+      "http://covers.openlibrary.org/b/id/#{@id}-L.jpg"
     end
 
     def ratio
@@ -45,10 +49,11 @@ class BookImporterService
     end
 
     def qualifies?
-      min_height = 0.85 * MAX_HEIGHT
-      min_width = 0.85 * MAX_WIDTH
+      return false if @height.blank? || @width.blank?
+      min_height = 0.8 * MAX_HEIGHT
+      min_width = 0.8 * MAX_WIDTH
 
-      @height >= min_height && @width >= min_width && ratio <= 1.6 && ratio >= 1.4
+      @height >= min_height && @width >= min_width && ratio <= 1.65 && ratio >= 1.4
     end
   end
 end

@@ -39,7 +39,7 @@ module BookService
     end
 
     def fetch_used_ids
-      if @cookie.nil? || @cookie.empty?
+      if @cookie.blank?
         @used_ids = []
       else
         @used_ids = @cookie.split('&').map(&:to_i)

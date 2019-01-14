@@ -10,7 +10,7 @@ class BookImporterService
   end
 
   def call
-    errors = []
+    errors = {}
     isbns.each do |isbn|
       begin
         google_book_info = GoogleBook.new.call(isbn)
@@ -21,7 +21,7 @@ class BookImporterService
         genre = create_genre(book_data, book.id)
         isbn_obj = create_isbn(book_data, book.id, isbn)
       rescue StandardError => e
-        errors << [isbn]
+        errors[isbn] = "#{e.class}: #{e.full_messages}"
       end
     end
     puts "ERRORS: #{errors.join(', ')}"
@@ -54,9 +54,11 @@ class BookImporterService
   end
 
   def create_genre(data, book_id)
-    data[:genres].each do |name|
-      genre = Genre.find_or_create_by(name: name)
-      create_book_genre(genre, book_id)
+    unless data[:genres].blank?
+      data[:genres].each do |name|
+        genre = Genre.find_or_create_by(name: name)
+        create_book_genre(genre, book_id)
+      end
     end
   end
 
