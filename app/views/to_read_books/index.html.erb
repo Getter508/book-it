@@ -9,13 +9,19 @@
   </div>
 </div>
 
+<div class="no-books">
+  <% if @to_read_books.blank? %>
+    <h1 class="h3">Your To Read Books is currently empty.</h1>
+  <% end %>
+</div>
+
 <div class="view-books">
   <ul class="books-list to-read-list">
     <% @to_read_books.each do |book| %>
       <li class="to-read-<%= book.id %> callout secondary">
         <div class="grid-x align-middle">
 
-          <div class="book-rank cell small-3 large-1">
+          <div class="book-rank cell small-3 medium-2 large-1">
             <%= form_tag(to_read_book_path(book), method: :put, class: "rank-form grid-x") do %>
               <div class="dropdown cell">
                 <%= select_tag(:rank, options_for_select(ToReadBook::RANKS, selected: to_read(book)&.rank), include_blank: true, id: "rank-#{book.id}") %>
@@ -34,15 +40,15 @@
             </div>
           </div>
 
-          <div class="to-read-rec cell small-6 large-3">Not Recommended</div>
+          <div class="to-read-rec cell medium-5 large-3">Not Recommended</div>
 
-          <div class="cell small-6 large-3">
-            <div class="grid-x align-center">
+          <div class="cell small-6 medium-5 large-3">
+            <div class="grid-x">
               <button class="finished button" data-open="modal-<%= book.id %>">Finished Reading</button>
             </div>
           </div>
 
-          <div class="cell medium-1 text-right">
+          <div class="cell small-5 medium-2 large-1 text-right">
             <%= button_to "Delete", { action: :destroy, id: to_read(book).id }, method: :delete, class: "clear button", id: "delete-to-read-#{book.id}"  %>
           </div>
         </div>

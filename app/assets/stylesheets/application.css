@@ -91,10 +91,6 @@ body {
   background-image: url('down_arrow.png');
 }
 
-.large-up-2 li {
-  min-width: 605px;
-}
-
 .book-cover img {
   max-width: 300px;
   max-height: 450px;
@@ -195,6 +191,15 @@ p.cell {
   margin-right: 20px;
   padding-left: 18px;
   padding-right: 18px;
+}
+
+.no-books {
+  padding-left: 40px;
+}
+
+.to-read-rec {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .buffer {
