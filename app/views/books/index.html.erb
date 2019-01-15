@@ -3,9 +3,9 @@
     <div class="search-message">
       <h1 class="h2">Search results</h1>
       <% if @books.empty? %>
-        <h2 class="h3">No matches found</h2>
+        <h2 class="h3">No matches found for "<%= "#{@search}" %>"</h2>
       <% else %>
-        <h2 class="h3"><%= @books.length %> matches found</h2>
+        <h2 class="h3"><%= "#{@books.length} #{'match'.pluralize(@books.length)}" %> found for "<%= "#{@search}" %>"</h2>
       <% end %>
     </div>
   <% else %>
