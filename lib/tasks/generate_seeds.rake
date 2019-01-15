@@ -2,8 +2,8 @@ task generate_seeds: :environment do
   class ApplicationRecord < ActiveRecord::Base
     def self.generate_output_seed!
       file_name = Rails.root.join('db', 'seeds', "#{self.name.underscore}s_seed.rb")
-      File.open(file_name, "wb") do |file|
-        self.all.each do |model|
+      File.open(file_name, 'wb') do |file|
+        self.order(:id).each do |model|
           file.puts model.as_seed_code
         end
       end
