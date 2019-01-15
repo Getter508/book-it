@@ -3,9 +3,9 @@
     <div class="search-message">
       <h1 class="h2">Search results</h1>
       <% if @books.empty? %>
-        <h2 class="h3">No matches found</h2>
+        <h2 class="h3">No matches found for "<%= "#{@search}" %>"</h2>
       <% else %>
-        <h2 class="h3"><%= @books.length %> matches found</h2>
+        <h2 class="h3"><%= "#{@books.length} #{'match'.pluralize(@books.length)}" %> found for "<%= "#{@search}" %>"</h2>
       <% end %>
     </div>
   <% else %>
@@ -43,7 +43,7 @@
   <ul class="books-list grid-x grid-padding-x medium-up-1 large-up-2">
     <% @books.each do |book| %>
       <li class="cell grid-x grid-padding-y">
-        <div class="cell medium-6">
+        <div class="cell medium-6 large-6">
           <%= link_to(image_tag(book.display_cover), book_path(book), class: "book-cover book-#{book.id}") %>
         </div>
         <div class="cell medium-6">

@@ -9,13 +9,19 @@
   </div>
 </div>
 
+<div class="no-books">
+  <% if @have_read_books.blank? %>
+    <h1 class="h3">Your Have Read Books is currently empty.</h1>
+  <% end %>
+</div>
+
 <div class="view-books">
   <ul class="books-list have-read-list">
     <% @have_read_books.each do |book| %>
       <li class="callout secondary">
         <div class="grid-x align-middle">
 
-          <div class="have-read-info buffer cell small-12 medium-9 large-4">
+          <div class="have-read-info buffer cell small-12 medium-8 large-4">
             <div class="grid-x align-middle">
               <div class="cell shrink">
                 <%= link_to(image_tag(book.display_cover), book_path(book), class: "thumbnail-cover book-#{book.id}") %>
@@ -36,9 +42,9 @@
             <% end %>
           </div>
 
-          <div class="have-read-rec buffer cell small-6 medium-5 large-3">Not Recommended</div>
+          <div class="have-read-rec buffer cell small-6 medium-5 large-2">Not<br>Recommended</div>
 
-          <div class="cell medium-7 large-3" id="have-read-date-<%= book.id %>">
+          <div class="cell small-6 medium-4 large-3" id="have-read-date-<%= book.id %>">
             <% if have_read(book)&.display_date.nil? %>
               <h6>Add Date Completed</h6>
               <%= form_tag(have_read_books_update_date_path, class: "date-form grid-x") do %>
@@ -53,13 +59,9 @@
               <div><%= have_read(book)&.display_date %></div>
             <% end %>
           </div>
-        </div>
 
-        <div class="grid-x align-right">
-          <div class="cell shrink">
+          <div class="have-read-buttons cell small-6 medium-3 large-1 text-center">
             <button class="clear button" data-open="modal-<%= book.id %>">Edit</button>
-          </div>
-          <div class="cell shrink">
             <%= button_to "Delete", { action: :destroy, id: have_read(book).id }, method: :delete, class: "clear button", id: "delete-have-read-#{book.id}" %>
           </div>
         </div>
